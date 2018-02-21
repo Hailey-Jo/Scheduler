@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
-<title>풀캘린더::구글캘린더</title>
+<title>Scheduler</title>
 <style type="text/css">
     body {
         margin:40px 10px;
@@ -42,16 +42,34 @@
 <script type="text/javascript" src="./fullcalendar-3.8.2/lib/jquery.min.js"></script>
 <script type="text/javascript" src="./fullcalendar-3.8.2/fullcalendar.js" charset="euc-kr"></script>
 <script type="text/javascript" src="./fullcalendar-3.8.2/gcal.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script type="text/javascript" src="./fullcalendar-3.8.2/locale-all.js"></script>
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<!-- bootstrap date Picker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
 <script type="text/javascript">
     jQuery(document).ready(function() {
         jQuery("#calendar").fullCalendar({
             header : {
                   left : "prev"
                 , center : "title, month"
-                , right : "next"
+                , right: 'month,agendaWeek,agendaDay'
             }
-            , lang : "ko"
+	        , navLinks: true // can click day/week names to navigate views
+	        , selectable: true
+	        , selectHelper: true
+        
+            , locale : "ko"
             , editable : true
             , eventLimit : true
 
@@ -78,7 +96,7 @@
                 {
                     title  : 'event2',
                     start  : '2018-02-05',
-                    end    : '2018-02-07'
+                    end    : '2018-02-07',
                 },
                 {
                     title  : 'event3',
@@ -86,32 +104,47 @@
                     allDay : false // will make the time show
                 }
             ]
-            , eventClick:function(event) {
-                if(event) {
-                    alert(event.title + "\n");
-                }
-            }
-            , eventClick:  function(event) {
-                $('#modalTitle').html(event.title);
-                $('#modalBody').html(event.description);
-                $('#eventUrl').attr('href',event.url);
-                $('#fullCalModal').modal();
-            }
-            
-            ,  dayClick: function(date, jsEvent, view) {
+            , select: function(start, end) {
+                // Display the modal.
+                // You could fill in the start and end fields based on the parameters
+                $('.modal').modal('show');
 
-                alert('Clicked on: ' + date.format());
-                alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-                alert('Current view: ' + view.name);
-                
-                $('#modalTitle').html(event.title);
-                $('#modalBody').html(event.description);
-                $('#eventUrl').attr('href',event.url);
-                $('#fullCalModal').modal();
-                // change the day's background color just for fun
-                //$(this).css('background-color', 'red');
+            },
+            eventClick: function(event, element) {
+                // Display the modal and set the values to the event values.
+                $('.modal').modal('show');
+                $('.modal').find('#title').val(event.title);
+                $('.modal').find('#starts-at').val(event.start);
+                $('.modal').find('#ends-at').val(event.end);
 
+            },
+            editable: true,
+            eventLimit: true // allow "more" link when too many events
+
+        });
+
+        // Bind the dates to datetimepicker.
+        // You should pass the options you need
+        $("#starts-at, #ends-at").datetimepicker();
+
+        // Whenever the user clicks on the "save" button om the dialog
+        $('#save-event').on('click', function() {
+            var title = $('#title').val();
+            if (title) {
+                var eventData = {
+                    title: title,
+                    start: $('#starts-at').val(),
+                    end: $('#ends-at').val()
+                };
+                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
             }
+            $('#calendar').fullCalendar('unselect');
+
+            // Clear modal inputs
+            $('.modal').find('input').val('');
+
+            // hide modal
+            $('.modal').modal('hide');
         });
     });
 
@@ -124,18 +157,54 @@
             jQuery("#calendar").fullCalendar("removeEventSource", { googleCalendarId : id });
         }
     }
+    
 </script>
 <body>
-    <div style="width:100%;display:table-cell;float:center;">
-        <div class="barKategorie" style="background-color:#FF0000;color:#FFFFFF;">
-            <label>
-                <input type="checkbox" class="swingBar" onChange="scheduleChoice(0, 'ko.south_korea#holiday@group.v.calendar.google.com', 'usaHolidays', '#FF0000', '#FFFFFF');" checked/>
-                &nbsp;한국 공휴일
-            </label>
-        </div>
+    <div class="barKategorie" style="background-color:#FF0000;color:#FFFFFF;">
+        <label>
+            <input type="checkbox" class="swingBar" onChange="scheduleChoice(0, 'ko.south_korea#holiday@group.v.calendar.google.com', 'usaHolidays', '#FF0000', '#FFFFFF');" checked/>
+            &nbsp;한국 공휴일
+        </label>
+    </div>
 
     <div style="height:30px;"></div>
     <div id="loading">loading...</div>
     <div id="calendar"></div>
+<div id='datepicker'></div>
+
+<div class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Create new event</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="col-xs-4" for="title">Event title</label>
+                        <input type="text" name="title" id="title" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="col-xs-4" for="starts-at">Starts at</label>
+                        <input type="text" name="starts_at" id="starts-at" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="col-xs-4" for="ends-at">Ends at</label>
+                        <input type="text" name="ends_at" id="ends-at" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="save-event">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 </body>
 </html>
