@@ -42,7 +42,7 @@
 <script type="text/javascript" src="./fullcalendar-3.8.2/lib/jquery.min.js"></script>
 <script type="text/javascript" src="./fullcalendar-3.8.2/fullcalendar.js" charset="euc-kr"></script>
 <script type="text/javascript" src="./fullcalendar-3.8.2/gcal.js"></script>
-<script type="text/javascript" src="./fullcalendar-3.8.2/lang-all.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script type="text/javascript">
     jQuery(document).ready(function() {
         jQuery("#calendar").fullCalendar({
@@ -57,11 +57,6 @@
 
             , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
 
-            // 예제소스에 적힌 구글캘린더 API 키는 FullCalendar 예제에 있는 API키를 그대로 사용한 것이다.
-			, googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
-
-            // 예제소스에 적힌 구글캘린더 API 키는 FullCalendar 예제에 있는 API키를 그대로 사용한 것이다.
-            , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"
             , eventSources : [
                 // 대한민국의 공휴일
                 {
@@ -69,24 +64,53 @@
                     , className : "koHolidays"
                     , color : "#FF0000"
                     , textColor : "#FFFFFF"
-                }
-                // 미국의 공휴일
-                , {
-                      googleCalendarId : "ko.usa#holiday@group.v.calendar.google.com"
-                    , className : "usaHolidays"
-                    , color : "#0000FF"
-                    , textColor : "#FFFF00"
-                }
-                // 일본의 공휴일
-                , {
-                      googleCalendarId : "ko.japanese#holiday@group.v.calendar.google.com"
-                    , className : "jpHolidays"
-                    , color : "#FF99CC"
-                    , textColor : "#000000"
+                    , editable : false
                 }
             ]
             , loading:function(bool) {
                 jQuery("#loading").toggle(bool);
+            }
+            , events: [
+                {
+                    title  : 'event1',
+                    start  : '2018-02-01'
+                },
+                {
+                    title  : 'event2',
+                    start  : '2018-02-05',
+                    end    : '2018-02-07'
+                },
+                {
+                    title  : 'event3',
+                    start  : '2018-02-09T12:30:00',
+                    allDay : false // will make the time show
+                }
+            ]
+            , eventClick:function(event) {
+                if(event) {
+                    alert(event.title + "\n");
+                }
+            }
+            , eventClick:  function(event) {
+                $('#modalTitle').html(event.title);
+                $('#modalBody').html(event.description);
+                $('#eventUrl').attr('href',event.url);
+                $('#fullCalModal').modal();
+            }
+            
+            ,  dayClick: function(date, jsEvent, view) {
+
+                alert('Clicked on: ' + date.format());
+                alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+                alert('Current view: ' + view.name);
+                
+                $('#modalTitle').html(event.title);
+                $('#modalBody').html(event.description);
+                $('#eventUrl').attr('href',event.url);
+                $('#fullCalModal').modal();
+                // change the day's background color just for fun
+                //$(this).css('background-color', 'red');
+
             }
         });
     });
@@ -109,19 +133,7 @@
                 &nbsp;한국 공휴일
             </label>
         </div>
-        <div class="barKategorie" style="background-color:#0000FF;color:#FFFF00;">
-            <label>
-                <input type="checkbox" class="swingBar" onChange="scheduleChoice(1, 'ko.usa#holiday@group.v.calendar.google.com', 'usaHolidays', '#0000FF', '#FFFF00');" checked/>
-                &nbsp;미국 공휴일
-            </label>
-        </div>
-        <div class="barKategorie" style="background-color:#FF99CC;color:#000000;">
-            <label>
-                <input type="checkbox" class="swingBar" onChange="scheduleChoice(2, 'ko.japanese#holiday@group.v.calendar.google.com', 'jpHolidays', '#FF99CC', '#000000');" checked/>
-                &nbsp;일본 공휴일
-            </label>
-        </div>
-    </div>
+
     <div style="height:30px;"></div>
     <div id="loading">loading...</div>
     <div id="calendar"></div>
