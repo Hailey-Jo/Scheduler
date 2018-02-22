@@ -21,7 +21,7 @@
     }
 
     #calendar {
-        max-width:900px;
+        max-width:1200px;
         margin:0 auto;
     }
 
@@ -35,6 +35,76 @@
         border-radius:5px;
         font-weight:bold;
     }
+    
+<!-- Side Calendar -->
+#calendar-mini {
+    width: 200px;
+    margin: 0 auto;
+    font-size: 10px;
+}
+.fc-header-title h2 {
+    font-size: .6em;
+    white-space: normal !important;
+}
+.fc-view-month .fc-event, .fc-view-agendaWeek .fc-event {
+    font-size: 0;
+    overflow: hidden;
+    height: 2px;
+}
+.fc-view-agendaWeek .fc-event-vert {
+    font-size: 0;
+    overflow: hidden;
+    width: 2px !important;
+}
+.fc-agenda-axis {
+    width: 20px !important;
+    font-size: .7em;
+}
+
+.fc-button-content {
+    padding: 0;
+}
+
+
+
+/* misc demo css */
+h2 { text-align: center; }
+.buttons { display: block; margin: 0 auto; text-align: center; }
+.buttons button { margin-bottom: 5px; }
+
+<!-- Main div css -->
+#wrapper{
+border: 1px solid #FFBB00;
+width:1400px; 
+padding: 10px; 
+position: absolute;
+top: 10px;
+left: 50%;
+margin-left: -533px;
+overflow: hidden; 
+
+}
+#calendar-mini{
+border: 1px solid #487BE1;
+width: 300px;
+height: 300px;
+float: left;
+padding: 10px;
+margin-left: 10px;
+margin-right: 10px;
+
+}
+
+#calendar{
+border: 1px solid #487BE1;
+width: 950px;
+float: left;
+padding: 10px;
+margin-right: 10px;
+
+}
+
+
 </style>
 <link href="./fullcalendar-3.8.2/fullcalendar.css" rel="stylesheet"/>
 <link href="./fullcalendar-3.8.2/fullcalendar.print.css" rel="stylesheet" media="print"/>
@@ -58,12 +128,81 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
 <script type="text/javascript">
+
+$(document).ready(function() {
+
+    var date = new Date();
+    var d = date.getDate();
+    var m = date.getMonth();
+    var y = date.getFullYear();
+
+    $('#calendar-mini').fullCalendar({
+        theme: true,
+        header: {
+            left: 'prev, today',
+            center: 'title',
+            right: 'next'
+        },
+        editable: true,
+        locale: "ko",
+        
+        // add event name to title attribute on mouseover
+        eventMouseover: function(event, jsEvent, view) {
+            if (view.name !== 'agendaDay') {
+                $(jsEvent.target).attr('title', event.title);
+            }
+        },
+        
+        // For DEMO only
+        // *************
+        events: [
+            {
+            title: 'All Day Event',
+            start: new Date(y, m, 1)},
+        {
+            title: 'Long Event',
+            start: new Date(y, m, d - 5),
+            end: new Date(y, m, d - 2)},
+        {
+            id: 999,
+            title: 'Repeating Event',
+            start: new Date(y, m, d - 3, 16, 0),
+            allDay: false},
+        {
+            id: 999,
+            title: 'Repeating Event',
+            start: new Date(y, m, d + 4, 16, 0),
+            allDay: false},
+        {
+            title: 'Meeting',
+            start: new Date(y, m, d, 10, 30),
+            allDay: false},
+        {
+            title: 'Lunch',
+            start: new Date(y, m, d, 12, 0),
+            end: new Date(y, m, d, 14, 0),
+            allDay: false},
+        {
+            title: 'Birthday Party',
+            start: new Date(y, m, d + 1, 19, 0),
+            end: new Date(y, m, d + 1, 22, 30),
+            allDay: false},
+        {
+            title: 'Click for Google',
+            start: new Date(y, m, 28),
+            end: new Date(y, m, 29),
+            url: 'http://google.com/'}
+        ]
+    });
+
+});
+
     jQuery(document).ready(function() {
         jQuery("#calendar").fullCalendar({
             header : {
                   left : "prev"
-                , center : "title, month"
-                , right: 'month,agendaWeek,agendaDay'
+                , center : "title"
+                , right: 'month, agendaWeek, agendaDay, next'
             }
 	        , navLinks: true // can click day/week names to navigate views
 	        , selectable: true
@@ -159,52 +298,57 @@
     }
     
 </script>
+
 <body>
-    <div class="barKategorie" style="background-color:#FF0000;color:#FFFFFF;">
-        <label>
-            <input type="checkbox" class="swingBar" onChange="scheduleChoice(0, 'ko.south_korea#holiday@group.v.calendar.google.com', 'usaHolidays', '#FF0000', '#FFFFFF');" checked/>
-            &nbsp;한국 공휴일
-        </label>
-    </div>
-
-    <div style="height:30px;"></div>
     <div id="loading">loading...</div>
-    <div id="calendar"></div>
-<div id='datepicker'></div>
+    
+	<div id="wrapper">
+	
 
-<div class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Create new event</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <label class="col-xs-4" for="title">Event title</label>
-                        <input type="text" name="title" id="title" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <label class="col-xs-4" for="starts-at">Starts at</label>
-                        <input type="text" name="starts_at" id="starts-at" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <label class="col-xs-4" for="ends-at">Ends at</label>
-                        <input type="text" name="ends_at" id="ends-at" />
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="save-event">Save changes</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+	<div style="padding: 10px; margin-left: 10px;">
+	<header><div style="height: 10px;"></div><div>Scheduler</div><div style="height: 10px;"></div></header>
+	</div>
+	
+	<div id="calendar-mini"></div>
+	
+    <div id="calendar" ></div>
+
+</div>
+	<div id='datepicker'></div>
+
+	<div class="modal fade" tabindex="-1" role="dialog">
+	    <div class="modal-dialog" role="document">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	                <h4 class="modal-title">Create new event</h4>
+	            </div>
+	            <div class="modal-body">
+	                <div class="row">
+	                    <div class="col-xs-12">
+	                        <label class="col-xs-4" for="title">Event title</label>
+	                        <input type="text" name="title" id="title" />
+	                    </div>
+	                </div>
+	                <div class="row">
+	                    <div class="col-xs-12">
+	                        <label class="col-xs-4" for="starts-at">Starts at</label>
+	                        <input type="text" name="starts_at" id="starts-at" />
+	                    </div>
+	                </div>
+	                <div class="row">
+	                    <div class="col-xs-12">
+	                        <label class="col-xs-4" for="ends-at">Ends at</label>
+	                        <input type="text" name="ends_at" id="ends-at" />
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	                <button type="button" class="btn btn-primary" id="save-event">Save changes</button>
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 </body>
 </html>
