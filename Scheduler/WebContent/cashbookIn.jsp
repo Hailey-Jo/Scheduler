@@ -253,8 +253,7 @@ padding : 50px;
 		<!-- 좌측 서브 메뉴 -->
 		<div class="leftBtn" align="center">
 			<div id="cashBtn" style="height:auto; overflow: y:hidden;" >
-				<button type="button" class="btn btn-primary btn-sm">　　　수입　　　</button>
-				<button type="button" class="btn btn-primary btn-sm">　　　지출　　　</button>
+				<button type="button" class="btn btn-primary btn-sm">　　　　　지출내역쓰기　　　　　</button>
 				<hr>
 			</div>
 		</div>
