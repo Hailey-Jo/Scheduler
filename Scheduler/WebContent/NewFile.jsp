@@ -7,13 +7,15 @@
 <%iScheduleDAO dao = ScheduleDAO.getInstance();
 List<ScheduleDTO> list = dao.getAllSchedulList();
 String eventstring = "";
-for(int i=0; i<list.size();i++){
-	System.out.println(list.get(i).toString());
+for(int i=0; i<list.size();i++){	
 	eventstring +="{";
 	eventstring += "title : '"+list.get(i).getTitle()+"',";
 	eventstring += "start : '"+list.get(i).getStartDate().substring(0, 10)+"',";
-	eventstring += "end : '"+list.get(i).getEndDate().substring(0, 10)+"'";
-	eventstring +="},";
+	eventstring += "end : '"+list.get(i).getEndDate().substring(0, 10)+"',";
+	if(list.get(i).getImportant()==1){
+		eventstring += "imageurl : " +" '.\\"+"\\image\\"+"\\"+"star.png',";
+	}
+	eventstring +="},"+"\n";
 	
 	System.out.println(eventstring);
 }
@@ -165,20 +167,7 @@ jQuery(document).ready(function() {
             jQuery("#loading").toggle(bool);
         }
         , events: [
-            {
-                title  : 'event1',
-                start  : '2018-02-01'
-            },
-            {
-                title  : 'event2',
-                start  : '2018-02-05',
-                end    : '2018-02-07'
-            },
-            {
-                title  : 'event3',
-                start  : '2018-02-09T12:30:00',
-                allDay : false // will make the time show
-            }
+            <%=eventstring %>
         ]
 
     });
@@ -238,8 +227,7 @@ jQuery(document).ready(function() {
 
             },
             eventClick: function(event, element) {
-                // Display the modal and set the values to the event values.
-                alert('Event: ' + event.imageurl);
+                // Display the modal and set the values to the event values.               
                 $('.modal').modal('show');
                 $('.modal').find('#title').val(event.title);
                 $('.modal').find('#starts-at').val(event.start);
@@ -332,9 +320,9 @@ jQuery(document).ready(function() {
 	                    </div>
 	                </div>
 	            </div>
-	            <div class="modal-footer">
+	            <div class="modal-footer">	                
+	                <button type="button" class="btn btn-primary" id="save-event">Modify Schedule</button>
 	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	                <button type="button" class="btn btn-primary" id="save-event">Save changes</button>
 	            </div>
 	        </div><!-- /.modal-content -->
 	    </div><!-- /.modal-dialog -->
