@@ -4,68 +4,24 @@
 <html>
 
 <head>
-
+<link rel="stylesheet" type="text/css" href="./css/header.css"> 
 <style type="text/css">
-
-header{
-	padding : 10px;
-    color: white;
-    background-color: #006699;
-}
-
-nav{
-	 vertical-align: middle;
-}
-
-#topMenu {
-        height: 40px;
-        vertical-align: middle;
-}
-
-#topMenu ul li {
-        list-style: none;
-        float: left;
-}
-
-#topMenu .menuLink {
-        /* text-decoration:none; */
-        display: block;
-        width: 60px;
-        clear: left;
-}
-
-#topMenu .topMenu_siteTitle ul li{
-	font-size: 20px;
-	padding-right: 400px;
-}
-
-
-#topMenu .topMenu_logInOut{
-	font-weight: bold;
-	font-size: 15px;
-	padding-left: 200px;
-	vertical-align: middle;
-}
-
-
-#topMenu_icon{
-	vertical-align: middle;
-	align-content: center;
-}
-
 
 aside{
 	float: left;
-    max-width: 400px;
+	/* width: 300px; */
+    max-width: 300px;
+    height : auto;
     margin: 0;
     padding: 10px;
+    
 }
 
 article {
-    margin-left: 50px;
+    margin-left: 10px;
     border-left: 1px solid gray;
-    padding: 1em;
     overflow: hidden;
+    height: auto;
 }
 
 footer {
@@ -81,51 +37,28 @@ footer {
 	height: 100%;
 }
 
-/* 
-#header{
-
-width : 100%;
-height: 10%;
-padding:10px;
-float:left;
-background-color: #006699;
-color: #ffffff;
-
-} */
-
-
-/* .left{
-width:20%;
-height: 30%;
-float:left;
-margin: 10px;
-}
- */
-
-
-#leftBtn{
-	margin: 10px;
+body {
+  width: 100%;
+  height: 100%;
+  min-width:800px; /* 최소 넓이가 지원되는 브라우져를 위해서 ...FF, IE7, safari */
+  margin: 0px; 
+  padding: 0px;  /* 옵션입니다.*/
+  /* 만약 콘텐츠를 가운데 정렬로 하고 싶은 경우 text-align: center 를 타이핑 하시고, 
+     패딩값을 적당하게 올려주시면 됩니다.*/
 }
 
 
 
 #calendar {
 
-width:80%;
-height: 90%;
+width:80vm;
+height: 80vm;
 float:left;
-padding-left: 50px;
-padding-top: 50px;
+padding : 50px;
 /* padding-right: 100px; */
 
 }
 
- body {
-        margin:40px 10px;
-        padding:0;
-        font-family:"Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
-        font-size:14px;
-    }
 
     #loading {
         display:none;
@@ -136,7 +69,8 @@ padding-top: 50px;
 
     #calendar {
         max-width:1200px;
-        margin:0 auto;
+        margin:auto;
+        float:left;
     }
 
     div.barKategorie {
@@ -145,7 +79,7 @@ padding-top: 50px;
         padding-top:5px;
         padding-bottom:5px;
         padding-left:5px;
-        padding-right:10px;
+        /* padding-right:10px; */
         border-radius:5px;
         font-weight:bold;
     }
@@ -297,9 +231,9 @@ padding-top: 50px;
 			
 			<div class="topMenu_icon" align="center">
 				<ul>
-					<li><a class="menuLink" href="NewFile.jsp"><img src="./icon/home-n.png" onmouseover='this.src="./icon/home-w.png"' onmouseout='this.src="./icon/home-n.png"' style="width: 30px; height: 30px;"></a></li>
-					<li><a class="menuLink" href="NewFile.jsp"><img src="./icon/schedule-n.png" onmouseover='this.src="./icon/schedule-w.png"' onmouseout='this.src="./icon/schedule-n.png"' style="width: 30px; height: 30px;"></a></li>
-					<li><a class="menuLink" href=""><img src="./icon/cash-w.png" style="width: 30px; height: 30px;"></a></li>
+					<li><a class="menuLink" href="NewFile.jsp"><img src="./icon/home-n.png" onmouseover='this.src="./icon/home-w.png"' onmouseout='this.src="./icon/home-n.png"' ></a></li>
+					<li><a class="menuLink" href="NewFile.jsp"><img src="./icon/schedule-n.png" onmouseover='this.src="./icon/schedule-w.png"' onmouseout='this.src="./icon/schedule-n.png"' ></a></li>
+					<li><a class="menuLink" href=""><img src="./icon/cash-w.png" ></a></li>
 				</ul>
 			</div>
 			
@@ -371,5 +305,6 @@ padding-top: 50px;
 	</article>
 		
 	<footer>Copyright &copy; BizPayDay</footer>
+	
 </body>
 </html>
