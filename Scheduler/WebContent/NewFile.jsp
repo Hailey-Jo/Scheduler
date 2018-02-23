@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
 <title>Scheduler</title>
+<link rel="stylesheet" href="Calendar.css" type="text/css">
 <style type="text/css">
 body {
     margin:40px 10px;
@@ -24,27 +25,8 @@ width: 20%;
 height: 90%;
 float: left;
 }
-
-#calendar {
-    max-width:900px;
-    margin:0 auto;    
-}
-
-div.barKategorie {
-    float:left;
-    margin:5px;
-    padding-top:5px;
-    padding-bottom:5px;
-    padding-left:5px;
-    padding-right:10px;
-    border-radius:5px;
-    font-weight:bold;
-}
-
 /* misc demo css */
-h2 { text-align: center; }
-.buttons { display: block; margin: 0 auto; text-align: center; }
-.buttons button { margin-bottom: 5px; }
+
 
 <!-- Main div css -->
 #wrapper{
@@ -52,34 +34,7 @@ border: 1px solid #FFBB00;
 position: absolute;
 height: 100%;
 width: 100%;
-
 }
-#calendar-mini{
-border: 1px solid #487BE1;
-float: left;
-padding: 10px;
-margin-left: 10px;
-margin-right: 10px;
-}
-#calendar-mini div.fc-content{
-	height: 1px;
-}
-#calendar-mini div.fc-center h2{
-	font-size: 15px;
-}
-#calendar-mini a.fc-day-number{
-	font-size: 5px;
-}
-
-#calendar{
-border: 1px solid #487BE1;
-float: left;
-width: 80%;
-height: 90%;
-padding: 10px;
-}
-
-
 </style>
 <link href="./fullcalendar-3.8.2/fullcalendar.css" rel="stylesheet"/>
 <link href="./fullcalendar-3.8.2/fullcalendar.print.css" rel="stylesheet" media="print"/>
@@ -277,11 +232,41 @@ jQuery(document).ready(function() {
 	
 
 	<div style="padding: 10px; margin-left: 10px;">
-	<header><div style="height: 10px;"></div><div>Scheduler</div><div style="height: 10px;"></div></header>
+	<header><div style="height: 10px;"></div><div>헤더부부</div><div style="height: 10px;"></div></header>
 	</div>
 	
 	<div class="left">
+		<div align="center">
+			<div class="btn-group">
+			  <button type="button" class="btn btn-info">Write Menu</button>
+			  <button type="button" class="btn btn-info dropdown-toggle" style="height: 34px" data-toggle="dropdown" aria-expanded="false">
+			    <span class="caret"></span>
+			    <span class="sr-only">Toggle Dropdown</span>
+			  </button>
+			  <ul class="dropdown-menu" role="menu" >
+			    <li><a href="#">Write Scheduler</a></li>
+			    <li><a href="#">Write MoneyBook</a></li>    
+			  </ul>
+			</div>
+		</div>
+	<br>
 		<div id="calendar-mini"></div>
+		<br><br>
+	
+		<div style="padding: 10px" class="tablediv">
+			<table style="padding-top: 10px">
+				<tr>
+					<td>　</td>
+				</tr>
+				<tr>
+					<td>중요일정보기</td>
+				</tr>
+				<tr>
+					<td>
+				</tr>
+			
+			</table>
+		</div>
 	</div>
 	
     	<div id="calendar"></div>
