@@ -1,5 +1,23 @@
+<%@page import="Schedule.ScheduleDTO"%>
+<%@page import="java.util.List"%>
+<%@page import="Schedule.ScheduleDAO"%>
+<%@page import="Schedule.iScheduleDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%iScheduleDAO dao = ScheduleDAO.getInstance();
+List<ScheduleDTO> list = dao.getAllSchedulList();
+String eventstring = "";
+for(int i=0; i<list.size();i++){
+	System.out.println(list.get(i).toString());
+	eventstring +="{";
+	eventstring += "title : '"+list.get(i).getTitle()+"',";
+	eventstring += "start : '"+list.get(i).getStartDate().substring(0, 10)+"',";
+	eventstring += "end : '"+list.get(i).getEndDate().substring(0, 10)+"'";
+	eventstring +="},";
+	
+	System.out.println(eventstring);
+}
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -154,7 +172,7 @@ jQuery(document).ready(function() {
             {
                 title  : 'event2',
                 start  : '2018-02-05',
-                end    : '2018-02-07',
+                end    : '2018-02-07'
             },
             {
                 title  : 'event3',
@@ -198,22 +216,22 @@ jQuery(document).ready(function() {
                 jQuery("#loading").toggle(bool);
             }
             , events: [
+                <%=eventstring %>
                 {
-                    title  : 'event1',
-                    start  : '2018-02-01'
-                },
-                {
-                    title  : 'event2',
-                    start  : '2018-02-05',
-                    end    : '2018-02-07',
-                },
-                {
-                    title  : 'event3',
-                    start  : '2018-02-09T12:30:00',
-                    allDay : false // will make the time show
+                	title : 'star',
+                	start : '2018-02-05',
+                	end : '2018-02-08',
+                	imageurl:'.\\image\\star.png'
                 }
-            ]
-            , select: function(start, end) {
+            ],
+            eventRender: function(event, eventElement) {
+            	if (event.imageurl)
+            		{             		
+            		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
+            	} 
+            },
+                    
+             select: function(start, end) {
                 // Display the modal.
                 // You could fill in the start and end fields based on the parameters
                 $('.modal').modal('show');
@@ -221,6 +239,7 @@ jQuery(document).ready(function() {
             },
             eventClick: function(event, element) {
                 // Display the modal and set the values to the event values.
+                alert('Event: ' + event.imageurl);
                 $('.modal').modal('show');
                 $('.modal').find('#title').val(event.title);
                 $('.modal').find('#starts-at').val(event.start);

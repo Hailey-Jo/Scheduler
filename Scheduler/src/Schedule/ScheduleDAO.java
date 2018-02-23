@@ -46,7 +46,7 @@ public class ScheduleDAO implements iScheduleDAO {
 			while(rs.next()) {
 				ScheduleDTO sDTO = new ScheduleDTO();
 				
-				sDTO.setSeq(rs.getInt("seq"));
+				sDTO.setSeq(rs.getInt("SHECDELE_SEQ"));
 				sDTO.setId(rs.getString("id"));
 				sDTO.setTitle(rs.getString("title"));
 				sDTO.setStartDate(rs.getString("startDate"));
