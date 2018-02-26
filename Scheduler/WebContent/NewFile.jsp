@@ -167,6 +167,7 @@ ul li a:hover, ul li a:focus {
     	                    , editable : false
     	                }
     	            ]
+    		        
     	            , loading:function(bool) {
     	                jQuery("#loading").toggle(bool);
     	            }
@@ -187,7 +188,11 @@ ul li a:hover, ul li a:focus {
     	                $('.modal').find('#ends-at').val(event.end);
 
     	            },
+       	        	eventRender:function (event, element){
+	    	        	$('td .fc-event-container').find('a').removeAttr("href");	
+    	        	},
     	        });
+ 
     	        $('#my-today-button').click(function() {
     	            $('#calendar').fullCalendar('today');
     	        });
