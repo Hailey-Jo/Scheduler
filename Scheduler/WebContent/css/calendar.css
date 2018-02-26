@@ -4,7 +4,7 @@
     margin:0 auto;    
 }
 #calendar-mini{
-border: 1px solid #487BE1;
+border: 1px solid;
 float: left;
 padding: 10px;
 margin-left: 10px;
@@ -22,7 +22,7 @@ margin-right: 10px;
 	font-size: 5px;
 }
 #calendar{
-border: 1px solid #487BE1;
+border: 1px solid;
 float: left;
 width: 80%;
 height: 90%;

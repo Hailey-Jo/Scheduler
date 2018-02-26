@@ -18,7 +18,7 @@ for(int i=0; i<list.size();i++){
 	}
 	eventstring +="},"+"\n";
 	
-	System.out.println(eventstring);
+	//System.out.println(eventstring);
 }
 %>
 <!DOCTYPE HTML>
@@ -83,30 +83,29 @@ padding : 50px;
 
 }
 
+#loading {
+    display:none;
+    position:absolute;
+    top:10px;
+    right:10px;
+}
 
-    #loading {
-        display:none;
-        position:absolute;
-        top:10px;
-        right:10px;
-    }
+#calendar {
+    max-width:1200px;
+    margin:auto;
+    float:left;
+}
 
-    #calendar {
-        max-width:1200px;
-        margin:auto;
-        float:left;
-    }
-
-    div.barKategorie {
-        float:left;
-        margin:5px;
-        padding-top:5px;
-        padding-bottom:5px;
-        padding-left:5px;
-        /* padding-right:10px; */
-        border-radius:5px;
-        font-weight:bold;
-    }
+div.barKategorie {
+    float:left;
+    margin:5px;
+    padding-top:5px;
+    padding-bottom:5px;
+    padding-left:5px;
+    /* padding-right:10px; */
+    border-radius:5px;
+    font-weight:bold;
+}
     
 ul li a:hover, ul li a:focus {  
     color:#fff;  
@@ -335,9 +334,9 @@ ul li a:hover, ul li a:focus {
 			
 			<div class="topMenu_icon" align="center">
 				<ul>
-					<li><a class="menuLink" href="NewFile.jsp"><img src="./icon/home-n.png" onmouseover='this.src="./icon/home-w.png"' onmouseout='this.src="./icon/home-n.png"' ></a></li>
-					<li><a class="menuLink" href="NewFile.jsp"><img src="./icon/schedule-n.png" onmouseover='this.src="./icon/schedule-w.png"' onmouseout='this.src="./icon/schedule-n.png"' ></a></li>
-					<li><a class="menuLink" href=""><img src="./icon/cash-w.png" ></a></li>
+					<li><a class="menuLink" href="Main.jsp"><img src="./icon/home-n.png" onmouseover='this.src="./icon/home-w.png"' onmouseout='this.src="./icon/home-n.png"' ></a></li>
+					<li><a class="menuLink" href="./schedule/scheduleMain.jsp"><img src="./icon/schedule-w.png" onmouseover='this.src="./icon/schedule-n.png"' onmouseout='this.src="./icon/schedule-w.png"' ></a></li>
+					<li><a class="menuLink" href="./cashbook/cashbookMain.jsp"><img src="./icon/cashbook-n.png" onmouseover='this.src="./icon/cashbook-w.png"' onmouseout='this.src="./icon/cashbook-n.png"' ></a></li>
 				</ul>
 			</div>
 			
