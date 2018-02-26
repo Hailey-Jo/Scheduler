@@ -285,9 +285,9 @@ jQuery(document).ready(function() {
             jQuery("#calendar").fullCalendar("removeEventSource", { googleCalendarId : id });
         }
     }
-    
-</script>
 
+</script>
+</head>
 <body>
     <div id="loading">loading...</div>
     
