@@ -39,6 +39,12 @@ aside{
     
 }
 
+td.first{
+	
+	text-align: center;
+
+}
+
 article {
     margin-left: 10px;
     border-left: 1px solid gray;
@@ -73,15 +79,10 @@ div.fc-center h2{
 	size: 0.8em;
 }
 
-#calendar {
-
-width:80vm;
-height: 80vm;
-float:left;
-padding : 50px;
-/* padding-right: 100px; */
-
+td.addtable{
+	padding: 10px;
 }
+
 
 
     #loading {
@@ -89,12 +90,6 @@ padding : 50px;
         position:absolute;
         top:10px;
         right:10px;
-    }
-
-    #calendar {
-        max-width:1200px;
-        margin:auto;
-        float:left;
     }
 
     div.barKategorie {
@@ -114,6 +109,8 @@ ul li a:hover, ul li a:focus {
 }  
 
 </style>
+<!-- DatePicker -->
+
 <link href="./fullcalendar-3.8.2/fullcalendar.css" rel="stylesheet"/>
 <link href="./fullcalendar-3.8.2/fullcalendar.print.css" rel="stylesheet" media="print"/>
 <script type="text/javascript" src="./fullcalendar-3.8.2/lib/moment.min.js"></script>
@@ -134,6 +131,24 @@ ul li a:hover, ul li a:focus {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+        	locale: 'ko'
+        	
+        });
+        $('#datetimepicker2').datetimepicker({
+        	locale: 'ko',        	
+            useCurrent: false //Important! See issue #1075
+        });
+        $("#datetimepicker1").on("dp.change", function (e) {
+            $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
+        });
+        $("#datetimepicker2").on("dp.change", function (e) {
+            $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
+        });
+    });
+</script>
 
 <script type="text/javascript">
 
@@ -173,156 +188,13 @@ ul li a:hover, ul li a:focus {
     	        , events: [
     	            <%=eventstring %>
     	        ]
-    	            , select: function(start, end) {
-    	                // Display the modal.
-    	                // You could fill in the start and end fields based on the parameters
-    	                $('.modal').modal('show');
-
-    	            },
-    	            eventClick: function(event, element) {
-    	                // Display the modal and set the values to the event values.
-    	                $('.modal').modal('show');
-    	                $('.modal').find('#title').val(event.title);
-    	                $('.modal').find('#starts-at').val(event.start);
-    	                $('.modal').find('#ends-at').val(event.end);
-
-    	            },
-    	        });
-    	        $('#my-today-button').click(function() {
-    	            $('#calendar').fullCalendar('today');
-    	        });
-    	        // Bind the dates to datetimepicker.
-    	        // You should pass the options you need
-    	        $("#starts-at, #ends-at").datetimepicker();
-
-    	        // Whenever the user clicks on the "save" button om the dialog
-    	        $('#save-event').on('click', function() {
-    	            var title = $('#title').val();
-    	            if (title) {
-    	                var eventData = {
-    	                    title: title,
-    	                    start: $('#starts-at').val(),
-    	                    end: $('#ends-at').val()
-    	                };
-    	                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-    	            }
-    	            $('#calendar').fullCalendar('unselect');
-
-
-    	            // Clear modal inputs
-    	            $('.modal').find('input').val('');
-
-    	            // hide modal
-    	            $('.modal').modal('hide');
+    	        
     	        });
     	    });
-        jQuery("#calendar").fullCalendar({
-        	fixedWeekCount : false,
-            header : {
-                  left : "prevYear, prev"
-                , center : "title, today"
-                , right: 'myCustomButton2,month,agendaWeek,agendaDay, next, nextYear'
-            }        	    
-        	        
-	        , navLinks: true // can click day/week names to navigate views
-	        , selectable: true
-	        , selectHelper: true
-        	, height : 580
-            , locale : "ko"
-            , editable : true
-            , eventLimit : true
-
-            , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
-
-            , eventSources : [
-                // 대한민국의 공휴일
-                {
-                      googleCalendarId : "ko.south_korea#holiday@group.v.calendar.google.com"
-                    , className : "koHolidays"
-                    , color : "#FF0000"
-                    , textColor : "#FFFFFF"
-                    , editable : false
-                    , url : "http://www.naver.com"
-                }
-            ]
-            , loading:function(bool) {
-                jQuery("#loading").toggle(bool);
-            }
-            , events: [
-                <%=eventstring %>
-            ], eventRender: function(event, eventElement) {        
-            	eventElement.find("td.fc-event-container").remove();
-            	if (event.imageurl)
-        		{             		
-        		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
-        		} 
-       		 }            
-        	,  eventClick: function(calEvent, jsEvent, view) {
-
-                alert('Event: ' + calEvent.title);
-                alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-                alert('View: ' + view.name);
-                alert('url : ' + calEvent.url)
-            }
-            ,  select: function(start, end) {
-                // Display the modal.
-                // You could fill in the start and end fields based on the parameters
-                $('.modal').modal('show');
-
-            },
-           /*  eventClick: function(event, element) {
-                // Display the modal and set the values to the event values.
-                $('.modal').modal('show');
-                $('.modal').find('#title').val(event.title);
-                $('.modal').find('#starts-at').val(event.start);
-                $('.modal').find('#ends-at').val(event.end);
-
-            }, */
-            editable: true,
-            eventLimit: true // allow "more" link when too many events
-
-        });
-        $('#my-today-button').click(function() {
-            $('#calendar').fullCalendar('today');
-        });
-        
-
-        // Bind the dates to datetimepicker.
-        // You should pass the options you need
-        $("#starts-at, #ends-at").datetimepicker();
-
-        // Whenever the user clicks on the "save" button om the dialog
-        $('#save-event').on('click', function() {
-            var title = $('#title').val();
-            if (title) {
-                var eventData = {
-                    title: title,
-                    start: $('#starts-at').val(),
-                    end: $('#ends-at').val()
-                };
-                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-            }
-            $('#calendar').fullCalendar('unselect');
-
-            // Clear modal inputs
-            $('.modal').find('input').val('');
-
-            // hide modal
-            $('.modal').modal('hide');
-        });
     });
 
-    // addEventSource, removeEventSource의 기능하는데 구별값은 googleCalendarId 이다.
-    // 그렇기에 googleCalendarId는 반드시 입력해야한다.
-    function scheduleChoice(num, id, distinct, color, text) {
-        if(jQuery(".swingBar").eq(num).is(":checked")) {
-            jQuery("#calendar").fullCalendar("addEventSource", { googleCalendarId : id, className : distinct, color : color, textColor : text });
-        } else {
-            jQuery("#calendar").fullCalendar("removeEventSource", { googleCalendarId : id });
-        }
-    }
-    
 </script>
+  
 </head>
 <body>
 <!-- <div id ="main"> -->
@@ -366,7 +238,7 @@ ul li a:hover, ul li a:focus {
 			    <span class="sr-only">Toggle Dropdown</span>
 			  </button>
 			  <ul class="dropdown-menu" role="menu" style="width: 230px">
-			    <li><a href="addschedule.jsp">Write Scheduler</a></li>
+			    <li><a href="#">Write Scheduler</a></li>
 			    <li><a href="#">Write MoneyBook</a></li>    
 			  </ul>
 			</div>
@@ -392,8 +264,91 @@ ul li a:hover, ul li a:focus {
 		
 			
 	<!-- 우측 본문 -->
-	<article>
-		<div id="calendar"></div>
+	<article style="padding: 20px">
+		<table class="table table-striped" style="height: 634px;" >
+  			<col width="10%"><col width="30%"><col width="10%"><col width="30%">
+  			<tr bgcolor="#f9f9f9" >
+  				<td class="first">제목</td>
+  				<td><input type="text" name="title" style="width: 100%"></td>
+  				<td><input type="checkbox"> 중요</td>  
+  				<td></td>				
+  			</tr>
+  			<tr>
+  				<td class="first">시작일</td>
+  				<td>
+	  				<div class='input-group date' id='datetimepicker1'>
+	                    <input type='text' class="form-control"  name="startdate" />
+	                    <span class="input-group-addon">
+	                        <span class="glyphicon glyphicon-calendar"></span>
+	                    </span>
+	                </div>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+  				<td class="first">종료일</td>
+  				<td>
+	  				<div class='input-group date' id='datetimepicker2'>
+	                    <input type='text' class="form-control"  name="enddate" />
+	                    <span class="input-group-addon">
+	                        <span class="glyphicon glyphicon-calendar"></span>
+	                    </span>
+	                </div>
+                </td>
+                <td>
+                <td>
+  			</tr>
+  			<tr>
+  				<td class="first">범주</td>
+  				<td>
+  					<div class="btn-group">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="colorbtn">
+  
+    Select Color <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <li class="selectcolor"><a href="#" style="color: red">Red</a></li>
+    <li class="divider"></li>
+    <li class="selectcolor"><a href="#" style="color: orange;">Orange</a></li>
+    <li class="divider"></li>
+    <li class="selectcolor"><a href="#" style="color: yellow;">Yellow</a></li>
+    <li class="divider"></li>
+    <li class="selectcolor"><a href="#" style="color: green;">Green</a></li>
+    <li class="divider"></li>
+    <li class="selectcolor"><a href="#" style="color: blue;">Blue</a></li>
+    <li class="divider"></li>
+    <li class="selectcolor"><a href="#" style="color: navy;">Navy</a></li>
+    <li class="divider"></li>
+    <li class="selectcolor"><a href="#" style="color: purple;">Purple</a></li>
+  </ul>
+  <script type="text/javascript">
+  	$(".selectcolor").click(function() {
+		$("#colorbtn").text($(this).children().text());
+		$("#colorbtn").attr("style",$(this).children().attr("style"));
+	});
+  </script>
+</div>
+  				</td>
+  				<td></td>
+  				<td></td>
+  			</tr>
+  			<tr>
+  				<td class="first">내용</td>
+  				<td><textarea rows="10" cols="47" name="content"></textarea></td>
+  				<td></td>
+  				<td></td>
+  			</tr>
+  			<tr>
+  				<td class="first"></td>
+  				<td></td>
+  				<td></td>
+  				<td>
+  					<button type="button" class="btn btn-info" onclick="location='NewFile.jsp'">뒤로가기</button>
+  					<button type="button" class="btn btn-info">저장</button>
+  				</td>
+  			</tr>
+		</table>
 	</article>
 		
 	<footer>Copyright &copy; BizPayDay</footer>
