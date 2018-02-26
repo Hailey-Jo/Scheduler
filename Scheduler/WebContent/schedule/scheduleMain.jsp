@@ -15,7 +15,7 @@ for(int i=0; i<list.size();i++){
 	eventstring += "end : '"+list.get(i).getEndDate().substring(0, 10)+"',";
 	if(list.get(i).getImportant()==1){
 		eventstring += "imageurl : " +" '.\\"+"\\image\\"+"\\"+"star.png',";
-	}
+	}	
 	eventstring +="},"+"\n";
 	
 	//System.out.println(eventstring);
@@ -223,7 +223,7 @@ ul li a:hover, ul li a:focus {
         jQuery("#calendar").fullCalendar({
         	fixedWeekCount : false,
             header : {
-                  left : "prevYear, prev, myCustomButton"
+                  left : "prevYear, prev"
                 , center : "title, today"
                 , right: 'myCustomButton2,month,agendaWeek,agendaDay, next, nextYear'
             }        	    
@@ -246,6 +246,7 @@ ul li a:hover, ul li a:focus {
                     , color : "#FF0000"
                     , textColor : "#FFFFFF"
                     , editable : false
+                    , url : "http://www.naver.com"
                 }
             ]
             , loading:function(bool) {
@@ -253,27 +254,34 @@ ul li a:hover, ul li a:focus {
             }
             , events: [
                 <%=eventstring %>
-            ],
-            eventRender: function(event, eventElement) {
+            ], eventRender: function(event, eventElement) {        
+            	eventElement.find("td.fc-event-container").remove();
             	if (event.imageurl)
-            		{             		
-            		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
-            	} 
+        		{             		
+        		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
+        		} 
+       		 }            
+        	,  eventClick: function(calEvent, jsEvent, view) {
+
+                alert('Event: ' + calEvent.title);
+                alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+                alert('View: ' + view.name);
+                alert('url : ' + calEvent.url)
             }
-            , select: function(start, end) {
+            ,  select: function(start, end) {
                 // Display the modal.
                 // You could fill in the start and end fields based on the parameters
                 $('.modal').modal('show');
 
             },
-            eventClick: function(event, element) {
+           /*  eventClick: function(event, element) {
                 // Display the modal and set the values to the event values.
                 $('.modal').modal('show');
                 $('.modal').find('#title').val(event.title);
                 $('.modal').find('#starts-at').val(event.start);
                 $('.modal').find('#ends-at').val(event.end);
 
-            },
+            }, */
             editable: true,
             eventLimit: true // allow "more" link when too many events
 
@@ -362,7 +370,7 @@ ul li a:hover, ul li a:focus {
 			    <span class="sr-only">Toggle Dropdown</span>
 			  </button>
 			  <ul class="dropdown-menu" role="menu" style="width: 230px">
-			    <li><a href="#">Write Scheduler</a></li>
+			    <li><a href="addschedule.jsp">Write Scheduler</a></li>
 			    <li><a href="#">Write MoneyBook</a></li>    
 			  </ul>
 			</div>
