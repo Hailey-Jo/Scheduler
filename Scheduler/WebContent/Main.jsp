@@ -115,7 +115,19 @@ div.barKategorie {
 ul li a:hover, ul li a:focus {  
     color:#fff;  
     background-color:#f40;  
-}  
+}
+#id{
+    display: block;
+    position: absolute;
+    top: 26px;
+    right: -8px;
+    padding: 9px 5px 4px 4px;
+    width: 316px;
+    height: 172px;
+    background-position: -2px -1310px;
+    z-index: 10;
+    overflow: hidden;
+    }
 
 </style>
 <link href="./fullcalendar-3.8.2/fullcalendar.css" rel="stylesheet"/>
@@ -287,6 +299,11 @@ ul li a:hover, ul li a:focus {
             $('#calendar').fullCalendar('today');
         });
         
+        //effect
+    	$( "#idview" ).on( "click", function() {
+    		$('#id').toggle("slow");
+    	});
+        
 
         // Bind the dates to datetimepicker.
         // You should pass the options you need
@@ -312,16 +329,6 @@ ul li a:hover, ul li a:focus {
             $('.modal').modal('hide');
         });
     });
-
-    // addEventSource, removeEventSource의 기능하는데 구별값은 googleCalendarId 이다.
-    // 그렇기에 googleCalendarId는 반드시 입력해야한다.
-    function scheduleChoice(num, id, distinct, color, text) {
-        if(jQuery(".swingBar").eq(num).is(":checked")) {
-            jQuery("#calendar").fullCalendar("addEventSource", { googleCalendarId : id, className : distinct, color : color, textColor : text });
-        } else {
-            jQuery("#calendar").fullCalendar("removeEventSource", { googleCalendarId : id });
-        }
-    }
     
 </script>
 </head>
@@ -339,7 +346,7 @@ ul li a:hover, ul li a:focus {
 			
 			<div class="topMenu_icon" align="center">
 				<ul>
-					<li><a class="menuLink" href="NewFile.jsp"><img src="./icon/home-n.png" onmouseover='this.src="./icon/home-w.png"' onmouseout='this.src="./icon/home-n.png"' ></a></li>
+					<li><a class="menuLink" href="Main.jsp"><img src="./icon/home-w.png" onmouseover='this.src="./icon/home-n.png"' onmouseout='this.src="./icon/home-w.png"' ></a></li>
 					<li><a class="menuLink" href="./schedule/scheduleMain.jsp"><img src="./icon/schedule-n.png" onmouseover='this.src="./icon/schedule-w.png"' onmouseout='this.src="./icon/schedule-n.png"' ></a></li>
 					<li><a class="menuLink" href="./cashbook/cashbookMain.jsp"><img src="./icon/cash-w.png" ></a></li>
 				</ul>
@@ -348,15 +355,14 @@ ul li a:hover, ul li a:focus {
 			<div class="topMenu_logInOut">
 				<ul>
 					<!-- <li><img src="./image/m01.jpg" style=""></li> -->
-					<li><%=id %></li>
-					<li><ul title="<%=id %>"></ul></li>
+					<li><a id="idview"><%=id %></a></li>
 					<li>　|　</li>
-					<li><a href="">로그아웃</a></li>
+					<li><a href="login.jsp">로그아웃</a></li>
 				</ul>
 			</div>
 		</nav>
 	</header>
-	
+	<div id="id" style=" display: none;">Hello world!</div>
 	<aside>
 	<!-- 하단 -->
 		<!-- 좌측 서브 메뉴 -->
