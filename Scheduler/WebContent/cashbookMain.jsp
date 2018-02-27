@@ -4,6 +4,7 @@
 <%@page import="Schedule.iScheduleDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <%iScheduleDAO dao = ScheduleDAO.getInstance();
 List<ScheduleDTO> list = dao.getAllSchedulList();
 String eventstring = "";
@@ -159,7 +160,7 @@ overflow: hidden;
         vertical-align: middle;
 }
  
-
+/* 수입 */
 .modal-dialog .modal-content {
 	width: 1000px;
  }
@@ -184,9 +185,7 @@ overflow: hidden;
  	overflow-y: scroll;
  }
  
- .th_inPrice{
- 	width: 200px;
- }
+
  
  .modal-body .modal-outLeft{
 	float: left;
@@ -205,9 +204,15 @@ overflow: hidden;
 	width: 50px;
 }
 
+.th_inPrice{
+	width: 150px;
+}
+
 
 
 </style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  
 <link href="./fullcalendar-3.8.2/fullcalendar.css" rel="stylesheet"/>
 <link href="./fullcalendar-3.8.2/fullcalendar.print.css" rel="stylesheet" media="print"/>
 <script type="text/javascript" src="./fullcalendar-3.8.2/lib/moment.min.js"></script>
@@ -238,151 +243,28 @@ overflow: hidden;
 
 
 <script type="text/javascript">
-jQuery(document).ready(function() {
+
+
 //지출용 캘린더
-jQuery("#calendar-out").fullCalendar({
-    	height: 347,
-    	fixedWeekCount : false,
-    	
-    	/* eventAfterAllRender: function(){
-    		  $('.fc-week.fc-widget-content.fc-rigid').attr('style', 'min-height: 3em');
-    	}, */
-
-    	eventAfterAllRender: function(){
-  		  $('#calendar-out .fc-row').css('min-height','10px'); 
-  		  $('#calendar-out .fc-week, #calendar-out .fc-widget-content, #calendar-out .fc-rigid').attr('style','height: 5px');
-  		},
-  		
-        header : {
-              left : "prev"
-            , center : "title, today"
-            , right: 'next'
-        }
-        , navLinks: true // can click day/week names to navigate views
-        , selectable: true
-        , selectHelper: true
-    
-        , locale : "ko"
-        , editable : false
-        , eventLimit : false
-
-        , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
-
-        , eventSources : [
-            // 대한민국의 공휴일
-            {
-                  googleCalendarId : "ko.south_korea#holiday@group.v.calendar.google.com"
-                , className : "koHolidays"
-                , color : "#FF0000"
-                , textColor : "#FFFFFF"
-                , editable : false
-            }
-        ]
-        , loading:function(bool) {
-            jQuery("#loading").toggle(bool);
-        }
-        , events: [
-            {
-                title  : 'event1',
-                start  : '2018-02-01'
-            },
-            {
-                title  : 'event2',
-                start  : '2018-02-05',
-                end    : '2018-02-07'
-            },
-            {
-                title  : 'event3',
-                start  : '2018-02-09T12:30:00',
-                allDay : false // will make the time show
-            }
-        ]
-
-    });
-});
-
-
-//입력용 캘린더
 jQuery(document).ready(function() {
 	
-    jQuery("#calendar-mini").fullCalendar({
-    	height: 347,
-    	fixedWeekCount : false,
-    	
-    	/* eventAfterAllRender: function(){
-    		  $('.fc-week.fc-widget-content.fc-rigid').attr('style', 'min-height: 3em');
-    	}, */
-
-    	eventAfterAllRender: function(){
-  		  $('#calendar-mini .fc-row').css('min-height','10px'); 
-  		  $('#calendar-mini .fc-week, #calendar-mini .fc-widget-content, #calendar-mini .fc-rigid').attr('style','height: 5px');
-  		},
-  		
-        header : {
-              left : "prev"
-            , center : "title"
-            , right: 'next'
-        }
-        , navLinks: true // can click day/week names to navigate views
-        , selectable: true
-        , selectHelper: true
-    
-        , locale : "ko"
-        , editable : false
-        , eventLimit : false
-
-        , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
-
-        , eventSources : [
-            // 대한민국의 공휴일
-            {
-                  googleCalendarId : "ko.south_korea#holiday@group.v.calendar.google.com"
-                , className : "koHolidays"
-                , color : "#FF0000"
-                , textColor : "#FFFFFF"
-                , editable : false
-            }
-        ]
-        , loading:function(bool) {
-            jQuery("#loading").toggle(bool);
-        }
-        , events: [
-            {
-                title  : 'event1',
-                start  : '2018-02-01'
-            },
-            {
-                title  : 'event2',
-                start  : '2018-02-05',
-                end    : '2018-02-07'
-            },
-            {
-                title  : 'event3',
-                start  : '2018-02-09T12:30:00',
-                allDay : false // will make the time show
-            }
-        ]
-
-    });
-});
-
-
-    jQuery(document).ready(function() {
-        jQuery("#calendar").fullCalendar({
+ jQuery(document).ready(function() {
+	jQuery("#calendar-out").fullCalendar({
         	fixedWeekCount : false,
             header : {
                   left : "prev"
                 , center : "title"
-                , right: 'month, agendaWeek, agendaDay, next'
-            }
+                , right: 'next'
+            }     	   
+        	        
 	        , navLinks: true // can click day/week names to navigate views
 	        , selectable: true
 	        , selectHelper: true
-        
+        	, navLinks: false
             , locale : "ko"
             , editable : true
             , eventLimit : true
-
+, height : 347
             , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
 
             , eventSources : [
@@ -398,42 +280,19 @@ jQuery(document).ready(function() {
             , loading:function(bool) {
                 jQuery("#loading").toggle(bool);
             }
-            , events: [
-                <%=eventstring %>
-                {
-                	title : 'star',
-                	start : '2018-02-05',
-                	end : '2018-02-08',
-                	imageurl:'.\\image\\star.png'
-                }
-            ],
-            eventRender: function(event, eventElement) {
-            	if (event.imageurl)
-            		{             		
-            		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
-            	} 
-            },
-                    
-             select: function(start, end) {
+        , events: [
+            <%=eventstring %>
+        ]
+            , select: function(start, end) {
                 // Display the modal.
                 // You could fill in the start and end fields based on the parameters
-                $('.modal').modal('show');
+                $('#datepicker .modal').modal('show');
 
-            },
-            eventClick: function(event, element) {
-                // Display the modal and set the values to the event values.
-                alert('Event: ' + event.imageurl);
-                $('.modal').modal('show');
-                $('.modal').find('#title').val(event.title);
-                $('.modal').find('#starts-at').val(event.start);
-                $('.modal').find('#ends-at').val(event.end);
-
-            },
-            editable: true,
-            eventLimit: true // allow "more" link when too many events
-
+            }
         });
-
+        $('#my-today-button').click(function() {
+            $('#calendar').fullCalendar('today');
+        });
         // Bind the dates to datetimepicker.
         // You should pass the options you need
         $("#starts-at, #ends-at").datetimepicker();
@@ -451,24 +310,188 @@ jQuery(document).ready(function() {
             }
             $('#calendar').fullCalendar('unselect');
 
+
             // Clear modal inputs
-            $('.modal').find('input').val('');
+            $('.modal fade .modal').find('input').val('');
 
             // hide modal
-            $('.modal').modal('hide');
+            $('.modal fade .modal').modal('hide');
         });
     });
+	
+	
+	
+	   //입력용 캘린더
+   	 jQuery(document).ready(function() {
+   	        jQuery("#calendar-mini").fullCalendar({
+   	        	fixedWeekCount : false,
+   	            header : {
+   	                  left : "prev"
+   	                , center : "title"
+   	                , right: 'next'
+   	            }     	   
+   	        	        
+   		        , navLinks: true // can click day/week names to navigate views
+   		        , selectable: true
+   		        , selectHelper: true
+   	        	, navLinks: false
+   	            , locale : "ko"
+   	            , editable : true
+   	            , eventLimit : true
+				, height : 347
+   	            , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
 
-    // addEventSource, removeEventSource의 기능하는데 구별값은 googleCalendarId 이다.
-    // 그렇기에 googleCalendarId는 반드시 입력해야한다.
-    function scheduleChoice(num, id, distinct, color, text) {
-        if(jQuery(".swingBar").eq(num).is(":checked")) {
-            jQuery("#calendar").fullCalendar("addEventSource", { googleCalendarId : id, className : distinct, color : color, textColor : text });
-        } else {
-            jQuery("#calendar").fullCalendar("removeEventSource", { googleCalendarId : id });
+   	            , eventSources : [
+   	                // 대한민국의 공휴일
+   	                {
+   	                      googleCalendarId : "ko.south_korea#holiday@group.v.calendar.google.com"
+   	                    , className : "koHolidays"
+   	                    , color : "#FF0000"
+   	                    , textColor : "#FFFFFF"
+   	                    , editable : false
+   	                }
+   	            ]
+   	            , loading:function(bool) {
+   	                jQuery("#loading").toggle(bool);
+   	            }
+   	        , events: [
+   	            <%=eventstring %>
+   	        ]
+   	            , select: function(start, end) {
+   	                // Display the modal.
+   	                // You could fill in the start and end fields based on the parameters
+   	                $('#datepicker .modal').modal('show');
+
+   	            }
+   	        });
+   	        $('#my-today-button').click(function() {
+   	            $('#calendar').fullCalendar('today');
+   	        });
+   	        // Bind the dates to datetimepicker.
+   	        // You should pass the options you need
+   	        $("#starts-at, #ends-at").datetimepicker();
+
+   	        // Whenever the user clicks on the "save" button om the dialog
+   	        $('#save-event').on('click', function() {
+   	            var title = $('#title').val();
+   	            if (title) {
+   	                var eventData = {
+   	                    title: title,
+   	                    start: $('#starts-at').val(),
+   	                    end: $('#ends-at').val()
+   	                };
+   	                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+   	            }
+   	            $('#calendar').fullCalendar('unselect');
+
+
+   	            // Clear modal inputs
+   	            $('.modal fade .modal').find('input').val('');
+
+   	            // hide modal
+   	            $('.modal fade .modal').modal('hide');
+   	        });
+   	    });
+    	 
+    	 
+    	 
+jQuery("#calendar").fullCalendar({
+	fixedWeekCount : false,
+    header : {
+          left : "prevYear, prev"
+        , center : "title, today"
+        , right: 'myCustomButton2,month,agendaWeek,agendaDay, next, nextYear'
+    }        	    
+	        
+ , navLinks: true // can click day/week names to navigate views
+ , selectable: true
+ , selectHelper: true
+	, height : 580
+    , locale : "ko"
+    , editable : true
+    , eventLimit : true
+
+    , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
+
+    , eventSources : [
+        // 대한민국의 공휴일
+        {
+              googleCalendarId : "ko.south_korea#holiday@group.v.calendar.google.com"
+            , className : "koHolidays"
+            , color : "#FF0000"
+            , textColor : "#FFFFFF"
+            , editable : false
+            , url : "http://www.naver.com"
         }
+    ]
+    , loading:function(bool) {
+        jQuery("#loading").toggle(bool);
     }
+    , events: [
+        <%=eventstring %>
+        ], eventRender: function(event, eventElement) {        
+        	eventElement.find("td.fc-event-container").remove();
+        	if (event.imageurl)
+    		{             		
+    		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
+    		} 
+   		 }            
+    	,  select: function(start, end) {
+            // Display the modal.
+            // You could fill in the start and end fields based on the parameters
+            $('#datepicker .modal').modal('show');
 
+        },
+         eventClick: function(event, element) {
+            // Display the modal and set the values to the event values.
+            $('.modal fade .modal').modal('show');
+            $('.modal fade .modal').find('#title').val(event.title);
+            $('.modal fade .modal').find('#starts-at').val(event.start);
+            $('.modal fade .modal').find('#ends-at').val(event.end);
+        }, 
+        editable: true,
+        eventLimit: true // allow "more" link when too many events
+
+    });
+    $('#my-today-button').click(function() {
+        $('#calendar').fullCalendar('today');
+    });
+    
+
+    // Bind the dates to datetimepicker.
+    // You should pass the options you need
+    $("#starts-at, #ends-at").datetimepicker();
+
+    // Whenever the user clicks on the "save" button om the dialog
+    $('#save-event').on('click', function() {
+        var title = $('#title').val();
+        if (title) {
+            var eventData = {
+                title: title,
+                start: $('#starts-at').val(),
+                end: $('#ends-at').val()
+            };
+            $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+        }
+        $('#calendar').fullCalendar('unselect');
+
+        // Clear modal inputs
+        $('.modal fade .modal').find('input').val('');
+
+        // hide modal
+        $('.modal fade .modal').modal('hide');
+    });
+});
+
+// addEventSource, removeEventSource의 기능하는데 구별값은 googleCalendarId 이다.
+// 그렇기에 googleCalendarId는 반드시 입력해야한다.
+function scheduleChoice(num, id, distinct, color, text) {
+    if(jQuery(".swingBar").eq(num).is(":checked")) {
+        jQuery("#calendar").fullCalendar("addEventSource", { googleCalendarId : id, className : distinct, color : color, textColor : text });
+    } else {
+        jQuery("#calendar").fullCalendar("removeEventSource", { googleCalendarId : id });
+    }
+}
 </script>
 </head>
 <body>
@@ -563,7 +586,7 @@ jQuery(document).ready(function() {
 		<div id="calendar"></div>
 	</article>
 	
-	
+	<!-- datepicker -->
 	<div id='datepicker'></div>
 	<div class="modal fade" tabindex="-1" role="dialog">
 	    <div class="modal-dialog" role="document">
@@ -613,7 +636,6 @@ jQuery(document).ready(function() {
         <span aria-hidden="true">×</span></button>
         <h4 class="modal-title" id="myModalLabel">수입 내역 입력</h4>
       </div>
-      
       <div class="modal-body">
 	      <div class="modal-outLeft">
 				<div id="calendar-mini"></div>
@@ -627,9 +649,11 @@ jQuery(document).ready(function() {
 		          <th class="th_inPrice">금액</th>
 		          <th class="th_inCategory">분류</th>
 		          <th class="th_inDelete">삭제</th>
+		          <th class="th_inDelete">아이콘</th>
 		        </tr>
 		      </thead>
 		      <tbody>
+		      
 		        <tr>
 		          <td>
 		            <p class="form-control-static">수입</p>
@@ -653,7 +677,8 @@ jQuery(document).ready(function() {
 		              <option>기타</option>
 		            </select>
 		          </td>
-		          <td><a class="deleteRow"></a></td>
+					<td><a class="deleteRow"></a></td>
+					<td><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></td>
 		        </tr>
 		      </tbody>
 		       <tfoot>
