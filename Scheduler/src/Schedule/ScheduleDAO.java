@@ -70,4 +70,52 @@ public class ScheduleDAO implements iScheduleDAO {
 
 	}
 
+	@Override
+	public boolean addSchedul(ScheduleDTO dto) {
+		String sql = "INSERT INTO SCHEDULE VALUES(SHECDELE_SEQ.NEXTVAL, ?,?,?,?,?,?,?,0)";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count=0;
+		
+		System.out.println("addSchedul 1/6 Success");
+		
+		try {
+			conn = DBConnection.makeConnection();
+			psmt = conn.prepareStatement(sql);
+			System.out.println("addSchedul 2/6 Success");
+			
+			/*SHECDELE_SEQ	NUMBER(8),
+			ID	VARCHAR2(50),
+			TITLE	VARCHAR2(50) NOT NULL,
+			STARTDATE	DATE	NOT NULL,
+			ENDDATE	DATE	NOT NULL,
+			CATEGORY	VARCHAR2(50),
+			CONTENT	VARCHAR2(2000)	NOT NULL,
+			IMPORTANT	NUMBER(1)	NOT NULL,
+			DEL	NUMBER(1)	NOT NULL*/
+			
+			psmt.setString(1, dto.getId());
+			psmt.setString(2, dto.getTitle());
+			psmt.setString(3, dto.getStartDate());
+			psmt.setString(4, dto.getEndDate());
+			psmt.setString(5, dto.getCategory());
+			psmt.setString(6, dto.getContent());
+			psmt.setInt(7, dto.getImportant());
+			
+			System.out.println("addSchedul 3/6 Success");
+			
+			count = psmt.executeUpdate();
+			
+			System.out.println("addSchedul 4/6 Success");
+		} catch (SQLException e) {
+			System.out.println("addSchedul Fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+		System.out.println("addSchedul 5/6 Success");
+		return count>0? true:false;
+	}
+
 }
