@@ -2,6 +2,7 @@
 <%@page import="java.util.List"%>
 <%@page import="Schedule.ScheduleDAO"%>
 <%@page import="Schedule.iScheduleDAO"%>
+<%request.setCharacterEncoding("utf-8"); %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -13,12 +14,11 @@ for(int i=0; i<list.size();i++){
 	eventstring += "title : '"+list.get(i).getTitle()+"',";
 	eventstring += "start : '"+list.get(i).getStartDate().substring(0, 10)+"',";
 	eventstring += "end : '"+list.get(i).getEndDate().substring(0, 10)+"',";
+	eventstring += "backgroundColor : '"+list.get(i).getCategory()+",";
 	if(list.get(i).getImportant()==1){
 		eventstring += "imageurl : " +" '.\\"+"\\image\\"+"\\"+"star.png',";
 	}	
-	eventstring +="},"+"\n";
-	
-	System.out.println(eventstring);
+	eventstring +="},"+"\n";	
 }
 %>
 <!DOCTYPE HTML>
@@ -265,93 +265,99 @@ ul li a:hover, ul li a:focus {
 			
 	<!-- 우측 본문 -->
 	<article style="padding: 20px">
-		<table class="table table-striped" style="height: 634px;" >
-  			<col width="10%"><col width="30%"><col width="10%"><col width="30%">
-  			<tr bgcolor="#f9f9f9" >
-  				<td class="first">제목</td>
-  				<td><input type="text" name="title" style="width: 100%"></td>
-  				<td><input type="checkbox"> 중요</td>  
-  				<td></td>				
-  			</tr>
-  			<tr>
-  				<td class="first">시작일</td>
-  				<td>
-	  				<div class='input-group date' id='datetimepicker1'>
-	                    <input type='text' class="form-control"  name="startdate" />
-	                    <span class="input-group-addon">
-	                        <span class="glyphicon glyphicon-calendar"></span>
-	                    </span>
-	                </div>
-                </td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-  				<td class="first">종료일</td>
-  				<td>
-	  				<div class='input-group date' id='datetimepicker2'>
-	                    <input type='text' class="form-control"  name="enddate" />
-	                    <span class="input-group-addon">
-	                        <span class="glyphicon glyphicon-calendar"></span>
-	                    </span>
-	                </div>
-                </td>
-                <td>
-                <td>
-  			</tr>
-  			<tr>
-  				<td class="first">범주</td>
-  				<td>
-  					<div class="btn-group">
-  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="colorbtn">
-  
-    Select Color <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" role="menu">
-    <li class="selectcolor"><a href="#" style="color: red">Red</a></li>
-    <li class="divider"></li>
-    <li class="selectcolor"><a href="#" style="color: orange;">Orange</a></li>
-    <li class="divider"></li>
-    <li class="selectcolor"><a href="#" style="color: yellow;">Yellow</a></li>
-    <li class="divider"></li>
-    <li class="selectcolor"><a href="#" style="color: green;">Green</a></li>
-    <li class="divider"></li>
-    <li class="selectcolor"><a href="#" style="color: blue;">Blue</a></li>
-    <li class="divider"></li>
-    <li class="selectcolor"><a href="#" style="color: navy;">Navy</a></li>
-    <li class="divider"></li>
-    <li class="selectcolor"><a href="#" style="color: purple;">Purple</a></li>
-  </ul>
-  <script type="text/javascript">
-  	$(".selectcolor").click(function() {
-		$("#colorbtn").text($(this).children().text());
-		$("#colorbtn").attr("style",$(this).children().attr("style"));
+		<form action="addscheduleAf.jsp" method="post">
+			<table class="table table-striped" style="height: 634px;" >
+	  			<col width="10%"><col width="30%"><col width="10%"><col width="30%">
+	  			<tr bgcolor="#f9f9f9" >
+	  				<td class="first">제목</td>
+	  				<td><input type="text" name="title" style="width: 100%"></td>
+	  				<td><input type="checkbox" name="important"> 중요</td>  
+	  				<td></td>				
+	  			</tr>
+	  			<tr>
+	  				<td class="first">시작일</td>
+	  				<td>
+		  				<div class='input-group date' id='datetimepicker1'>
+		                    <input type='text' class="form-control"  name="startdate" />
+		                    <span class="input-group-addon">
+		                        <span class="glyphicon glyphicon-calendar"></span>
+		                    </span>
+		                </div>
+	                </td>
+	                <td></td>
+	                <td></td>
+	            </tr>
+	            <tr>
+	  				<td class="first">종료일</td>
+	  				<td>
+		  				<div class='input-group date' id='datetimepicker2'>
+		                    <input type='text' class="form-control"  name="enddate" />
+		                    <span class="input-group-addon">
+		                        <span class="glyphicon glyphicon-calendar"></span>
+		                    </span>
+		                </div>
+	                </td>
+	                <td>
+	                <td>
+	  			</tr>
+	  			<tr>
+	  				<td class="first">범주</td>
+	  				<td>
+	  					<div class="btn-group">
+	  <input type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="colorbtn" class="colorbtn" 
+	   value ="Select Color"><!-- <span class="caret" ></span>	   -->
+	  <input type="hidden" value="Select Color" name="colorbtn" class="colorbtn">	  
+	  <ul class="dropdown-menu" role="menu">
+	    <li class="selectcolor"><a href="#" style="color: red">Red</a></li>
+	    <li class="divider"></li>
+	    <li class="selectcolor"><a href="#" style="color: orange;">Orange</a></li>
+	    <li class="divider"></li>
+	    <li class="selectcolor"><a href="#" style="color: yellow;">Yellow</a></li>
+	    <li class="divider"></li>
+	    <li class="selectcolor"><a href="#" style="color: green;">Green</a></li>
+	    <li class="divider"></li>
+	    <li class="selectcolor"><a href="#" style="color: blue;">Blue</a></li>
+	    <li class="divider"></li>
+	    <li class="selectcolor"><a href="#" style="color: navy;">Navy</a></li>
+	    <li class="divider"></li>
+	    <li class="selectcolor"><a href="#" style="color: purple;">Purple</a></li>
+	  </ul>
+	  <script type="text/javascript">
+	  	$(".selectcolor").click(function() {
+	  		alert($(this).children().text());
+	  		alert($(this).children().attr("style"));
+	  			  		
+	  		$("#colorbtn").val($(this).children().text());
+	  		$("#colorbtn").attr("style",$(this).children().attr("style"));
+	  		$(".colorbtn").val($(this).children().text());			
 	});
-  </script>
-</div>
-  				</td>
-  				<td></td>
-  				<td></td>
-  			</tr>
-  			<tr>
-  				<td class="first">내용</td>
-  				<td><textarea rows="10" cols="47" name="content"></textarea></td>
-  				<td></td>
-  				<td></td>
-  			</tr>
-  			<tr>
-  				<td class="first"></td>
-  				<td></td>
-  				<td></td>
-  				<td>
-  					<button type="button" class="btn btn-info" onclick="location='NewFile.jsp'">뒤로가기</button>
-  					<button type="button" class="btn btn-info">저장</button>
-  				</td>
-  			</tr>
-		</table>
+	  </script>
+	</div>
+	  				</td>
+	  				<td></td>
+	  				<td></td>
+	  			</tr>
+	  			<tr>
+	  				<td class="first">내용</td>
+	  				<td><textarea rows="10" cols="47" name="content"></textarea></td>
+	  				<td></td>
+	  				<td></td>
+	  			</tr>
+	  			<tr>
+	  				<td class="first"></td>
+	  				<td></td>
+	  				<td></td>
+	  				<td>
+	  					<button type="button" class="btn btn-info" onclick="location='NewFile.jsp'">뒤로가기</button>
+	  					<input type="submit" class="btn btn-info" id="savebtn" value="저장">
+	  				</td>
+	  			</tr>
+			</table>
+		</form>
 	</article>
 		
 	<footer>Copyright &copy; BizPayDay</footer>
+	
 	
 </body>
 </html>
