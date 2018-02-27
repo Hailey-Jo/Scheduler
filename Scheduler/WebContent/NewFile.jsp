@@ -13,12 +13,12 @@ for(int i=0; i<list.size();i++){
 	eventstring += "title : '"+list.get(i).getTitle()+"',";
 	eventstring += "start : '"+list.get(i).getStartDate().substring(0, 10)+"',";
 	eventstring += "end : '"+list.get(i).getEndDate().substring(0, 10)+"',";
+	eventstring += "backgroundColor : '"+list.get(i).getCategory()+"',";
 	if(list.get(i).getImportant()==1){
 		eventstring += "imageurl : " +" '.\\"+"\\image\\"+"\\"+"star.png',";
 	}	
 	eventstring +="},"+"\n";
 	
-	System.out.println(eventstring);
 }
 %>
 <!DOCTYPE HTML>
@@ -178,15 +178,7 @@ ul li a:hover, ul li a:focus {
     	                // You could fill in the start and end fields based on the parameters
     	                $('.modal').modal('show');
 
-    	            },
-    	            eventClick: function(event, element) {
-    	                // Display the modal and set the values to the event values.
-    	                $('.modal').modal('show');
-    	                $('.modal').find('#title').val(event.title);
-    	                $('.modal').find('#starts-at').val(event.start);
-    	                $('.modal').find('#ends-at').val(event.end);
-
-    	            },
+    	            }
     	        });
     	        $('#my-today-button').click(function() {
     	            $('#calendar').fullCalendar('today');
@@ -257,27 +249,19 @@ ul li a:hover, ul li a:focus {
         		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
         		} 
        		 }            
-        	,  eventClick: function(calEvent, jsEvent, view) {
-
-                alert('Event: ' + calEvent.title);
-                alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-                alert('View: ' + view.name);
-                alert('url : ' + calEvent.url)
-            }
-            ,  select: function(start, end) {
+        	,  select: function(start, end) {
                 // Display the modal.
                 // You could fill in the start and end fields based on the parameters
                 $('.modal').modal('show');
 
             },
-           /*  eventClick: function(event, element) {
+             eventClick: function(event, element) {
                 // Display the modal and set the values to the event values.
                 $('.modal').modal('show');
                 $('.modal').find('#title').val(event.title);
                 $('.modal').find('#starts-at').val(event.start);
                 $('.modal').find('#ends-at').val(event.end);
-
-            }, */
+            }, 
             editable: true,
             eventLimit: true // allow "more" link when too many events
 

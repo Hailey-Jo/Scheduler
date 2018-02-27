@@ -71,7 +71,7 @@ public class ScheduleDAO implements iScheduleDAO {
 	}
 
 	@Override
-	public boolean addSchedul(ScheduleDTO dto) {
+	public boolean addSchedule(ScheduleDTO dto) {
 		String sql = "INSERT INTO SCHEDULE VALUES(SHECDELE_SEQ.NEXTVAL, ?,?,?,?,?,?,?,0)";
 		
 		Connection conn = null;
@@ -83,17 +83,7 @@ public class ScheduleDAO implements iScheduleDAO {
 		try {
 			conn = DBConnection.makeConnection();
 			psmt = conn.prepareStatement(sql);
-			System.out.println("addSchedul 2/6 Success");
-			
-			/*SHECDELE_SEQ	NUMBER(8),
-			ID	VARCHAR2(50),
-			TITLE	VARCHAR2(50) NOT NULL,
-			STARTDATE	DATE	NOT NULL,
-			ENDDATE	DATE	NOT NULL,
-			CATEGORY	VARCHAR2(50),
-			CONTENT	VARCHAR2(2000)	NOT NULL,
-			IMPORTANT	NUMBER(1)	NOT NULL,
-			DEL	NUMBER(1)	NOT NULL*/
+			System.out.println("addSchedul 2/6 Success");			
 			
 			psmt.setString(1, dto.getId());
 			psmt.setString(2, dto.getTitle());
