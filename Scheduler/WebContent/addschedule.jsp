@@ -17,9 +17,7 @@ for(int i=0; i<list.size();i++){
 	if(list.get(i).getImportant()==1){
 		eventstring += "imageurl : " +" '.\\"+"\\image\\"+"\\"+"star.png',";
 	}	
-	eventstring +="},"+"\n";
-	
-	System.out.println(eventstring);
+	eventstring +="},"+"\n";	
 }
 %>
 <!DOCTYPE HTML>
