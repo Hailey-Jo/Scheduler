@@ -127,25 +127,17 @@ h2 { text-align: center; }
 .buttons { display: block; margin: 0 auto; text-align: center; }
 .buttons button { margin-bottom: 5px; }
 
-<!-- Main div css -->
-#wrapper{
-border: 1px solid #FFBB00;
-width:1400px; 
-padding: 10px; 
-position: absolute;
-top: 10px;
-left: 50%;
-margin-left: -533px;
-overflow: hidden; 
-}
+
+
 
 
 /* modal 조정 */
+
  .modal {
         text-align: center;
 }
  
-@media screen and (min-width: 900px) { 
+@media screen and (min-width: 768px) { 
         .modal:before {
                 display: inline-block;
                 vertical-align: middle;
@@ -159,11 +151,18 @@ overflow: hidden;
         text-align: left;
         vertical-align: middle;
 }
+
+.modal-content {
+	align-content: center;
+	width: 140%;
+	height: auto;
+ }
+
+
+
  
 /* 수입 */
-.modal-dialog .modal-content {
-	width: 1000px;
- }
+
  
 .modal-header {
     background-color: #337AB7;
@@ -212,7 +211,8 @@ overflow: hidden;
 
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+
+
 <link href="./fullcalendar-3.8.2/fullcalendar.css" rel="stylesheet"/>
 <link href="./fullcalendar-3.8.2/fullcalendar.print.css" rel="stylesheet" media="print"/>
 <script type="text/javascript" src="./fullcalendar-3.8.2/lib/moment.min.js"></script>
@@ -242,12 +242,12 @@ overflow: hidden;
 <script defer src="/static/fontawesome/fa-v4-shim.js"></script>
 
 
+
 <script type="text/javascript">
-
-
-//지출용 캘린더
 jQuery(document).ready(function() {
-	
+/* -------------------------------------------------------------------------------
+	 지출 내역 입력 창 미니 캘린더
+------------------------------------------------------------------------------- */
  jQuery(document).ready(function() {
 	jQuery("#calendar-out").fullCalendar({
         	fixedWeekCount : false,
@@ -321,7 +321,9 @@ jQuery(document).ready(function() {
 	
 	
 	
-	   //입력용 캘린더
+/* -------------------------------------------------------------------------------
+	수입 내역 창 미니 캘린더
+------------------------------------------------------------------------------- */
    	 jQuery(document).ready(function() {
    	        jQuery("#calendar-mini").fullCalendar({
    	        	fixedWeekCount : false,
@@ -394,7 +396,9 @@ jQuery(document).ready(function() {
    	    });
     	 
     	 
-    	 
+/* -------------------------------------------------------------------------------
+	본문 캘린더
+------------------------------------------------------------------------------- */
 jQuery("#calendar").fullCalendar({
 	fixedWeekCount : false,
     header : {
@@ -497,8 +501,10 @@ function scheduleChoice(num, id, distinct, color, text) {
 <body>
 
 <div id="loading">loading...</div>
-<!-- 상단 메뉴바 -->
 
+<!-------------------------------------------------------------------------------
+	상단 메뉴바
+ ------------------------------------------------------------------------------->
 	<header>
 		<nav id="topMenu">
 			<div class="topMenu_siteTitle">
@@ -526,9 +532,11 @@ function scheduleChoice(num, id, distinct, color, text) {
 		</nav>
 	</header>
 	
+	
+<!-------------------------------------------------------------------------------
+	좌측 서브 메뉴
+ ------------------------------------------------------------------------------->
 	<aside>
-	<!-- 하단 -->
-		<!-- 좌측 서브 메뉴 -->
 		<div class="leftBtn" align="center">
 			<div id="cashBtn" style="height:auto; overflow: y:hidden;" >
 			<!-- Button trigger modal -->
@@ -581,12 +589,16 @@ function scheduleChoice(num, id, distinct, color, text) {
 	</aside>
 		
 			
-	<!-- 우측 본문 -->
+<!-------------------------------------------------------------------------------
+	캘린더 본문 (article)
+ ------------------------------------------------------------------------------->
 	<article>
 		<div id="calendar"></div>
 	</article>
 	
-	<!-- datepicker -->
+<!-------------------------------------------------------------------------------
+	 데이터 관련 modal
+ ------------------------------------------------------------------------------->
 	<div id='datepicker'></div>
 	<div class="modal fade" tabindex="-1" role="dialog">
 	    <div class="modal-dialog" role="document">
@@ -627,7 +639,9 @@ function scheduleChoice(num, id, distinct, color, text) {
 	<footer>Copyright &copy; BizPayDay</footer>
 	
 	
-<!-- 수입내역입력 -->
+<!-------------------------------------------------------------------------------
+	 수입내역입력 기능
+ ------------------------------------------------------------------------------->
 <div class="modal fade" id="inCashMyModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -649,7 +663,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 		          <th class="th_inPrice">금액</th>
 		          <th class="th_inCategory">분류</th>
 		          <th class="th_inDelete">삭제</th>
-		          <th class="th_inDelete">아이콘</th>
+		          <!-- <th class="th_inDelete">아이콘</th> -->
 		        </tr>
 		      </thead>
 		      <tbody>
@@ -660,25 +674,25 @@ function scheduleChoice(num, id, distinct, color, text) {
 		          </td>
 		          
 		          <td>
-		            <input type="text" class="form-control" size="16" placeholder="내역 입력" name="cashContent"/>
+		            <input type="text" id="inContent" class="form-control" size="16" placeholder="내역 입력" name="cashContent"/>
 		          </td>
 		          
 		          <td>
 		            <div class="input-group">
 		              <span class="input-group-addon"><i class="fas fa-won-sign"></i></span>
-		              <input type="number" class="form-control" value="1000" size="12" placeholder="금액 입력" name="cashPrice"/>
+		              <input type="number" class="form-control" value="0" size="15" placeholder="금액 입력" name="cashPrice" id="inPrice"/>
 		            </div>
 		          </td>
 		          
 		          <td>
 		            <select class="form-control match-content" name="cashCategory">
-		              <option selected="">주수입</option>
+		              <option selected="selected">주수입</option>
 		              <option>부수입</option>
 		              <option>기타</option>
 		            </select>
 		          </td>
 					<td><a class="deleteRow"></a></td>
-					<td><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></td>
+					<!-- <td><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></td> -->
 		        </tr>
 		      </tbody>
 		       <tfoot>
@@ -694,15 +708,16 @@ function scheduleChoice(num, id, distinct, color, text) {
 		  </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn btn-primary" data-dismiss="modal">Save</button>
+        <button type="button" id="btn_saveIo" class="btn btn btn-primary" data-dismiss="modal">Save</button>
         <button type="button" class="btn btn-orange" data-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>
 </div>
  
-
- <!-- 지출내역입력 -->
+<!-------------------------------------------------------------------------------
+	 지출내역입력
+ ------------------------------------------------------------------------------->
 <div class="modal fade" id="outCashMyModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -782,8 +797,11 @@ function scheduleChoice(num, id, distinct, color, text) {
   </div>
 </div> 
 
-	
-<!-- 수입내역입력 기능 -->
+
+
+<!-------------------------------------------------------------------------------
+	수입내역입력 기능
+ ------------------------------------------------------------------------------->
  <script type="text/javascript">
  var counter = 0;
  $(document).ready(function () {
@@ -809,10 +827,10 @@ function scheduleChoice(num, id, distinct, color, text) {
 	        <th>삭제</th> */
 	        
 	        cols += '<td><class="form-control-static">수입</p></td>';
-	        cols += '<td><input type="text" class="form-control" size="16" placeholder="내역 입력" name="cashContent' + counter + '"/></td>';
-	        cols += '<td><div class="input-group"><span class="input-group-addon"><i class="fas fa-won-sign"></i></span><input type="number" class="form-control" value="1000" size="12" placeholder="금액 입력" name="cashPrice'+counter+'"/></div></td>';
-	        cols += '<td><select class="form-control match-content" name="cashCategory'+counter+'"><option selected="">주수입</option><option>부수입</option><option>기타</option></select></td>';
-	        cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
+	        cols += '<td><input type="text" class="form-control" size="16" placeholder="내역 입력" name="cashContent'+ counter +'" id="inContent'+counter+'"/></td>';
+	        cols += '<td><div class="input-group"><span class="input-group-addon"><i class="fas fa-won-sign"></i></span><input type="number" class="form-control" value="0" size="15" placeholder="금액 입력" name="cashPrice'+counter+'" id="inPrice'+counter+'" /></div></td>';
+	        cols += '<td><select class="form-control match-content" name="cashCategory'+counter+'"><option selected="selected">주수입</option><option>부수입</option><option>기타</option></select></td>';
+	        cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="삭제"></td>';
 	        newRow.append(cols);
 	        $("#inCashMyModal .table").append(newRow);
 	        counter++;
@@ -845,7 +863,9 @@ function scheduleChoice(num, id, distinct, color, text) {
 </script>
 
 
-<!-- 지출내역입력 기능 -->
+<!-------------------------------------------------------------------------------
+	 지출내역입력 기능
+ ------------------------------------------------------------------------------->
  <script type="text/javascript">
  var out_Counter = 0;
  $(document).ready(function () {
@@ -874,7 +894,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 	        cols += '<td><input type="text" class="form-control" size="16" placeholder="내역 입력" name="cashContent' + out_Counter + '"/></td>';
 	        cols += '<td><div class="input-group"><span class="input-group-addon"><i class="fas fa-won-sign"></i></span><input type="number" class="form-control" value="1000" size="12" placeholder="금액 입력" name="cashPrice'+out_Counter+'"/></div></td>';
 	        cols += '<td><select class="form-control match-content" name="cashCategory'+out_Counter+'"><option selected="">분류</option><option>식비</option><option>통신비</option><option>공과금</option><option>의류/미용</option><option>건강/문화생활</option><option>교육/육아</option><option>교통/차량</option><option>경조사/회비</option><option>기타</option></select></td>';
-	        cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
+	        cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="삭제"></td>';
 	        newRow.append(cols);
 	        $("#outCashMyModal .table").append(newRow);
 	        out_Counter++;
@@ -907,7 +927,35 @@ function scheduleChoice(num, id, distinct, color, text) {
 </script>
 
 
+<!-- 	
+	private int seq; 
+	private String id;
+	private String title; //ex)식비, 교통비 분류
+	private String moneyDate; //기입 날짜
+	private int ioMoney; //지출(1), 수입(0) 구분
+	private int category; //이미지
+	private int price; //금액
+	private String content; //상세 내역
+	private int del; //삭제 여부 -->
 
+
+
+<!-- 수입 입력 내역 가져오기 -->
+<script type="text/javascript">
+$(document).ready(function () {
+	$("#btn_saveIo").on("click", function () {
+        alert("수입내역 : "+$("#inContent0").val());
+        var inContent = $("#inContent0").val();
+        //금액
+        alert("금액 : "+$("#inPrice0").val());
+        var inPrice = $("#inPrice0").val();
+        //분류
+        alert("분류 : "+$('[name="cashCategory0"]').val());
+	});
+});
+
+
+</script>
 
 </body>
 </html>
