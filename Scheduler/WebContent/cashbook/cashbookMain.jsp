@@ -65,14 +65,6 @@ body {
 }
 
 
-/* 
-body {
-    margin:40px 10px;
-    padding:0;
-    font-family:"Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
-    font-size:14px;
-}
- */
 #loading {
     display:none;
     position:absolute;
@@ -80,19 +72,42 @@ body {
     right:10px;
 }
 
-/* #calendar {
-    max-width:1200px;
-    margin:0 auto;
-}
- */
-#calendar {
 
+#calendar {
 width:80vm;
 height: 80vm;
 float:left;
 padding : 50px;
 /* padding-right: 100px; */
+}
 
+#calendar-mini{
+border: 1px solid #487BE1;
+width: 100%;
+height: auto;
+float: left;
+padding: 10px;
+margin-left: 10px;
+margin-right: 10px;
+}
+#calendar-mini div.fc-content{
+	height: 1px;
+}
+#calendar-mini div.fc-center h2{
+	font-size: 15px;
+}
+#calendar-mini a.fc-day-number{
+	font-size: 5px;
+}
+
+#calendar-out div.fc-content{
+	height: 1px;
+}
+#calendar-out div.fc-center h2{
+	font-size: 15px;
+}
+#calendar-out a.fc-day-number{
+	font-size: 5px;
 }
 
 div.barKategorie {
@@ -123,20 +138,32 @@ margin-left: -533px;
 overflow: hidden; 
 }
 
-/* #calendar{
-border: 1px solid #487BE1;
-width: 950px;
-float: left;
-padding: 10px;
-margin-right: 10px;
-}
 
- */
+/* modal 조정 */
+ .modal {
+        text-align: center;
+}
  
- /* 수입내역입력 */
+@media screen and (min-width: 900px) { 
+        .modal:before {
+                display: inline-block;
+                vertical-align: middle;
+                content: " ";
+                height: 100%;
+        }
+}
+ 
+.modal-dialog {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+}
+ 
+
 .modal-dialog .modal-content {
-          width: 900px;
+	width: 1000px;
  }
+ 
 .modal-header {
     background-color: #337AB7;
     padding:16px 16px;
@@ -144,13 +171,41 @@ margin-right: 10px;
     border-bottom:2px dashed #337AB7;
  }
 
- .modal-body .container {
- 	width: 100%;
+.modal-body {
+	height: 500px;
+	padding: 10px;
+	margin-bottom: 30px;
+}
+
+.modal-body .container {
+ 	width: 70%;
+ 	float: right;
+ 	height: inherit;
+ 	overflow-y: scroll;
  }
  
  .th_inPrice{
  	width: 200px;
  }
+ 
+ .modal-body .modal-outLeft{
+	float: left;
+ 	width: 30%;
+ 	height: auto;
+ 	padding: 5px;
+ 	padding-top: 50px;
+ }
+ 
+ .modal-dialog .modal-content .modal-footer {
+    bottom: 0;
+    height: 60px;
+}
+
+.th_inWaru{
+	width: 50px;
+}
+
+
 
 </style>
 <link href="./fullcalendar-3.8.2/fullcalendar.css" rel="stylesheet"/>
@@ -183,24 +238,33 @@ margin-right: 10px;
 
 
 <script type="text/javascript">
-
-
-
 jQuery(document).ready(function() {
-    jQuery("#calendar").fullCalendar({
+//지출용 캘린더
+jQuery("#calendar-out").fullCalendar({
+    	height: 347,
     	fixedWeekCount : false,
+    	
+    	/* eventAfterAllRender: function(){
+    		  $('.fc-week.fc-widget-content.fc-rigid').attr('style', 'min-height: 3em');
+    	}, */
+
+    	eventAfterAllRender: function(){
+  		  $('#calendar-out .fc-row').css('min-height','10px'); 
+  		  $('#calendar-out .fc-week, #calendar-out .fc-widget-content, #calendar-out .fc-rigid').attr('style','height: 5px');
+  		},
+  		
         header : {
               left : "prev"
-            , center : "title"
-            , right: 'month,agendaWeek,agendaDay, next'
+            , center : "title, today"
+            , right: 'next'
         }
         , navLinks: true // can click day/week names to navigate views
         , selectable: true
         , selectHelper: true
     
         , locale : "ko"
-        , editable : true
-        , eventLimit : true
+        , editable : false
+        , eventLimit : false
 
         , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
 
@@ -218,77 +282,193 @@ jQuery(document).ready(function() {
             jQuery("#loading").toggle(bool);
         }
         , events: [
-            <%=eventstring %>
             {
-            	title : 'star',
-            	start : '2018-02-05',
-            	end : '2018-02-08',
-            	imageurl:'.\\image\\star.png'
+                title  : 'event1',
+                start  : '2018-02-01'
+            },
+            {
+                title  : 'event2',
+                start  : '2018-02-05',
+                end    : '2018-02-07'
+            },
+            {
+                title  : 'event3',
+                start  : '2018-02-09T12:30:00',
+                allDay : false // will make the time show
             }
-        ],
-        eventRender: function(event, eventElement) {
-        	if (event.imageurl)
-        		{             		
-        		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
-        	} 
-        },
-                
-         select: function(start, end) {
-            // Display the modal.
-            // You could fill in the start and end fields based on the parameters
-            $('.modal').modal('show');
+        ]
 
-        },
-        eventClick: function(event, element) {
-            // Display the modal and set the values to the event values.
-            alert('Event: ' + event.imageurl);
-            $('.modal').modal('show');
-            $('.modal').find('#title').val(event.title);
-            $('.modal').find('#starts-at').val(event.start);
-            $('.modal').find('#ends-at').val(event.end);
-
-        },
-        editable: true,
-        eventLimit: true // allow "more" link when too many events
-
-    });
-
-    // Bind the dates to datetimepicker.
-    // You should pass the options you need
-    $("#starts-at, #ends-at").datetimepicker();
-
-    // Whenever the user clicks on the "save" button om the dialog
-    $('#save-event').on('click', function() {
-        var title = $('#title').val();
-        if (title) {
-            var eventData = {
-                title: title,
-                start: $('#starts-at').val(),
-                end: $('#ends-at').val()
-            };
-            $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-        }
-        $('#calendar').fullCalendar('unselect');
-
-        // Clear modal inputs
-        $('.modal').find('input').val('');
-
-        // hide modal
-        $('.modal').modal('hide');
     });
 });
 
-// addEventSource, removeEventSource의 기능하는데 구별값은 googleCalendarId 이다.
-// 그렇기에 googleCalendarId는 반드시 입력해야한다.
-function scheduleChoice(num, id, distinct, color, text) {
-    if(jQuery(".swingBar").eq(num).is(":checked")) {
-        jQuery("#calendar").fullCalendar("addEventSource", { googleCalendarId : id, className : distinct, color : color, textColor : text });
-    } else {
-        jQuery("#calendar").fullCalendar("removeEventSource", { googleCalendarId : id });
-    }
-}
 
+//입력용 캘린더
+jQuery(document).ready(function() {
+	
+    jQuery("#calendar-mini").fullCalendar({
+    	height: 347,
+    	fixedWeekCount : false,
+    	
+    	/* eventAfterAllRender: function(){
+    		  $('.fc-week.fc-widget-content.fc-rigid').attr('style', 'min-height: 3em');
+    	}, */
+
+    	eventAfterAllRender: function(){
+  		  $('#calendar-mini .fc-row').css('min-height','10px'); 
+  		  $('#calendar-mini .fc-week, #calendar-mini .fc-widget-content, #calendar-mini .fc-rigid').attr('style','height: 5px');
+  		},
+  		
+        header : {
+              left : "prev"
+            , center : "title"
+            , right: 'next'
+        }
+        , navLinks: true // can click day/week names to navigate views
+        , selectable: true
+        , selectHelper: true
     
+        , locale : "ko"
+        , editable : false
+        , eventLimit : false
+
+        , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
+
+        , eventSources : [
+            // 대한민국의 공휴일
+            {
+                  googleCalendarId : "ko.south_korea#holiday@group.v.calendar.google.com"
+                , className : "koHolidays"
+                , color : "#FF0000"
+                , textColor : "#FFFFFF"
+                , editable : false
+            }
+        ]
+        , loading:function(bool) {
+            jQuery("#loading").toggle(bool);
+        }
+        , events: [
+            {
+                title  : 'event1',
+                start  : '2018-02-01'
+            },
+            {
+                title  : 'event2',
+                start  : '2018-02-05',
+                end    : '2018-02-07'
+            },
+            {
+                title  : 'event3',
+                start  : '2018-02-09T12:30:00',
+                allDay : false // will make the time show
+            }
+        ]
+
+    });
+});
+
+
+    jQuery(document).ready(function() {
+        jQuery("#calendar").fullCalendar({
+        	fixedWeekCount : false,
+            header : {
+                  left : "prev"
+                , center : "title"
+                , right: 'month, agendaWeek, agendaDay, next'
+            }
+	        , navLinks: true // can click day/week names to navigate views
+	        , selectable: true
+	        , selectHelper: true
+        
+            , locale : "ko"
+            , editable : true
+            , eventLimit : true
+
+            , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
+
+            , eventSources : [
+                // 대한민국의 공휴일
+                {
+                      googleCalendarId : "ko.south_korea#holiday@group.v.calendar.google.com"
+                    , className : "koHolidays"
+                    , color : "#FF0000"
+                    , textColor : "#FFFFFF"
+                    , editable : false
+                }
+            ]
+            , loading:function(bool) {
+                jQuery("#loading").toggle(bool);
+            }
+            , events: [
+                <%=eventstring %>
+                {
+                	title : 'star',
+                	start : '2018-02-05',
+                	end : '2018-02-08',
+                	imageurl:'.\\image\\star.png'
+                }
+            ],
+            eventRender: function(event, eventElement) {
+            	if (event.imageurl)
+            		{             		
+            		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
+            	} 
+            },
+                    
+             select: function(start, end) {
+                // Display the modal.
+                // You could fill in the start and end fields based on the parameters
+                $('.modal').modal('show');
+
+            },
+            eventClick: function(event, element) {
+                // Display the modal and set the values to the event values.
+                alert('Event: ' + event.imageurl);
+                $('.modal').modal('show');
+                $('.modal').find('#title').val(event.title);
+                $('.modal').find('#starts-at').val(event.start);
+                $('.modal').find('#ends-at').val(event.end);
+
+            },
+            editable: true,
+            eventLimit: true // allow "more" link when too many events
+
+        });
+
+        // Bind the dates to datetimepicker.
+        // You should pass the options you need
+        $("#starts-at, #ends-at").datetimepicker();
+
+        // Whenever the user clicks on the "save" button om the dialog
+        $('#save-event').on('click', function() {
+            var title = $('#title').val();
+            if (title) {
+                var eventData = {
+                    title: title,
+                    start: $('#starts-at').val(),
+                    end: $('#ends-at').val()
+                };
+                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+            }
+            $('#calendar').fullCalendar('unselect');
+
+            // Clear modal inputs
+            $('.modal').find('input').val('');
+
+            // hide modal
+            $('.modal').modal('hide');
+        });
+    });
+
+    // addEventSource, removeEventSource의 기능하는데 구별값은 googleCalendarId 이다.
+    // 그렇기에 googleCalendarId는 반드시 입력해야한다.
+    function scheduleChoice(num, id, distinct, color, text) {
+        if(jQuery(".swingBar").eq(num).is(":checked")) {
+            jQuery("#calendar").fullCalendar("addEventSource", { googleCalendarId : id, className : distinct, color : color, textColor : text });
+        } else {
+            jQuery("#calendar").fullCalendar("removeEventSource", { googleCalendarId : id });
+        }
+    }
+
 </script>
 </head>
 <body>
@@ -435,6 +615,9 @@ function scheduleChoice(num, id, distinct, color, text) {
       </div>
       
       <div class="modal-body">
+	      <div class="modal-outLeft">
+				<div id="calendar-mini"></div>
+		  </div>
 		<div class="container">
 		    <table class="table">
 		      <thead>
@@ -459,7 +642,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 		          <td>
 		            <div class="input-group">
 		              <span class="input-group-addon"><i class="fas fa-won-sign"></i></span>
-		              <input type="number" class="form-control" value="1,000" size="12" placeholder="금액 입력" name="cashPrice"/>
+		              <input type="number" class="form-control" value="1000" size="12" placeholder="금액 입력" name="cashPrice"/>
 		            </div>
 		          </td>
 		          
@@ -493,7 +676,7 @@ function scheduleChoice(num, id, distinct, color, text) {
   </div>
 </div>
  
- 
+
  <!-- 지출내역입력 -->
 <div class="modal fade" id="outCashMyModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
   <div class="modal-dialog" role="document">
@@ -501,10 +684,14 @@ function scheduleChoice(num, id, distinct, color, text) {
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">×</span></button>
-        <h4 class="modal-title" id="myModalLabel">수입 내역 입력</h4>
+        <h4 class="modal-title" id="myModalLabel">지출 내역 입력</h4>
       </div>
       
+      
       <div class="modal-body">
+	      <div class="modal-outLeft">
+			<div id="calendar-out"></div>
+	      </div>
 		<div class="container">
 		    <table class="table">
 		      <thead>
@@ -529,7 +716,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 		          <td>
 		            <div class="input-group">
 		              <span class="input-group-addon"><i class="fas fa-won-sign"></i></span>
-		              <input type="number" class="form-control" value="1,000" size="12" placeholder="금액 입력" name="cashPrice"/>
+		              <input type="number" class="form-control" value="1000" size="12" placeholder="금액 입력" name="cashPrice"/>
 		            </div>
 		          </td>
 		          
@@ -553,7 +740,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 		       <tfoot>
 		        <tr>
 		           <td colspan="6" style="text-align: left;">
-		                <input type="button" class="btn btn-lg btn-block " id="addrow_outCash" value="지출 내역 입력" />
+		                <input type="button" class="btn btn-lg btn-block " id="addrowOut" value="지출 내역 입력" />
 		            </td>
 		        </tr>
 		        <tr>
@@ -573,17 +760,21 @@ function scheduleChoice(num, id, distinct, color, text) {
 	
 <!-- 수입내역입력 기능 -->
  <script type="text/javascript">
-var counter = 0;
+ var counter = 0;
  $(document).ready(function () {
+	 
 	     $("#btnInPrice").on("click", function () {
-	    	counter = 0;
-			alert("수입 입력 버튼 클릭 counter 값 :" +counter);
+	    	 counter=0;
+			//alert("수입 입력 버튼 클릭 counter 값 :" +counter);
+	    	//테이블 초기화
+			$( '#inCashMyModal .table > tbody').empty();
 		});
+	
  
 	    $("#addrow").on("click", function () {
 	        var newRow = $("<tr>");
 	        var cols = "";
-	        alert("addrwo 후 counter 값 :" +counter);
+	        alert("addrow 후 counter 값 :" +counter);
 	        
 	        /* 
 	        <th>수입/지출</th>
@@ -594,20 +785,17 @@ var counter = 0;
 	        
 	        cols += '<td><class="form-control-static">수입</p></td>';
 	        cols += '<td><input type="text" class="form-control" size="16" placeholder="내역 입력" name="cashContent' + counter + '"/></td>';
-	        cols += '<td><div class="input-group"><span class="input-group-addon"><i class="fas fa-won-sign"></i></span><input type="number" class="form-control" value="1,000" size="12" placeholder="금액 입력" name="cashPrice'+counter+'"/></div></td>';
+	        cols += '<td><div class="input-group"><span class="input-group-addon"><i class="fas fa-won-sign"></i></span><input type="number" class="form-control" value="1000" size="12" placeholder="금액 입력" name="cashPrice'+counter+'"/></div></td>';
 	        cols += '<td><select class="form-control match-content" name="cashCategory'+counter+'"><option selected="">주수입</option><option>부수입</option><option>기타</option></select></td>';
 	        cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
 	        newRow.append(cols);
-	        $(".table").append(newRow);
+	        $("#inCashMyModal .table").append(newRow);
 	        counter++;
-	    	$(".table").closest("tr").remove();
-	        
-	        
 	    });
 
 
 		/* 삭제 */
-	    $(".table").on("click", ".ibtnDel", function (event) {
+	    $("#inCashMyModal .table").on("click", ".ibtnDel", function (event) {
 	        $(this).closest("tr").remove();       
 	        counter -= 1
 	    });
@@ -617,7 +805,7 @@ var counter = 0;
 
 
 
-	function calculateRow(row) {
+	/* function calculateRow(row) {
 	    var price = +row.find('input[name^="price"]').val();
 
 	}
@@ -628,66 +816,71 @@ var counter = 0;
 	        grandTotal += +$(this).val();
 	    });
 	    $("#grandtotal").text(grandTotal.toFixed(2));
-	}
+	} */
 </script>
 
 
 <!-- 지출내역입력 기능 -->
-<script type="text/javascript">
-$(document).ready(function () {
-$("#btnOutPrice").on("click", function () {
-	var in_Counter = 0;
-	$("#btnOutPrice").on("click", function () {
-	    var in_Counter = 0;
+ <script type="text/javascript">
+ var out_Counter = 0;
+ $(document).ready(function () {
+	 
+	     $("#btnOutPrice").on("click", function () {
+	    	 out_Counter=0;
+			//alert("수입 입력 버튼 클릭 counter 값 :" +counter);
+	    	//테이블 초기화
+			$( '#outCashMyModal .table > tbody').empty();
+		});
+	
+ 
+	    $("#addrowOut").on("click", function () {
+	        var newRow = $("<tr>");
+	        var cols = "";
+	        alert("addrow 후 counter 값 :" +counter);
+	        
+	        /* 
+	        <th>수입/지출</th>
+	        <th>수입 내역</th>
+	        <th>금액</th>
+	        <th>분류</th>
+	        <th>삭제</th> */
+	        
+	        cols += '<td><class="form-control-static">지출</p></td>';
+	        cols += '<td><input type="text" class="form-control" size="16" placeholder="내역 입력" name="cashContent' + out_Counter + '"/></td>';
+	        cols += '<td><div class="input-group"><span class="input-group-addon"><i class="fas fa-won-sign"></i></span><input type="number" class="form-control" value="1000" size="12" placeholder="금액 입력" name="cashPrice'+out_Counter+'"/></div></td>';
+	        cols += '<td><select class="form-control match-content" name="cashCategory'+out_Counter+'"><option selected="">분류</option><option>식비</option><option>통신비</option><option>공과금</option><option>의류/미용</option><option>건강/문화생활</option><option>교육/육아</option><option>교통/차량</option><option>경조사/회비</option><option>기타</option></select></td>';
+	        cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
+	        newRow.append(cols);
+	        $("#outCashMyModal .table").append(newRow);
+	        out_Counter++;
+	    });
+
+
+		/* 삭제 */
+	    $("#outCashMyModal .table").on("click", ".ibtnDel", function (event) {
+	        $(this).closest("tr").remove();       
+	        out_Counter -= 1
+	    });
+
+
 	});
 
-    $("#addrow_outCash").on("click", function () {
-        var newRow = $("<tr>");
-        var cols = "";
-        
-        /* 
-        <th>수입/지출</th>
-        <th>수입 내역</th>
-        <th>금액</th>
-        <th>분류</th>
-        <th>삭제</th> */
-        
-        cols += '<td><class="form-control-static">지출</p></td>';
-        cols += '<td><input type="text" class="form-control" size="16" placeholder="내역 입력" name="cashContent' + out_Counter + '"/></td>';
-        cols += '<td><div class="input-group"><span class="input-group-addon"><i class="fas fa-won-sign"></i></span><input type="number" class="form-control" value="1,000" size="12" placeholder="금액 입력" name="cashPrice'+out_Counter+'"/></div></td>';
-        cols += '<td><select class="form-control match-content" name="cashCategory'+out_Counter+'"><option selected="">분류</option><option>식비</option><option>통신비</option><option>공과금</option><option>의류/미용</option><option>건강/문화생활</option><option>교육/육아</option><option>교통/차량</option><option>경조사/회비</option><option>기타</option></select></td>';
-        cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
-        newRow.append(cols);
-        $(".table").append(newRow);
-        out_Counter++;
-    });
 
 
+	/* function calculateRow(row) {
+	    var price = +row.find('input[name^="price"]').val();
 
-    $(".table").on("click", ".ibtnDel", function (event) {
-        $(this).closest("tr").remove();       
-        out_Counter -= 1
-    });
+	}
 
-
-});
-});
-
-
-
-function calculateRow(row) {
-    var price = +row.find('input[name^="price"]').val();
-
-}
-
-function calculateGrandTotal() {
-    var grandTotal = 0;
-    $(".table.order-list").find('input[name^="price"]').each(function () {
-        grandTotal += +$(this).val();
-    });
-    $("#grandtotal").text(grandTotal.toFixed(2));
-}
+	function calculateGrandTotal() {
+	    var grandTotal = 0;
+	    $(".table.order-list").find('input[name^="price"]').each(function () {
+	        grandTotal += +$(this).val();
+	    });
+	    $("#grandtotal").text(grandTotal.toFixed(2));
+	} */
 </script>
+
 
 
 

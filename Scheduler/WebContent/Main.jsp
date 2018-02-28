@@ -46,7 +46,7 @@ aside{
 
 article {
     margin-left: 10px;
-    border-left: 1px solid gray;
+    border-left: 1px solid;
     overflow: hidden;
     height: auto;
 }
@@ -56,6 +56,9 @@ footer {
     background-color: #006699;
     clear: left;
     text-align: right;
+}
+a:hover {
+    background-color: #006699;
 }
 
 #main{
@@ -96,7 +99,7 @@ padding : 50px;
 }
 
 #calendar {
-    max-width:1200px;
+    max-width:2500px;
     margin:auto;
     float:left;
 }
@@ -116,19 +119,6 @@ ul li a:hover, ul li a:focus {
     color:#fff;  
     background-color:#f40;  
 }
-#id{
-    display: block;
-    position: absolute;
-    top: 26px;
-    right: -8px;
-    padding: 9px 5px 4px 4px;
-    width: 316px;
-    height: 172px;
-    background-position: -2px -1310px;
-    z-index: 10;
-    overflow: hidden;
-    }
-
 </style>
 <link href="./fullcalendar-3.8.2/fullcalendar.css" rel="stylesheet"/>
 <link href="./fullcalendar-3.8.2/fullcalendar.print.css" rel="stylesheet" media="print"/>
@@ -139,10 +129,8 @@ ul li a:hover, ul li a:focus {
 <script type="text/javascript" src="./fullcalendar-3.8.2/locale-all.js"></script>
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
 <!-- 부가적인 테마 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
@@ -151,94 +139,56 @@ ul li a:hover, ul li a:focus {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
+<!-- top drop menu -->
+<link href="./css/jktCuteDropdown.css" rel="stylesheet">
+<link href="./css/style_by_you_need.css" rel="stylesheet">
+<script src="./js/jktCuteDropdown.js"></script>
+
 <script type="text/javascript">
+//좌측 fullcalender
+jQuery(document).ready(function() {
+	jQuery("#calendar-mini").fullCalendar({
+		header : {
+		      left : "prev"
+		    , center : "title"
+		    , right: 'next'
+		}
+		, selectable: true
+		, selectHelper: true
+		, navLinks: false
+		, locale : "ko"
+		, eventLimit : true
+		, fixedWeekCount : false
+		, height : 347
+        , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
+		, eventSources : [
+		    // 대한민국의 공휴일
+		    {
+		          googleCalendarId : "ko.south_korea#holiday@group.v.calendar.google.com"
+		        , className : "koHolidays"
+		        , color : "#FF0000"
+		        , textColor : "#FFFFFF"
+		        , editable : false
+		    }
+		]
+	        
+        , loading:function(bool) {
+			jQuery("#loading").toggle(bool);
+        }
+        , events: [ <%=eventstring %> ]
+        
+        , eventRender: function(event, eventElement) {
+        	if (event.imageurl){             		
+        		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
+        	}
+        	$('td .fc-event-container').find('a').removeAttr("href");
+        }
+	});
+});	
 
-    jQuery(document).ready(function() {
-    	 jQuery(document).ready(function() {
-    	        jQuery("#calendar-mini").fullCalendar({
-    	        	fixedWeekCount : false,
-    	            header : {
-    	                  left : "prev"
-    	                , center : "title"
-    	                , right: 'next'
-    	            }     	   
-    	        	        
-    		        , navLinks: true // can click day/week names to navigate views
-    		        , selectable: true
-    		        , selectHelper: true
-    	        	, navLinks: false
-    	            , locale : "ko"
-    	            , editable : true
-    	            , eventLimit : true
-					, height : 347
-    	            , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
-
-    	            , eventSources : [
-    	                // 대한민국의 공휴일
-    	                {
-    	                      googleCalendarId : "ko.south_korea#holiday@group.v.calendar.google.com"
-    	                    , className : "koHolidays"
-    	                    , color : "#FF0000"
-    	                    , textColor : "#FFFFFF"
-    	                    , editable : false
-    	                }
-    	            ]
-    		        
-    	            , loading:function(bool) {
-    	                jQuery("#loading").toggle(bool);
-    	            }
-    	        , events: [
-    	            <%=eventstring %>
-    	        ]
-    	            , select: function(start, end) {
-    	                // Display the modal.
-    	                // You could fill in the start and end fields based on the parameters
-    	                $('.modal').modal('show');
-
-    	            },
-    	            eventClick: function(event, element) {
-    	                // Display the modal and set the values to the event values.
-    	                $('.modal').modal('show');
-    	                $('.modal').find('#title').val(event.title);
-    	                $('.modal').find('#starts-at').val(event.start);
-    	                $('.modal').find('#ends-at').val(event.end);
-
-    	            },
-       	        	eventRender:function (event, element){
-	    	        	$('td .fc-event-container').find('a').removeAttr("href");	
-    	        	},
-    	        });
- 
-    	        $('#my-today-button').click(function() {
-    	            $('#calendar').fullCalendar('today');
-    	        });
-    	        // Bind the dates to datetimepicker.
-    	        // You should pass the options you need
-    	        $("#starts-at, #ends-at").datetimepicker();
-
-    	        // Whenever the user clicks on the "save" button om the dialog
-    	        $('#save-event').on('click', function() {
-    	            var title = $('#title').val();
-    	            if (title) {
-    	                var eventData = {
-    	                    title: title,
-    	                    start: $('#starts-at').val(),
-    	                    end: $('#ends-at').val()
-    	                };
-    	                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-    	            }
-    	            $('#calendar').fullCalendar('unselect');
-
-
-    	            // Clear modal inputs
-    	            $('.modal').find('input').val('');
-
-    	            // hide modal
-    	            $('.modal').modal('hide');
-    	        });
-    	    });
-        jQuery("#calendar").fullCalendar({
-        	fixedWeekCount : false,
+//우측 fullcalendar
+jQuery(document).ready(function() {
+    jQuery("#calendar").fullCalendar({
             header : {
                   left : "prevYear, prev, myCustomButton"
                 , center : "title, today"
@@ -252,9 +202,9 @@ ul li a:hover, ul li a:focus {
             , locale : "ko"
             , editable : true
             , eventLimit : true
+        	, fixedWeekCount : false
 
             , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
-
             , eventSources : [
                 // 대한민국의 공휴일
                 {
@@ -272,10 +222,10 @@ ul li a:hover, ul li a:focus {
                 <%=eventstring %>
             ],
             eventRender: function(event, eventElement) {
-            	if (event.imageurl)
-            		{             		
+            	if (event.imageurl){             		
             		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
-            	} 
+            	}
+            	$('td .fc-event-container').find('a').removeAttr("href");
             }
             , select: function(start, end) {
                 // Display the modal.
@@ -289,24 +239,17 @@ ul li a:hover, ul li a:focus {
                 $('.modal').find('#title').val(event.title);
                 $('.modal').find('#starts-at').val(event.start);
                 $('.modal').find('#ends-at').val(event.end);
-
             },
-            editable: true,
-            eventLimit: true // allow "more" link when too many events
 
         });
+    
+    	$('.demo').jktCD({typeCursor:'click'});
+    
         $('#my-today-button').click(function() {
             $('#calendar').fullCalendar('today');
         });
-        
-        //effect
-    	$( "#idview" ).on( "click", function() {
-    		$('#id').toggle("slow");
-    	});
-        
-
-        // Bind the dates to datetimepicker.
-        // You should pass the options you need
+            	
+        //날짜 선택 시 datepicker 로 날짜 선택
         $("#starts-at, #ends-at").datetimepicker();
 
         // Whenever the user clicks on the "save" button om the dialog
@@ -333,36 +276,44 @@ ul li a:hover, ul li a:focus {
 </script>
 </head>
 <body>
-<!-- <div id ="main"> -->
-
 <!-- 상단 메뉴바 -->
 	<header>
 		<nav id="topMenu">
-			<div class="topMenu_siteTitle">
+			<div class="topMenu_siteTitle" style=" float: left; width: 40%;">
 				<ul>
 					<li>BizPayDay</li>
 				</ul>
 			</div>
-			
-			<div class="topMenu_icon" align="center">
+			<div class="topMenu_icon" align="center" style=" float: left; width: 40%;">
 				<ul>
 					<li><a class="menuLink" href="Main.jsp"><img src="./icon/home-w.png" onmouseover='this.src="./icon/home-n.png"' onmouseout='this.src="./icon/home-w.png"' ></a></li>
 					<li><a class="menuLink" href="./schedule/scheduleMain.jsp"><img src="./icon/schedule-n.png" onmouseover='this.src="./icon/schedule-w.png"' onmouseout='this.src="./icon/schedule-n.png"' ></a></li>
-					<li><a class="menuLink" href="./cashbook/cashbookMain.jsp"><img src="./icon/cash-w.png" ></a></li>
+					<li><a class="menuLink" href="./cashbook/cashbookMain.jsp"><img src="./icon/cash-n.png" ></a></li>
 				</ul>
 			</div>
-			
-			<div class="topMenu_logInOut">
-				<ul>
-					<!-- <li><img src="./image/m01.jpg" style=""></li> -->
-					<li><a id="idview"><%=id %></a></li>
-					<li>　|　</li>
-					<li><a href="login.jsp">로그아웃</a></li>
-				</ul>
-			</div>
+		  <div class="login_info" style=" float: left; width: 20%;">
+		  <ul>
+		    <li class="demo jktCD">
+			  <span class="jktCD-click"><%=id %></span>
+			  <div class="jktCD-main jktCD-style-one">
+			    <ul>
+			      <li class="item"><a href="#">Home</a></li>
+			      <li class="item"><a href="#">Settings</a></li>
+			      <li class="item"><a href="#">Profile</a></li>
+			      <li class="item"><a href="#">Login</a></li>
+			      <li class="item"><a href="#">Register</a></li>
+			      <li class="pemisah"></li>
+			      <li class="item"><a href="">Sign Out</a></li>
+			    </ul>
+			  </div>
+			</li>
+			<li>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+			<li><a href="login.html">로그아웃</a></li>
+			</ul>
+		  </div>
 		</nav>
 	</header>
-	<div id="id" style=" display: none;">Hello world!</div>
+
 	<aside>
 	<!-- 하단 -->
 		<!-- 좌측 서브 메뉴 -->
@@ -380,7 +331,7 @@ ul li a:hover, ul li a:focus {
 			</div>
 		</div>
 	<br>
-		<div id="calendar-mini"></div>
+	<div id="calendar-mini"></div>
 	
 	<div style="padding: 10px" class="tablediv">
 			<table style="padding-top: 10px">
@@ -403,7 +354,7 @@ ul li a:hover, ul li a:focus {
 	<article>
 		<div id="calendar"></div>
 	</article>
-		
+	<!-- footer -->
 	<footer>Copyright &copy; BizPayDay</footer>
 	
 </body>
