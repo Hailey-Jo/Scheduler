@@ -108,4 +108,111 @@ public class ScheduleDAO implements iScheduleDAO {
 		return count>0? true:false;
 	}
 
+	@Override
+	public ScheduleDTO findschduel(int seq) {
+		String sql = " SELECT SHECDELE_SEQ, ID, TITLE, STARTDATE, "
+				+ " ENDDATE, CATEGORY, CONTENT, IMPORTANT, DEL "
+				+ " FROM SCHEDULE WHERE SHECDELE_SEQ = " + seq;
+		
+		System.out.println("1/6 findschduel");
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		ScheduleDTO dto = new ScheduleDTO();
+		
+		
+		try {
+			conn = DBConnection.makeConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			
+			System.out.println("2/6 findschduel");
+			
+			while(rs.next()) {
+				dto.setSeq(seq);
+				dto.setId(rs.getString(2));
+				dto.setTitle(rs.getString(3));
+				dto.setStartDate(rs.getString(4));
+				dto.setEndDate(rs.getString(5));
+				dto.setCategory(rs.getString(6));
+				dto.setContent(rs.getString(7));
+				dto.setImportant(rs.getInt(8));
+				dto.setDel(rs.getInt(9));
+			}
+			
+			System.out.println("3/6 findschduel");
+		} catch (SQLException e) {
+			System.out.println("findschduel fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		System.out.println("4/6 findschduel");
+		return dto;
+	}
+
+	@Override
+	public boolean updateSchedule(ScheduleDTO dto) {
+		String sql = "UPDATE SCHEDULE SET TITLE=?, IMPORTANT=?, STARTDATE=?, "
+				+ "ENDDATE=?, CONTENT=?, CATEGORY=? WHERE SHECDELE_SEQ="+dto.getSeq();
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+		
+		System.out.println("1/6 updateSchedule");
+		try {
+			conn = DBConnection.makeConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			System.out.println("2/6 updateSchedule");
+			
+			psmt.setString(1, dto.getTitle());
+			psmt.setInt(2, dto.getImportant());
+			psmt.setString(3, dto.getStartDate());
+			psmt.setString(4, dto.getEndDate());
+			psmt.setString(5, dto.getContent());
+			psmt.setString(6, dto.getCategory());
+			
+			count = psmt.executeUpdate();
+			
+			System.out.println("3/6 updateSchedule");
+		} catch (SQLException e) {
+			System.out.println("updateSchedule fail TT");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+		System.out.println("4/6 updateSchedule");
+		return count>0? true:false;
+	}
+
+	@Override
+	public boolean deleteSchedule(int seq) {
+		String sql = "DELETE FROM SCHEDULE WHERE SHECDELE_SEQ = " +seq;
+		
+		Connection conn= null;
+		PreparedStatement psmt = null;
+		int count = 0;
+		
+		System.out.println("1/6 deleteSchedule");
+		
+		try {
+			conn = DBConnection.makeConnection();
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 deleteSchedule");
+			count = psmt.executeUpdate();
+			System.out.println("3/6 deleteSchedule");
+		} catch (SQLException e) {
+			System.out.println("deleteSchedule fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+		System.out.println("4/6 deleteSchedule");
+		return count>0? true:false;
+	}
+
 }

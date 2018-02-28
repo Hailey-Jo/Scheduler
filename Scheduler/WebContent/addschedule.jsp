@@ -14,7 +14,7 @@ for(int i=0; i<list.size();i++){
 	eventstring += "title : '"+list.get(i).getTitle()+"',";
 	eventstring += "start : '"+list.get(i).getStartDate().substring(0, 10)+"',";
 	eventstring += "end : '"+list.get(i).getEndDate().substring(0, 10)+"',";
-	eventstring += "backgroundColor : '"+list.get(i).getCategory()+",";
+	eventstring += "backgroundColor : '"+list.get(i).getCategory()+"',";
 	if(list.get(i).getImportant()==1){
 		eventstring += "imageurl : " +" '.\\"+"\\image\\"+"\\"+"star.png',";
 	}	
