@@ -1,10 +1,29 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="Cashbook.CashbookDTO"%>
+<%@page import="Cashbook.CashbookDAO"%>
+<%@page import="Cashbook.iCashbookDAO"%>
 <%@page import="Schedule.ScheduleDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="Schedule.ScheduleDAO"%>
 <%@page import="Schedule.iScheduleDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
+
+<%
+//cashbook 연결
+iCashbookDAO cashDao = CashbookDAO.getInstance();
+
+//최근 리스트 받아오기
+List<CashbookDTO> cList = new ArrayList<CashbookDTO>();
+cList = cashDao.getCashDate("creepin");
+
+for(int i=0; i<cList.size(); i++){
+	System.out.println(cList.get(i).toString());
+}
+
+%>
+
 <%iScheduleDAO dao = ScheduleDAO.getInstance();
 List<ScheduleDTO> list = dao.getAllSchedulList();
 String eventstring = "";
@@ -241,8 +260,6 @@ h2 { text-align: center; }
 <script defer src="/static/fontawesome/fontawesome-all.js"></script>
 <script defer src="/static/fontawesome/fa-v4-shim.js"></script>
 
-
-
 <script type="text/javascript">
 jQuery(document).ready(function() {
 /* -------------------------------------------------------------------------------
@@ -364,6 +381,15 @@ jQuery(document).ready(function() {
    	                // You could fill in the start and end fields based on the parameters
    	                $('#datepicker .modal').modal('show');
 
+   	            }, eventClick: function(event, element) {
+   	                // Display the modal and set the values to the event values.
+   	                /* $('.modal').modal('show');
+   	                $('.modal').find('#title').val(event.title);
+   	                $('.modal').find('#starts-at').val(event.start);
+   	                $('.modal').find('#ends-at').val(event.end); */
+					$('#datepicker .modal').modal('show');
+   	                alert($('#datepicker .modal').val(event.start));
+   	                
    	            }
    	        });
    	        $('#my-today-button').click(function() {
@@ -574,15 +600,37 @@ function scheduleChoice(num, id, distinct, color, text) {
 			<div id="" style="height: auto; overflow: y:hidden;">
 			<b>최근 내역</b><br><br>
 				<ul class="list-group">
-					<li class="list-group-item d-flex justify-content-between align-items-center">점심식사
-						<span class="badge badge-primary badge-pill">- 2,000</span>
-					</li>
-					<li class="list-group-item d-flex justify-content-between align-items-center">교통비
-						<span class="badge badge-primary badge-pill">- 1,000</span>
-					</li>
-					<li class="list-group-item d-flex justify-content-between align-items-center">회비
-						<span class="badge badge-primary badge-pill">-1,000</span>
-					</li>
+					<% 
+					if(cList.size()==0){
+						//자료가 하나도 없으면
+						%>
+						<li class="list-group-item d-flex justify-content-between align-items-center">
+						가계부를 작성하세요
+						</li>
+						<%
+					
+					//만약 불러올 리스트 5개 이하이면
+					}else if(cList.size()<5){
+						for(int i=0; i<cList.size(); i++) {
+							%>
+							<li class="list-group-item d-flex justify-content-between align-items-center">
+							<%=cList.get(i).getContent() %>
+							<span class="badge badge-primary badge-pill">- <%=cList.get(i).getPrice() %></span>
+							</li>
+							<%
+						}
+					}else{
+						//리스트 5개 이상
+						for(int i=0; i<6; i++) {
+							%>
+							<li class="list-group-item d-flex justify-content-between align-items-center">
+							<%=cList.get(i).getContent() %>
+							<span class="badge badge-primary badge-pill">- <%=cList.get(i).getPrice() %></span>
+							</li>
+							<%
+						}
+					}
+					%>
 				</ul>
 			</div>
 		</div>
@@ -658,7 +706,6 @@ function scheduleChoice(num, id, distinct, color, text) {
 		    <table class="table">
 		      <thead>
 		        <tr>
-		          <th class="th_inWaru">구분</th>
 		          <th class="th_inContent">수입 내역</th>
 		          <th class="th_inPrice">금액</th>
 		          <th class="th_inCategory">분류</th>
@@ -669,10 +716,6 @@ function scheduleChoice(num, id, distinct, color, text) {
 		      <tbody>
 		      
 		        <tr>
-		          <td>
-		            <p class="form-control-static">수입</p>
-		          </td>
-		          
 		          <td>
 		            <input type="text" id="inContent" class="form-control" size="16" placeholder="내역 입력" name="cashContent"/>
 		          </td>
@@ -697,7 +740,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 		      </tbody>
 		       <tfoot>
 		        <tr>
-		           <td colspan="6" style="text-align: left;">
+		           <td colspan="5" style="text-align: left;">
 		                <input type="button" class="btn btn-lg btn-block " id="addrow" value="수입 내역 입력" />
 		            </td>
 		        </tr>
@@ -736,7 +779,6 @@ function scheduleChoice(num, id, distinct, color, text) {
 		    <table class="table">
 		      <thead>
 		        <tr>
-		          <th class="th_inWaru">구분</th>
 		          <th class="th_inContent">지출 내역</th>
 		          <th class="th_inPrice">금액</th>
 		          <th class="th_inCategory">분류</th>
@@ -745,10 +787,6 @@ function scheduleChoice(num, id, distinct, color, text) {
 		      </thead>
 		      <tbody>
 		        <tr>
-		          <td>
-		            <p class="form-control-static">지출</p>
-		          </td>
-		          
 		          <td>
 		            <input type="text" class="form-control" size="16" placeholder="지출 입력" name="cashContent"/>
 		          </td>
@@ -762,7 +800,6 @@ function scheduleChoice(num, id, distinct, color, text) {
 		          
 		          <td>
 		            <select class="form-control match-content" name="cashCategory">
-		              <option selected="">분류</option>
 		              <option>식비</option>
 		              <option>통신비</option>
 		              <option>공과금</option>
@@ -779,7 +816,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 		      </tbody>
 		       <tfoot>
 		        <tr>
-		           <td colspan="6" style="text-align: left;">
+		           <td colspan="5" style="text-align: left;">
 		                <input type="button" class="btn btn-lg btn-block " id="addrowOut" value="지출 내역 입력" />
 		            </td>
 		        </tr>
@@ -817,7 +854,6 @@ function scheduleChoice(num, id, distinct, color, text) {
 	    $("#addrow").on("click", function () {
 	        var newRow = $("<tr>");
 	        var cols = "";
-	        alert("addrow 후 counter 값 :" +counter);
 	        
 	        /* 
 	        <th>수입/지출</th>
@@ -826,10 +862,9 @@ function scheduleChoice(num, id, distinct, color, text) {
 	        <th>분류</th>
 	        <th>삭제</th> */
 	        
-	        cols += '<td><class="form-control-static">수입</p></td>';
 	        cols += '<td><input type="text" class="form-control" size="16" placeholder="내역 입력" name="cashContent'+ counter +'" id="inContent'+counter+'"/></td>';
 	        cols += '<td><div class="input-group"><span class="input-group-addon"><i class="fas fa-won-sign"></i></span><input type="number" class="form-control" value="0" size="15" placeholder="금액 입력" name="cashPrice'+counter+'" id="inPrice'+counter+'" /></div></td>';
-	        cols += '<td><select class="form-control match-content" name="cashCategory'+counter+'"><option selected="selected">주수입</option><option>부수입</option><option>기타</option></select></td>';
+	        cols += '<td><select class="form-control match-content" name="inCategory'+counter+'"><option selected="selected">주수입</option><option>부수입</option><option>기타</option></select></td>';
 	        cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="삭제"></td>';
 	        newRow.append(cols);
 	        $("#inCashMyModal .table").append(newRow);
@@ -850,7 +885,6 @@ function scheduleChoice(num, id, distinct, color, text) {
 
 	/* function calculateRow(row) {
 	    var price = +row.find('input[name^="price"]').val();
-
 	}
 
 	function calculateGrandTotal() {
@@ -860,6 +894,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 	    });
 	    $("#grandtotal").text(grandTotal.toFixed(2));
 	} */
+	
 </script>
 
 
@@ -876,7 +911,6 @@ function scheduleChoice(num, id, distinct, color, text) {
 	    	//테이블 초기화
 			$( '#outCashMyModal .table > tbody').empty();
 		});
-	
  
 	    $("#addrowOut").on("click", function () {
 	        var newRow = $("<tr>");
@@ -890,10 +924,9 @@ function scheduleChoice(num, id, distinct, color, text) {
 	        <th>분류</th>
 	        <th>삭제</th> */
 	        
-	        cols += '<td><class="form-control-static">지출</p></td>';
-	        cols += '<td><input type="text" class="form-control" size="16" placeholder="내역 입력" name="cashContent' + out_Counter + '"/></td>';
-	        cols += '<td><div class="input-group"><span class="input-group-addon"><i class="fas fa-won-sign"></i></span><input type="number" class="form-control" value="1000" size="12" placeholder="금액 입력" name="cashPrice'+out_Counter+'"/></div></td>';
-	        cols += '<td><select class="form-control match-content" name="cashCategory'+out_Counter+'"><option selected="">분류</option><option>식비</option><option>통신비</option><option>공과금</option><option>의류/미용</option><option>건강/문화생활</option><option>교육/육아</option><option>교통/차량</option><option>경조사/회비</option><option>기타</option></select></td>';
+	        cols += '<td><input type="text" class="form-control" size="16" placeholder="내역 입력" name="cashContent' + out_Counter + '" id="outContent'+counter+'"/></td>';
+	        cols += '<td><div class="input-group"><span class="input-group-addon"><i class="fas fa-won-sign"></i></span><input type="number" class="form-control" value="1000" size="12" placeholder="금액 입력" name="cashPrice'+out_Counter+'" id="outPrice'+counter+'"/></div></td>';
+	        cols += '<td><select class="form-control match-content" name="outCategory'+out_Counter+'"><option>식비</option><option>통신비</option><option>공과금</option><option>의류/미용</option><option>건강/문화생활</option><option>교육/육아</option><option>교통/차량</option><option>경조사/회비</option><option>기타</option></select></td>';
 	        cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="삭제"></td>';
 	        newRow.append(cols);
 	        $("#outCashMyModal .table").append(newRow);
@@ -906,10 +939,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 	        $(this).closest("tr").remove();       
 	        out_Counter -= 1
 	    });
-
-
 	});
-
 
 
 	/* function calculateRow(row) {
@@ -939,23 +969,35 @@ function scheduleChoice(num, id, distinct, color, text) {
 	private int del; //삭제 여부 -->
 
 
-
+<!-- 참고 http://egloos.zum.com/dreamform/v/2805065 -->
 <!-- 수입 입력 내역 가져오기 -->
 <script type="text/javascript">
 $(document).ready(function () {
 	$("#btn_saveIo").on("click", function () {
-        alert("수입내역 : "+$("#inContent0").val());
-        var inContent = $("#inContent0").val();
-        //금액
-        alert("금액 : "+$("#inPrice0").val());
-        var inPrice = $("#inPrice0").val();
-        //분류
-        alert("분류 : "+$('[name="cashCategory0"]').val());
+		
+		//수입내역
+		//counter
+        alert("addrow 후 counter 값 :" +counter);
+		var row = parseInt(counter);
+		alert(typeof row);
+				
+        
+		for(var i=0; i<row; i++){
+           alert("수입내역 : "+$("#inContent"+i).val());
+           alert("금액 : "+ parseInt($("#inPrice"+i).val()));
+           alert("카테고리 : "+ $('[name="inCategory'+i+'"]').val());
+           
+			/* inContent  = $("#inContent"+i).val();
+			inPrice = parseInt($("#inPrice"+i).val());
+			inCategory = $('[name="inCategory'+i+'"]').val(); */
+			
+        };
+        
 	});
 });
-
-
 </script>
+
+
 
 </body>
 </html>

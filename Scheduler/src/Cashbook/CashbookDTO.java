@@ -18,7 +18,7 @@ public class CashbookDTO {
 	private String id;
 	private String title; //ex)식비, 교통비 분류
 	private String moneyDate; //기입 날짜
-	private int ioMoney; //지출, 수입 구분
+	private int ioMoney; //수입 0 , 지출1
 	private int category; //이미지
 	private int price; //금액
 	private String content; //상세 내역
@@ -43,6 +43,17 @@ public class CashbookDTO {
 		this.del = del;
 	}
 
+	
+	
+
+
+	public CashbookDTO(String title, int category, int price, String content) {
+		super();
+		this.title = title;
+		this.category = category;
+		this.price = price;
+		this.content = content;
+	}
 
 
 	public int getSeq() {
