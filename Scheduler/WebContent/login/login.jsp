@@ -318,7 +318,7 @@ border-bottom:3px solid #78788c
 			
 				
 				<h2>아이디 찾기</h2>
-				<form action="">
+				<form action="findAf.jsp">
 					<input class="modal__input" type="text" name="input-name" placeholder="이름">
 					<br>
 					<input class="modal__input" type="text" name="input-birth" placeholder="생년월일">

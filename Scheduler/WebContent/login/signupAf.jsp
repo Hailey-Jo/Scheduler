@@ -18,7 +18,7 @@ String repw = request.getParameter("input-repw");
 String name = request.getParameter("input-name");
 String birth = request.getParameter("input-birth");
 String email = request.getParameter("input-email");
-String agree = request.getParameter("agree");
+String agree = request.getParameter("CheckForm");
 // 약관 확인?
 
 		

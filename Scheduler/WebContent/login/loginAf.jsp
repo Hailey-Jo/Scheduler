@@ -14,9 +14,6 @@
 <%
 String id = request.getParameter("input_id");
 String pw = request.getParameter("input_pw");
-String save_login = request.getParameter("save_login");
-
-
 
 iuserDAO dao = userDAO.getInstance();
 userDTO user = dao.login(new userDTO(0, id, pw, null, null, null, null, 0));
@@ -32,14 +29,6 @@ if(user != null && !user.getId().equals("")){
 	session.setAttribute("login", user);
 	%>
 	
-	<%
-	if(save_login != null){
-		Cookie cookie_id = new Cookie("cookie_id", id);
-		Cookie cookie_pw = new Cookie("cookie_pw", pw);
-		response.addCookie(cookie_id);
-		response.addCookie(cookie_pw);
-	}
-	%>
 	</script>
 
 

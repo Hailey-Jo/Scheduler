@@ -130,6 +130,123 @@ public class userDAO implements iuserDAO {
 		}
 		
 		return user;
+
 	}
 
+	@Override
+	public boolean checkId(String id) {
+
+		String sql = " SELECT ID "
+				+ " FROM  USERDTO "
+				+ " WHERE ID = '"+id+"'";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		System.out.println("1/3 checkId Success");
+		
+		boolean findId = false;
+		
+		try {
+
+			conn = DBConnection.makeConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			System.out.println("2/3 checkId Success");
+			
+			
+			while(rs.next()) {
+				findId = true;
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			DBClose.close(psmt, conn, rs);
+			System.out.println("3/3 checkId Success");
+		}
+		
+		return findId;
+		
+	}
+
+	@Override
+	public String findId(String name, String birth) {
+
+		String sql = " SELECT ID "
+				+ " FROM USERDTO "
+				+ " WHERE NAME ='"+name+"' AND BIRTH = '"+birth+"'";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		String id = null;
+		
+		
+		try {
+
+			conn = DBConnection.makeConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				id = rs.getString("ID");
+			}
+			
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			System.out.println("찾기 성공~:"+ id);
+			DBClose.close(null, conn, rs);
+			
+		}
+		
+		return id;
+		
+	}
+
+	@Override
+	public String findPw(String id, String email) {
+
+		String sql = " SELECT PASSWORD "
+				+ " FROM USERDTO "
+				+ " WHERE ID = '"+id+"' AND EMAIL = '"+email+"'";
+		
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		System.out.println("1/3 findPw Success");
+		
+		String pw = null;
+		
+		try {
+
+			conn = DBConnection.makeConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			System.out.println("2/3 findPw Success");
+			
+			while(rs.next()) {
+				pw = rs.getString("PASSWORD");
+			}
+			System.out.println("3/3 findPw Success");
+			
+		} catch (SQLException e) {
+			System.out.println("findPw fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+			System.out.println("findPw Success");
+		}
+		 
+		return pw;
+		
+	}
 }

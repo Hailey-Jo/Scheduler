@@ -24,6 +24,22 @@ for(int i=0; i<list.size();i++){
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
 <title>Scheduler</title>
 <style type="text/css">
+aside{
+	float: left;
+	width: 300px;
+    max-width: 300px;
+    height : auto;
+    margin: 0;
+    padding: 10px;
+}
+
+article {
+    margin-left: 10px;
+    border-left: 1px solid gray;
+    overflow: hidden;
+    height: auto;
+}
+
 body {
     margin:40px 10px;
     padding:0;
@@ -98,6 +114,7 @@ margin-right: 10px;
 }
 
 
+
 </style>
 <link href="./fullcalendar-3.8.2/fullcalendar.css" rel="stylesheet"/>
 <link href="./fullcalendar-3.8.2/fullcalendar.print.css" rel="stylesheet" media="print"/>
@@ -120,34 +137,33 @@ margin-right: 10px;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
+<!-- icon 불러오기 -->
+<!--core first + styles last-->
+<link href="/static/fontawesome/fontawesome-all.css" rel="stylesheet">
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+<!--load everything-->
+<script defer src="/static/fontawesome/fontawesome-all.js"></script>
+<script defer src="/static/fontawesome/fa-v4-shim.js"></script>
+
 <script type="text/javascript">
 
-jQuery(document).ready(function() {
-    jQuery("#calendar-mini").fullCalendar({
-    	height: 347,
-    	fixedWeekCount : false,
-    	
-    	/* eventAfterAllRender: function(){
-    		  $('.fc-week.fc-widget-content.fc-rigid').attr('style', 'min-height: 3em');
-    	}, */
 
-    	eventAfterAllRender: function(){
-  		  $('#calendar-mini .fc-row').css('min-height','10px'); 
-  		  $('#calendar-mini .fc-week, #calendar-mini .fc-widget-content, #calendar-mini .fc-rigid').attr('style','height: 5px');
-  		},
-  		
+
+jQuery(document).ready(function() {
+    jQuery("#calendar").fullCalendar({
+    	fixedWeekCount : false,
         header : {
               left : "prev"
             , center : "title"
-            , right: 'next'
+            , right: 'month,agendaWeek,agendaDay, next'
         }
         , navLinks: true // can click day/week names to navigate views
         , selectable: true
         , selectHelper: true
     
         , locale : "ko"
-        , editable : false
-        , eventLimit : false
+        , editable : true
+        , eventLimit : true
 
         , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
 
@@ -165,144 +181,99 @@ jQuery(document).ready(function() {
             jQuery("#loading").toggle(bool);
         }
         , events: [
+            <%=eventstring %>
             {
-                title  : 'event1',
-                start  : '2018-02-01'
-            },
-            {
-                title  : 'event2',
-                start  : '2018-02-05',
-                end    : '2018-02-07'
-            },
-            {
-                title  : 'event3',
-                start  : '2018-02-09T12:30:00',
-                allDay : false // will make the time show
+            	title : 'star',
+            	start : '2018-02-05',
+            	end : '2018-02-08',
+            	imageurl:'.\\image\\star.png'
             }
-        ]
+        ],
+        eventRender: function(event, eventElement) {
+        	if (event.imageurl)
+        		{             		
+        		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
+        	} 
+        },
+                
+         select: function(start, end) {
+            // Display the modal.
+            // You could fill in the start and end fields based on the parameters
+            $('.modal').modal('show');
 
+        },
+        eventClick: function(event, element) {
+            // Display the modal and set the values to the event values.
+            alert('Event: ' + event.imageurl);
+            $('.modal').modal('show');
+            $('.modal').find('#title').val(event.title);
+            $('.modal').find('#starts-at').val(event.start);
+            $('.modal').find('#ends-at').val(event.end);
+
+        },
+        editable: true,
+        eventLimit: true // allow "more" link when too many events
+
+    });
+
+    // Bind the dates to datetimepicker.
+    // You should pass the options you need
+    $("#starts-at, #ends-at").datetimepicker();
+
+    // Whenever the user clicks on the "save" button om the dialog
+    $('#save-event').on('click', function() {
+        var title = $('#title').val();
+        if (title) {
+            var eventData = {
+                title: title,
+                start: $('#starts-at').val(),
+                end: $('#ends-at').val()
+            };
+            $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+        }
+        $('#calendar').fullCalendar('unselect');
+
+        // Clear modal inputs
+        $('.modal').find('input').val('');
+
+        // hide modal
+        $('.modal').modal('hide');
     });
 });
 
-    jQuery(document).ready(function() {
-        jQuery("#calendar").fullCalendar({
-        	fixedWeekCount : false,
-            header : {
-                  left : "prev"
-                , center : "title"
-                , right: 'month, agendaWeek, agendaDay, next'
-            }
-	        , navLinks: true // can click day/week names to navigate views
-	        , selectable: true
-	        , selectHelper: true
-        
-            , locale : "ko"
-            , editable : true
-            , eventLimit : true
-
-            , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
-
-            , eventSources : [
-                // 대한민국의 공휴일
-                {
-                      googleCalendarId : "ko.south_korea#holiday@group.v.calendar.google.com"
-                    , className : "koHolidays"
-                    , color : "#FF0000"
-                    , textColor : "#FFFFFF"
-                    , editable : false
-                }
-            ]
-            , loading:function(bool) {
-                jQuery("#loading").toggle(bool);
-            }
-            , events: [
-                <%=eventstring %>
-                {
-                	title : 'star',
-                	start : '2018-02-05',
-                	end : '2018-02-08',
-                	imageurl:'.\\image\\star.png'
-                }
-            ],
-            eventRender: function(event, eventElement) {
-            	if (event.imageurl)
-            		{             		
-            		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
-            	} 
-            },
-                    
-             select: function(start, end) {
-                // Display the modal.
-                // You could fill in the start and end fields based on the parameters
-                $('.modal').modal('show');
-
-            },
-            eventClick: function(event, element) {
-                // Display the modal and set the values to the event values.
-                alert('Event: ' + event.imageurl);
-                $('.modal').modal('show');
-                $('.modal').find('#title').val(event.title);
-                $('.modal').find('#starts-at').val(event.start);
-                $('.modal').find('#ends-at').val(event.end);
-
-            },
-            editable: true,
-            eventLimit: true // allow "more" link when too many events
-
-        });
-
-        // Bind the dates to datetimepicker.
-        // You should pass the options you need
-        $("#starts-at, #ends-at").datetimepicker();
-
-        // Whenever the user clicks on the "save" button om the dialog
-        $('#save-event').on('click', function() {
-            var title = $('#title').val();
-            if (title) {
-                var eventData = {
-                    title: title,
-                    start: $('#starts-at').val(),
-                    end: $('#ends-at').val()
-                };
-                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-            }
-            $('#calendar').fullCalendar('unselect');
-
-            // Clear modal inputs
-            $('.modal').find('input').val('');
-
-            // hide modal
-            $('.modal').modal('hide');
-        });
-    });
-
-    // addEventSource, removeEventSource의 기능하는데 구별값은 googleCalendarId 이다.
-    // 그렇기에 googleCalendarId는 반드시 입력해야한다.
-    function scheduleChoice(num, id, distinct, color, text) {
-        if(jQuery(".swingBar").eq(num).is(":checked")) {
-            jQuery("#calendar").fullCalendar("addEventSource", { googleCalendarId : id, className : distinct, color : color, textColor : text });
-        } else {
-            jQuery("#calendar").fullCalendar("removeEventSource", { googleCalendarId : id });
-        }
+// addEventSource, removeEventSource의 기능하는데 구별값은 googleCalendarId 이다.
+// 그렇기에 googleCalendarId는 반드시 입력해야한다.
+function scheduleChoice(num, id, distinct, color, text) {
+    if(jQuery(".swingBar").eq(num).is(":checked")) {
+        jQuery("#calendar").fullCalendar("addEventSource", { googleCalendarId : id, className : distinct, color : color, textColor : text });
+    } else {
+        jQuery("#calendar").fullCalendar("removeEventSource", { googleCalendarId : id });
     }
+}
 
+    
 </script>
 </head>
 <body>
-    <div id="loading">loading...</div>
+
+
+   <%--  <aside>
+	<jsp:include page="miniCalendar.jsp"></jsp:include>
+	안녕
+    </aside> --%>
     
-	<div id="wrapper">
+    	<!-- 우측 본문 -->
+	<aside>
+		<div id="calendar-mini"></div>
+	</aside>
 	
-
-	<div style="padding: 10px; margin-left: 10px;">
-	<header><div style="height: 10px;"></div><div>Scheduler</div><div style="height: 10px;"></div></header>
-	</div>
+		
+	<article>
+	<!-- include 불러오기 방법1) -->
+	<div id="loading">loading...</div>
+	<%@ include file="inTable.jsp" %>
+	</article>
 	
-	<div id="calendar-mini"></div>
-	
-    <div id="calendar" ></div>
-
-</div>
 	<div id='datepicker'></div>
 
 	<div class="modal fade" tabindex="-1" role="dialog">
@@ -339,5 +310,8 @@ jQuery(document).ready(function() {
 	        </div><!-- /.modal-content -->
 	    </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
+	<script type="text/javascript">
+	
+	</script>
 </body>
 </html>

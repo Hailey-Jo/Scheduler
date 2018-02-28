@@ -98,6 +98,7 @@ margin-right: 10px;
 }
 
 
+
 </style>
 <link href="./fullcalendar-3.8.2/fullcalendar.css" rel="stylesheet"/>
 <link href="./fullcalendar-3.8.2/fullcalendar.print.css" rel="stylesheet" media="print"/>
@@ -293,14 +294,10 @@ jQuery(document).ready(function() {
     
 	<div id="wrapper">
 	
-
-	<div style="padding: 10px; margin-left: 10px;">
-	<header><div style="height: 10px;"></div><div>Scheduler</div><div style="height: 10px;"></div></header>
-	</div>
 	
 	<div id="calendar-mini"></div>
 	
-    <div id="calendar" ></div>
+ 
 
 </div>
 	<div id='datepicker'></div>

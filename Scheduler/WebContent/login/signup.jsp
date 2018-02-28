@@ -24,8 +24,8 @@ html {
 }
 
 body {
-	background-color: navy;
-	color: #606468;
+	background-color: #006699;
+	color: white;
 	font: 400 0.875rem/1.5 "Open Sans", sans-serif;
 	margin: 0;
 	min-height: 100%;
@@ -156,6 +156,10 @@ input {
 					<input class="form__input" name="input-name" type="text" placeholder="이름">
 				</div>
 				
+				<input type=file name='file1' style='display: none;'> 
+				<input type='text' name='file2' id='file2' size="10"> 
+				<img src='이미지경로' border='0' onclick='document.all.file1.click(); document.all.file2.value=document.all.file1.value'> 
+								
 				<div class="form__field">
 					<div>
 						<input type="text" placeholder="생년월일" readonly="readonly"> 						
