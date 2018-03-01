@@ -57,9 +57,14 @@ footer {
     clear: left;
     text-align: right;
 }
+/* hover 시 color */
 a:hover {
     background-color: #006699;
 }
+.jktCD-click:hover{
+	color:#FFFFFF;
+}
+
 
 #main{
 	position: absolute;
@@ -119,6 +124,7 @@ ul li a:hover, ul li a:focus {
     color:#fff;  
     background-color:#f40;  
 }
+
 </style>
 <link href="./fullcalendar-3.8.2/fullcalendar.css" rel="stylesheet"/>
 <link href="./fullcalendar-3.8.2/fullcalendar.print.css" rel="stylesheet" media="print"/>
@@ -138,11 +144,6 @@ ul li a:hover, ul li a:focus {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-
-<!-- top drop menu -->
-<link href="./css/jktCuteDropdown.css" rel="stylesheet">
-<link href="./css/style_by_you_need.css" rel="stylesheet">
-<script src="./js/jktCuteDropdown.js"></script>
 
 <script type="text/javascript">
 //좌측 fullcalender
@@ -181,7 +182,13 @@ jQuery(document).ready(function() {
         	if (event.imageurl){             		
         		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
         	}
+        	
         	$('td .fc-event-container').find('a').removeAttr("href");
+        }
+        , eventClick: function(e) {  
+            var target = $(this).find('a').attr('href', '#');
+            //alert(target);
+            return false
         }
 	});
 });	
@@ -225,7 +232,8 @@ jQuery(document).ready(function() {
             	if (event.imageurl){             		
             		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
             	}
-            	$('td .fc-event-container').find('a').removeAttr("href");
+            	
+            	$('#calendar td .fc-event-container').find('a').removeAttr("href");
             }
             , select: function(start, end) {
                 // Display the modal.
@@ -234,6 +242,11 @@ jQuery(document).ready(function() {
 
             },
             eventClick: function(event, element) {
+            	
+            	var target = $(this).find('a').attr('href', '#');
+            	alert(target);
+                return false
+            	
                 // Display the modal and set the values to the event values.
                 $('.modal').modal('show');
                 $('.modal').find('#title').val(event.title);
@@ -242,9 +255,7 @@ jQuery(document).ready(function() {
             },
 
         });
-    
-    	$('.demo').jktCD({typeCursor:'click'});
-    
+
         $('#my-today-button').click(function() {
             $('#calendar').fullCalendar('today');
         });
@@ -274,6 +285,7 @@ jQuery(document).ready(function() {
     });
     
 </script>
+<title>BizPayDay</title>
 </head>
 <body>
 <!-- 상단 메뉴바 -->
@@ -291,26 +303,18 @@ jQuery(document).ready(function() {
 					<li><a class="menuLink" href="./cashbook/cashbookMain.jsp"><img src="./icon/cash-n.png" ></a></li>
 				</ul>
 			</div>
-		  <div class="login_info" style=" float: left; width: 20%;">
-		  <ul>
-		    <li class="demo jktCD">
-			  <span class="jktCD-click"><%=id %></span>
-			  <div class="jktCD-main jktCD-style-one">
-			    <ul>
-			      <li class="item"><a href="#">Home</a></li>
-			      <li class="item"><a href="#">Settings</a></li>
-			      <li class="item"><a href="#">Profile</a></li>
-			      <li class="item"><a href="#">Login</a></li>
-			      <li class="item"><a href="#">Register</a></li>
-			      <li class="pemisah"></li>
-			      <li class="item"><a href="">Sign Out</a></li>
-			    </ul>
-			  </div>
-			</li>
-			<li>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
-			<li><a href="login.html">로그아웃</a></li>
-			</ul>
-		  </div>
+			<div class="login_info" style=" float: left; width: 18%; height: 30px;">
+		      <ul class="nav navbar-nav navbar-right">
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style=" padding:5px; height: 30px;"><%=id %><span class="caret"></span></a>
+		          <ul class="dropdown-menu" role="menu">
+		            <li><a href="#">My List</a></li>
+		            <li><a href="#">My Info</a></li>
+		            <li><a href="login.html">Log out</a></li>
+		          </ul>
+		        </li>
+		      </ul>
+ 		  </div>
 		</nav>
 	</header>
 
@@ -348,8 +352,7 @@ jQuery(document).ready(function() {
 			</table>
 		</div>
 	</aside>
-		
-			
+
 	<!-- 우측 본문 -->
 	<article>
 		<div id="calendar"></div>
