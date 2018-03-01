@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import Schedule.ScheduleDAO;
@@ -154,8 +155,85 @@ public class CashbookDAO implements iCashbookDAO{
 		
 		return cList;
 	}
+
 	
+
 	/*---------------------------------------------------------
 	 * 수입 / 지출 합계 구하기 (이달의 가계)
 	 ---------------------------------------------------------*/
+	
+	@Override
+	public int getInOutcome(String id, int ioMoney, String todayDate) {
+		// TODO Auto-generated method stub
+		
+		//System.out.println("getInoutcome id : " + id);
+		
+		Calendar cal = Calendar.getInstance();
+		 
+		//현재 년도, 월
+		int year = cal.get ( cal.YEAR );
+		int month = cal.get ( cal.MONTH ) + 1 ;
+		String monthAf;
+		if(month<10) {
+			monthAf="0"+month;
+		}else {
+			monthAf=month+"";
+		}
+		
+		todayDate = year+"" + monthAf;
+		System.out.println("todayDate : " + todayDate);
+
+		
+		/*SELECT SUM(PRICE)
+		FROM MONEYBOOK 
+		WHERE ID='creepin' AND IOMONEY=0 AND TO_CHAR(MONEYDATE, 'YYYYMM') = '201802';*/
+		
+		String sql = " SELECT SUM(PRICE) "
+				+ " FROM MONEYBOOK "
+				+ " WHERE ID=? "
+				+ " AND IOMONEY=?  "
+				+ " AND TO_CHAR(MONEYDATE, 'YYYYMM') = ? ";
+		
+		System.out.println("getInOutcome sql : "+sql);
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		int result = 0;
+		
+		try {
+			conn = DBConnection.makeConnection();
+			System.out.println("1/6 success getInOutcome");
+	
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1,id);
+			psmt.setInt(2, ioMoney);
+			psmt.setString(3,todayDate);
+			System.out.println("2/6 success getInOutcome");
+			
+			rs = psmt.executeQuery();
+			   if(rs.next()){
+			// null 값이 아닌경우 이 부분에 while(rs.next()){} 또는 do{ }while(rs.next()){} 구문을 쓸수 있다.
+				   result = rs.getInt(1);
+			   }else{
+			// ResultSet값이 null인 경우 처리하고 싶은 코드를 작성하면 된다.
+				   result=0;
+			 }
+
+			System.out.println("3/6 success getInOutcome");
+			
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("fail getInOutcome");
+		}finally {
+			DBClose.close(psmt, conn, rs);
+			System.out.println("4/6 success getInOutcome");
+		}
+		
+		return result;
+	}
+	
+	
 }

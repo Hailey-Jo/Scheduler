@@ -9,4 +9,9 @@ public interface iCashbookDAO {
 	
 	//최근 내역 불러오기
 	public List<CashbookDTO> getCashDate(String id);
+	
+	//이달의 총 수입 / 지출
+	public int getInOutcome(String id, int ioMoney, String todayDate);
+	
+	
 }

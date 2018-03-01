@@ -28,6 +28,7 @@ height: 90%;
 padding: 10px;
 /* Calendar 호출시 height: 650 설정하기  */
 }
+
 h2 { text-align: center; }
 .buttons { display: block; margin: 0 auto; text-align: center; }
 .buttons button { margin-bottom: 5px; }

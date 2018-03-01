@@ -1,3 +1,5 @@
+<%@page import="com.sun.javafx.binding.StringFormatter"%>
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Cashbook.CashbookDTO"%>
 <%@page import="Cashbook.CashbookDAO"%>
@@ -9,7 +11,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-
 <%
 //cashbook 연결
 iCashbookDAO cashDao = CashbookDAO.getInstance();
@@ -18,13 +19,24 @@ iCashbookDAO cashDao = CashbookDAO.getInstance();
 List<CashbookDTO> cList = new ArrayList<CashbookDTO>();
 cList = cashDao.getCashDate("creepin");
 
+
 for(int i=0; i<cList.size(); i++){
 	System.out.println(cList.get(i).toString());
 }
 
+
+//수입
+int income = cashDao.getInOutcome("creepin", 0, "");
+System.out.println("수입 : " +income);
+//지출
+int spending = cashDao.getInOutcome("creepin", 1, "");
+System.out.println("지출 : " +spending);
+//총액
+
 %>
 
-<%iScheduleDAO dao = ScheduleDAO.getInstance();
+<%
+iScheduleDAO dao = ScheduleDAO.getInstance();
 List<ScheduleDTO> list = dao.getAllSchedulList();
 String eventstring = "";
 for(int i=0; i<list.size();i++){
@@ -38,13 +50,14 @@ for(int i=0; i<list.size();i++){
 	System.out.println(eventstring);
 }
 %>
+
 <!DOCTYPE HTML>
 <html>
 
 <head>
 <link rel="stylesheet" type="text/css" href="./css/header.css"> 
-<style type="text/css">
 
+<style type="text/css">
 aside{
 	float: left;
 	width: 300px;
@@ -84,14 +97,12 @@ body {
      패딩값을 적당하게 올려주시면 됩니다.*/
 }
 
-
 #loading {
     display:none;
     position:absolute;
     top:10px;
     right:10px;
 }
-
 
 #calendar {
 width:80vm;
@@ -110,6 +121,7 @@ padding: 10px;
 margin-left: 10px;
 margin-right: 10px;
 }
+
 #calendar-mini div.fc-content{
 	height: 1px;
 }
@@ -147,13 +159,30 @@ h2 { text-align: center; }
 .buttons button { margin-bottom: 5px; }
 
 
+aside .badge-error { 
+  background-color: #b94a48;
+}
+aside .badge-error:hover {
+  background-color: #953b39;
+}
 
+aside .badge-info { 
+  background-color: #3a87ad;
+}
+aside .badge-info:hover {
+  background-color: #2d6987;
+}
+
+/*더보기 버튼*/
+#moreBtn{
+	float: right;
+}
 
 
 /* modal 조정 */
 
  .modal {
-        text-align: center;
+	        text-align: center;
 }
  
 @media screen and (min-width: 768px) { 
@@ -231,7 +260,6 @@ h2 { text-align: center; }
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
 <link href="./fullcalendar-3.8.2/fullcalendar.css" rel="stylesheet"/>
 <link href="./fullcalendar-3.8.2/fullcalendar.print.css" rel="stylesheet" media="print"/>
 <script type="text/javascript" src="./fullcalendar-3.8.2/lib/moment.min.js"></script>
@@ -239,11 +267,12 @@ h2 { text-align: center; }
 <script type="text/javascript" src="./fullcalendar-3.8.2/fullcalendar.js" charset="euc-kr"></script>
 <script type="text/javascript" src="./fullcalendar-3.8.2/gcal.js"></script>
 <script type="text/javascript" src="./fullcalendar-3.8.2/locale-all.js"></script>
-
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
 <!-- 부가적인 테마 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
@@ -254,11 +283,7 @@ h2 { text-align: center; }
 
 <!-- icon 불러오기 -->
 <!--core first + styles last-->
-<link href="/static/fontawesome/fontawesome-all.css" rel="stylesheet">
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-<!--load everything-->
-<script defer src="/static/fontawesome/fontawesome-all.js"></script>
-<script defer src="/static/fontawesome/fa-v4-shim.js"></script>
 
 <script type="text/javascript">
 jQuery(document).ready(function() {
@@ -581,15 +606,35 @@ function scheduleChoice(num, id, distinct, color, text) {
 				<ul class="list-group">
 					<li class="list-group-item d-flex justify-content-between align-items-center">
 					  수입
-						<span class="badge badge-primary badge-pill">+ 2,000</span>
+					  <% if(income==0){
+						  //수입 0 이면
+						  %>
+						  <span class="badge badge-primary badge-pill"><%=income %></span>
+						  <%
+					  }else{
+						  %>
+						  <span class="badge badge-info">+ <%=income %></span>
+						  <%
+					  }
+					  %>
 					</li>
 					<li class="list-group-item d-flex justify-content-between align-items-center">
-					  지출
-						<span class="badge badge-primary badge-pill">- 1,000</span>
+					지출
+					  <% if(spending==0){
+						  //지출 0 이면
+						  %>
+						  <span class="badge badge-primary badge-pill"><%=spending %></span>
+						  <%
+					  }else{
+						  %>
+						  <span class="badge badge-error">- <%=spending %></span>
+						  <%
+					  }
+					  %>
 					</li>
 					<li class="list-group-item d-flex justify-content-between align-items-center">
 					  총액
-						<span class="badge badge-primary badge-pill">1,000</span>
+						<span class="badge badge-primary badge-pill">= <%=income-spending %></span>
 					</li>
 				</ul>
 				<hr>
@@ -610,33 +655,69 @@ function scheduleChoice(num, id, distinct, color, text) {
 						<%
 					
 					//만약 불러올 리스트 5개 이하이면
-					}else if(cList.size()<5){
+					}else if(cList.size()<6){
 						for(int i=0; i<cList.size(); i++) {
-							%>
-							<li class="list-group-item d-flex justify-content-between align-items-center">
-							<%=cList.get(i).getContent() %>
-							<span class="badge badge-primary badge-pill">- <%=cList.get(i).getPrice() %></span>
-							</li>
-							<%
+							//천단위 콤마
+							int price = cList.get(i).getPrice();
+							String priceAf =String.format("%,d", price);
+							
+							//수입일 때
+							if(cList.get(i).getIoMoney()==0){
+								%>
+								<li class="list-group-item d-flex justify-content-between align-items-center">
+								<%=cList.get(i).getContent() %>
+								<span class="badge badge-info">+ <%=priceAf  %> 원</span>
+								</li>
+								<%
+							}else{
+								//지출일 때
+								%>
+								<li class="list-group-item d-flex justify-content-between align-items-center">
+								<%=cList.get(i).getContent() %>
+								<span class="badge badge-error">- <%=priceAf %> 원</span>
+								</li>
+								<%
+							}
 						}
-					}else{
-						//리스트 5개 이상
-						for(int i=0; i<6; i++) {
-							%>
-							<li class="list-group-item d-flex justify-content-between align-items-center">
-							<%=cList.get(i).getContent() %>
-							<span class="badge badge-primary badge-pill">- <%=cList.get(i).getPrice() %></span>
-							</li>
-							<%
+					}else {
+						//리스트 5개 초과
+						for(int i=0; i<5; i++) {
+							//천단위 콤마
+							int price = cList.get(i).getPrice();
+							String priceAf =String.format("%,d", price);
+							
+							//수입일 때
+							if(cList.get(i).getIoMoney()==0){
+								%>
+								<li class="list-group-item d-flex justify-content-between align-items-center">
+								<%=cList.get(i).getContent() %>
+								<span class="badge badge-info">+ <%=priceAf  %> 원</span>
+								</li>
+								<%
+							}else{
+								//지출일 때
+								%>
+								<li class="list-group-item d-flex justify-content-between align-items-center">
+								<%=cList.get(i).getContent() %>
+								<span class="badge badge-error">- <%=priceAf %> 원</span>
+								</li>
+								<%
+							}
 						}
 					}
 					%>
 				</ul>
+				
+				<%if(cList.size()>6){
+					%>
+					<a href="#" id=moreBtn class="badge badge-light" style="background-color: #fff; color: #777;">... 더보기</a>
+					<%
+				}
+				%>
 			</div>
 		</div>
 	</aside>
 		
-			
 <!-------------------------------------------------------------------------------
 	캘린더 본문 (article)
  ------------------------------------------------------------------------------->
@@ -996,7 +1077,6 @@ $(document).ready(function () {
 	});
 });
 </script>
-
 
 
 </body>
