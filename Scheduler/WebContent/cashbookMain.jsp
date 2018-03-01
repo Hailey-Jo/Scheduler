@@ -12,13 +12,16 @@
     pageEncoding="UTF-8"%>
 
 <%
+
+String id = request.getParameter("login_username");  
+System.out.println("id : "+id);
+
 //cashbook 연결
 iCashbookDAO cashDao = CashbookDAO.getInstance();
 
 //최근 리스트 받아오기
 List<CashbookDTO> cList = new ArrayList<CashbookDTO>();
 cList = cashDao.getCashDate("creepin");
-
 
 for(int i=0; i<cList.size(); i++){
 	System.out.println(cList.get(i).toString());
@@ -31,7 +34,6 @@ System.out.println("수입 : " +income);
 //지출
 int spending = cashDao.getInOutcome("creepin", 1, "");
 System.out.println("지출 : " +spending);
-//총액
 
 %>
 
@@ -875,7 +877,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 		          <td>
 		            <div class="input-group">
 		              <span class="input-group-addon"><i class="fas fa-won-sign"></i></span>
-		              <input type="number" class="form-control" value="1000" size="12" placeholder="금액 입력" name="cashPrice"/>
+		              <input type="number" class="form-control" value="0" size="12" placeholder="금액 입력" name="cashPrice"/>
 		            </div>
 		          </td>
 		          
@@ -945,7 +947,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 	        
 	        cols += '<td><input type="text" class="form-control" size="16" placeholder="내역 입력" name="cashContent'+ counter +'" id="inContent'+counter+'"/></td>';
 	        cols += '<td><div class="input-group"><span class="input-group-addon"><i class="fas fa-won-sign"></i></span><input type="number" class="form-control" value="0" size="15" placeholder="금액 입력" name="cashPrice'+counter+'" id="inPrice'+counter+'" /></div></td>';
-	        cols += '<td><select class="form-control match-content" name="inCategory'+counter+'"><option selected="selected">주수입</option><option>부수입</option><option>기타</option></select></td>';
+	        cols += '<td><select class="form-control match-content" id="inCategory'+counter+'"><option selected="selected">주수입</option><option>부수입</option><option>기타</option></select></td>';
 	        cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="삭제"></td>';
 	        newRow.append(cols);
 	        $("#inCashMyModal .table").append(newRow);
@@ -1007,7 +1009,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 	        
 	        cols += '<td><input type="text" class="form-control" size="16" placeholder="내역 입력" name="cashContent' + out_Counter + '" id="outContent'+counter+'"/></td>';
 	        cols += '<td><div class="input-group"><span class="input-group-addon"><i class="fas fa-won-sign"></i></span><input type="number" class="form-control" value="1000" size="12" placeholder="금액 입력" name="cashPrice'+out_Counter+'" id="outPrice'+counter+'"/></div></td>';
-	        cols += '<td><select class="form-control match-content" name="outCategory'+out_Counter+'"><option>식비</option><option>통신비</option><option>공과금</option><option>의류/미용</option><option>건강/문화생활</option><option>교육/육아</option><option>교통/차량</option><option>경조사/회비</option><option>기타</option></select></td>';
+	        cols += '<td><select class="form-control match-content" id="outCategory'+out_Counter+'"><option>식비</option><option>통신비</option><option>공과금</option><option>의류/미용</option><option>건강/문화생활</option><option>교육/육아</option><option>교통/차량</option><option>경조사/회비</option><option>기타</option></select></td>';
 	        cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="삭제"></td>';
 	        newRow.append(cols);
 	        $("#outCashMyModal .table").append(newRow);
@@ -1054,25 +1056,49 @@ function scheduleChoice(num, id, distinct, color, text) {
 <!-- 수입 입력 내역 가져오기 -->
 <script type="text/javascript">
 $(document).ready(function () {
-	$("#btn_saveIo").on("click", function () {
-		
+	/* $("#btn_saveIo").on("click", function () { */
+	$("#btn_saveIo").click(function () {	
 		//수입내역
 		//counter
         alert("addrow 후 counter 값 :" +counter);
 		var row = parseInt(counter);
 		alert(typeof row);
 				
-        
+		
 		for(var i=0; i<row; i++){
-           alert("수입내역 : "+$("#inContent"+i).val());
+           /* alert("수입내역 : "+$("#inContent"+i).val());
            alert("금액 : "+ parseInt($("#inPrice"+i).val()));
-           alert("카테고리 : "+ $('[name="inCategory'+i+'"]').val());
-           
-			/* inContent  = $("#inContent"+i).val();
-			inPrice = parseInt($("#inPrice"+i).val());
-			inCategory = $('[name="inCategory'+i+'"]').val(); */
-			
+           alert("금액 : "+ parseInt($("#inCategory"+i).val())); */
         };
+        
+        var arr = [];
+        for(var i=0; i<row; i++){
+        	arr.push($("#inContent"+i).val());
+        	arr.push($("#inPrice"+i).val());
+        	arr.push($("#inCategory"+i).val());
+    	};
+    	
+		$.ajax({
+			
+            type : "get",
+            url : "./check.jsp",
+            //여러개 데이터 보낼 때 Json 방식
+            data : {
+				"test" : arr
+			},
+			dataType : "text",
+			contentType : "application; charset=utf-8",
+			traditional : true,
+			
+            success : function(data){
+                alert("success");
+            },
+            error : function(request,status,error){
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+        
+            
+        });
         
 	});
 });
