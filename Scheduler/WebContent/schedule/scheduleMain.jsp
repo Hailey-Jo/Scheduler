@@ -224,10 +224,22 @@ ul li a:hover, ul li a:focus {
         		} 
        		 },
        	  eventClick:  function(event, jsEvent, view) {
-              $('#modalTitle').html(event.title);
-              $('#modalBody').html(event.description);
-              $('#eventUrl').attr('href','updateschedule.jsp?seq='+event.id);
-              $('#fullCalModal').modal();
+
+			var moment = $('#calendar').fullCalendar('getDate').format('YYYYMM');
+			var eid = event.id;
+/* 			
+			alert("moment==>"+moment);
+			alert("eid.substring(0,8)==>"+eid.substring(0,8));
+*/		     	
+			if(eid.indexOf(moment) == 0){
+				var target = $(this).find('a').attr('href', '#');
+				return false
+			}else{
+				$('#modalTitle').html(event.title);
+				$('#modalBody').html(event.description);
+				$('#eventUrl').attr('href','updateschedule.jsp?seq='+event.id);
+				$('#fullCalModal').modal();
+			}
           },
             editable: true,
             eventLimit: true // allow "more" link when too many events
@@ -252,6 +264,7 @@ ul li a:hover, ul li a:focus {
     }
      
 </script>
+<title>BizPayDay</title>
 </head>
 <body>
 <!-- <div id ="main"> -->
