@@ -16,7 +16,7 @@ for(int i=0; i<list.size();i++){
 	eventstring += "end : '"+list.get(i).getEndDate().substring(0, 10)+"',";
 	eventstring += "backgroundColor : '"+list.get(i).getCategory()+"',";
 	if(list.get(i).getImportant()==1){
-		eventstring += "imageurl : " +" '..\\"+"\\image\\"+"\\"+"star.png',";
+		eventstring += "imageurl : " +" '.\\"+"\\image\\"+"\\"+"star.png',";
 	}	
 	eventstring +="},"+"\n";	
 }
@@ -25,8 +25,8 @@ for(int i=0; i<list.size();i++){
 <html>
 
 <head>
-<link rel="stylesheet" type="text/css" href="../css/header.css">
-<link rel="stylesheet" type="text/css" href="../css/calendar.css">  
+<link rel="stylesheet" type="text/css" href="./css/header.css">
+<link rel="stylesheet" type="text/css" href="./css/calendar.css">  
 <style type="text/css">
 
 aside{
@@ -111,13 +111,13 @@ ul li a:hover, ul li a:focus {
 </style>
 <!-- DatePicker -->
 
-<link href="../fullcalendar-3.8.2/fullcalendar.css" rel="stylesheet"/>
-<link href="../fullcalendar-3.8.2/fullcalendar.print.css" rel="stylesheet" media="print"/>
-<script type="text/javascript" src="../fullcalendar-3.8.2/lib/moment.min.js"></script>
-<script type="text/javascript" src="../fullcalendar-3.8.2/lib/jquery.min.js"></script>
-<script type="text/javascript" src="../fullcalendar-3.8.2/fullcalendar.js" charset="euc-kr"></script>
-<script type="text/javascript" src="../fullcalendar-3.8.2/gcal.js"></script>
-<script type="text/javascript" src="../fullcalendar-3.8.2/locale-all.js"></script>
+<link href="./fullcalendar-3.8.2/fullcalendar.css" rel="stylesheet"/>
+<link href="./fullcalendar-3.8.2/fullcalendar.print.css" rel="stylesheet" media="print"/>
+<script type="text/javascript" src="./fullcalendar-3.8.2/lib/moment.min.js"></script>
+<script type="text/javascript" src="./fullcalendar-3.8.2/lib/jquery.min.js"></script>
+<script type="text/javascript" src="./fullcalendar-3.8.2/fullcalendar.js" charset="euc-kr"></script>
+<script type="text/javascript" src="./fullcalendar-3.8.2/gcal.js"></script>
+<script type="text/javascript" src="./fullcalendar-3.8.2/locale-all.js"></script>
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
@@ -210,15 +210,15 @@ ul li a:hover, ul li a:focus {
 			
 			<div class="topMenu_icon" align="center">
 				<ul>
-					<li><a class="menuLink" href="NewFile.jsp"><img src="../icon/home-n.png" onmouseover='this.src="../icon/home-w.png"' onmouseout='this.src="../icon/home-n.png"' ></a></li>
-					<li><a class="menuLink" href="NewFile.jsp"><img src="../icon/schedule-n.png" onmouseover='this.src="../icon/schedule-w.png"' onmouseout='this.src="../icon/schedule-n.png"' ></a></li>
-					<li><a class="menuLink" href=""><img src="../icon/cash-w.png" ></a></li>
+					<li><a class="menuLink" href="NewFile.jsp"><img src="./icon/home-n.png" onmouseover='this.src="./icon/home-w.png"' onmouseout='this.src="./icon/home-n.png"' ></a></li>
+					<li><a class="menuLink" href="NewFile.jsp"><img src="./icon/schedule-n.png" onmouseover='this.src="./icon/schedule-w.png"' onmouseout='this.src="./icon/schedule-n.png"' ></a></li>
+					<li><a class="menuLink" href=""><img src="./icon/cash-w.png" ></a></li>
 				</ul>
 			</div>
 			
 			<div class="topMenu_logInOut">
 				<ul>
-					<!-- <li><img src="../image/m01.jpg" style=""></li> -->
+					<!-- <li><img src="./image/m01.jpg" style=""></li> -->
 					<li>사용자 이름</li>
 					<li>　|　</li>
 					<li><a href="">로그아웃</a></li>
