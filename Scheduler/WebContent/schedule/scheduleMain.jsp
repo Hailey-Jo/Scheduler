@@ -9,25 +9,32 @@
 List<ScheduleDTO> list = dao.getAllSchedulList();
 String eventstring = "";
 for(int i=0; i<list.size();i++){	
-	eventstring +="{";
+	
+	eventstring +="{";	
 	eventstring += "title : '"+list.get(i).getTitle()+"',";
+	eventstring += "id : '"+list.get(i).getSeq()+"',";
 	eventstring += "start : '"+list.get(i).getStartDate().substring(0, 10)+"',";
 	eventstring += "end : '"+list.get(i).getEndDate().substring(0, 10)+"',";
+	eventstring += "description : '"+list.get(i).getContent()+"',";	
+	eventstring += "backgroundColor : '"+list.get(i).getCategory()+"',";
 	if(list.get(i).getImportant()==1){
-		eventstring += "imageurl : " +" '.\\"+"\\image\\"+"\\"+"star.png',";
+		eventstring += "imageurl : " +" '..\\"+"\\image\\"+"\\"+"star.png',";
 	}	
 	eventstring +="},"+"\n";
 	
-	//System.out.println(eventstring);
 }
 %>
 <!DOCTYPE HTML>
 <html>
 
 <head>
-<link rel="stylesheet" type="text/css" href="./css/header.css">
-<link rel="stylesheet" type="text/css" href="./css/calendar.css">  
+<link rel="stylesheet" type="text/css" href="../css/header.css">
+<link rel="stylesheet" type="text/css" href="../css/calendar.css">  
 <style type="text/css">
+#topMenu a:hover {
+	text-decoration:none;
+    background-color: #006699;
+}
 
 aside{
 	float: left;
@@ -83,29 +90,30 @@ padding : 50px;
 
 }
 
-#loading {
-    display:none;
-    position:absolute;
-    top:10px;
-    right:10px;
-}
 
-#calendar {
-    max-width:1200px;
-    margin:auto;
-    float:left;
-}
+    #loading {
+        display:none;
+        position:absolute;
+        top:10px;
+        right:10px;
+    }
 
-div.barKategorie {
-    float:left;
-    margin:5px;
-    padding-top:5px;
-    padding-bottom:5px;
-    padding-left:5px;
-    /* padding-right:10px; */
-    border-radius:5px;
-    font-weight:bold;
-}
+    #calendar {
+        max-width:1200px;
+        margin:auto;
+        float:left;
+    }
+
+    div.barKategorie {
+        float:left;
+        margin:5px;
+        padding-top:5px;
+        padding-bottom:5px;
+        padding-left:5px;
+        /* padding-right:10px; */
+        border-radius:5px;
+        font-weight:bold;
+    }
     
 ul li a:hover, ul li a:focus {  
     color:#fff;  
@@ -113,13 +121,13 @@ ul li a:hover, ul li a:focus {
 }  
 
 </style>
-<link href="./fullcalendar-3.8.2/fullcalendar.css" rel="stylesheet"/>
-<link href="./fullcalendar-3.8.2/fullcalendar.print.css" rel="stylesheet" media="print"/>
-<script type="text/javascript" src="./fullcalendar-3.8.2/lib/moment.min.js"></script>
-<script type="text/javascript" src="./fullcalendar-3.8.2/lib/jquery.min.js"></script>
-<script type="text/javascript" src="./fullcalendar-3.8.2/fullcalendar.js" charset="euc-kr"></script>
-<script type="text/javascript" src="./fullcalendar-3.8.2/gcal.js"></script>
-<script type="text/javascript" src="./fullcalendar-3.8.2/locale-all.js"></script>
+<link href="../fullcalendar-3.8.2/fullcalendar.css" rel="stylesheet"/>
+<link href="../fullcalendar-3.8.2/fullcalendar.print.css" rel="stylesheet" media="print"/>
+<script type="text/javascript" src="../fullcalendar-3.8.2/lib/moment.min.js"></script>
+<script type="text/javascript" src="../fullcalendar-3.8.2/lib/jquery.min.js"></script>
+<script type="text/javascript" src="../fullcalendar-3.8.2/fullcalendar.js" charset="euc-kr"></script>
+<script type="text/javascript" src="../fullcalendar-3.8.2/gcal.js"></script>
+<script type="text/javascript" src="../fullcalendar-3.8.2/locale-all.js"></script>
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
@@ -166,59 +174,17 @@ ul li a:hover, ul li a:focus {
     	                    , editable : false
     	                }
     	            ]
-    		        
     	            , loading:function(bool) {
     	                jQuery("#loading").toggle(bool);
     	            }
     	        , events: [
     	            <%=eventstring %>
-    	        ]
-    	            , select: function(start, end) {
-    	                // Display the modal.
-    	                // You could fill in the start and end fields based on the parameters
-    	                $('.modal').modal('show');
-
-    	            },
-    	            eventClick: function(event, element) {
-    	                // Display the modal and set the values to the event values.
-    	                $('.modal').modal('show');
-    	                $('.modal').find('#title').val(event.title);
-    	                $('.modal').find('#starts-at').val(event.start);
-    	                $('.modal').find('#ends-at').val(event.end);
-
-    	            },
-       	        	eventRender:function (event, element){
-	    	        	$('td .fc-event-container').find('a').removeAttr("href");	
-    	        	},
+    	        ]    	            
     	        });
- 
     	        $('#my-today-button').click(function() {
     	            $('#calendar').fullCalendar('today');
     	        });
-    	        // Bind the dates to datetimepicker.
-    	        // You should pass the options you need
-    	        $("#starts-at, #ends-at").datetimepicker();
-
-    	        // Whenever the user clicks on the "save" button om the dialog
-    	        $('#save-event').on('click', function() {
-    	            var title = $('#title').val();
-    	            if (title) {
-    	                var eventData = {
-    	                    title: title,
-    	                    start: $('#starts-at').val(),
-    	                    end: $('#ends-at').val()
-    	                };
-    	                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-    	            }
-    	            $('#calendar').fullCalendar('unselect');
-
-
-    	            // Clear modal inputs
-    	            $('.modal').find('input').val('');
-
-    	            // hide modal
-    	            $('.modal').modal('hide');
-    	        });
+    	        
     	    });
         jQuery("#calendar").fullCalendar({
         	fixedWeekCount : false,
@@ -235,9 +201,7 @@ ul li a:hover, ul li a:focus {
             , locale : "ko"
             , editable : true
             , eventLimit : true
-
             , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
-
             , eventSources : [
                 // 대한민국의 공휴일
                 {
@@ -245,8 +209,7 @@ ul li a:hover, ul li a:focus {
                     , className : "koHolidays"
                     , color : "#FF0000"
                     , textColor : "#FFFFFF"
-                    , editable : false
-                    , url : "http://www.naver.com"
+                    , editable : false                    
                 }
             ]
             , loading:function(bool) {
@@ -254,70 +217,44 @@ ul li a:hover, ul li a:focus {
             }
             , events: [
                 <%=eventstring %>
-            ], eventRender: function(event, eventElement) {        
-            	eventElement.find("td.fc-event-container").remove();
+            ], eventRender: function(event, eventElement) { 
             	if (event.imageurl)
         		{             		
         		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
         		} 
-       		 }            
-        	,  eventClick: function(calEvent, jsEvent, view) {
+       		 },
+       	  eventClick:  function(event, jsEvent, view) {
 
-                alert('Event: ' + calEvent.title);
-                alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-                alert('View: ' + view.name);
-                alert('url : ' + calEvent.url)
-            }
-            ,  select: function(start, end) {
-                // Display the modal.
-                // You could fill in the start and end fields based on the parameters
-                $('.modal').modal('show');
-
-            },
-           /*  eventClick: function(event, element) {
-                // Display the modal and set the values to the event values.
-                $('.modal').modal('show');
-                $('.modal').find('#title').val(event.title);
-                $('.modal').find('#starts-at').val(event.start);
-                $('.modal').find('#ends-at').val(event.end);
-
-            }, */
+			var moment = $('#calendar').fullCalendar('getDate').format('YYYYMM');
+			var eid = event.id;
+/* 			
+			alert("moment==>"+moment);
+			alert("eid.substring(0,8)==>"+eid.substring(0,8));
+*/		     	
+			if(eid.indexOf(moment) == 0){
+				var target = $(this).find('a').attr('href', '#');
+				return false
+			}else{
+				$('#modalTitle').html(event.title);
+				$('#modalBody').html(event.description);
+				$('#eventUrl').attr('href','updateschedule.jsp?seq='+event.id);
+				$('#fullCalModal').modal();
+			}
+          },
             editable: true,
             eventLimit: true // allow "more" link when too many events
-
-        });
+	
+        }); 
         $('#my-today-button').click(function() {
             $('#calendar').fullCalendar('today');
-        });
-        
-
-        // Bind the dates to datetimepicker.
-        // You should pass the options you need
-        $("#starts-at, #ends-at").datetimepicker();
-
-        // Whenever the user clicks on the "save" button om the dialog
-        $('#save-event').on('click', function() {
-            var title = $('#title').val();
-            if (title) {
-                var eventData = {
-                    title: title,
-                    start: $('#starts-at').val(),
-                    end: $('#ends-at').val()
-                };
-                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-            }
-            $('#calendar').fullCalendar('unselect');
-
-            // Clear modal inputs
-            $('.modal').find('input').val('');
-
-            // hide modal
-            $('.modal').modal('hide');
-        });
+        });       
+ 
     });
 
     // addEventSource, removeEventSource의 기능하는데 구별값은 googleCalendarId 이다.
     // 그렇기에 googleCalendarId는 반드시 입력해야한다.
+    
+    
     function scheduleChoice(num, id, distinct, color, text) {
         if(jQuery(".swingBar").eq(num).is(":checked")) {
             jQuery("#calendar").fullCalendar("addEventSource", { googleCalendarId : id, className : distinct, color : color, textColor : text });
@@ -325,8 +262,9 @@ ul li a:hover, ul li a:focus {
             jQuery("#calendar").fullCalendar("removeEventSource", { googleCalendarId : id });
         }
     }
-    
+     
 </script>
+<title>BizPayDay</title>
 </head>
 <body>
 <!-- <div id ="main"> -->
@@ -342,15 +280,15 @@ ul li a:hover, ul li a:focus {
 			
 			<div class="topMenu_icon" align="center">
 				<ul>
-					<li><a class="menuLink" href="Main.jsp"><img src="./icon/home-n.png" onmouseover='this.src="./icon/home-w.png"' onmouseout='this.src="./icon/home-n.png"' ></a></li>
-					<li><a class="menuLink" href="./schedule/scheduleMain.jsp"><img src="./icon/schedule-w.png" onmouseover='this.src="./icon/schedule-n.png"' onmouseout='this.src="./icon/schedule-w.png"' ></a></li>
-					<li><a class="menuLink" href="./cashbook/cashbookMain.jsp"><img src="./icon/cashbook-n.png" onmouseover='this.src="./icon/cashbook-w.png"' onmouseout='this.src="./icon/cashbook-n.png"' ></a></li>
+					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/home-n.png" onmouseover='this.src="../icon/home-w.png"' onmouseout='this.src="../icon/home-n.png"' ></a></li>
+					<li><a class="menuLink" href="NewFile.jsp"><img src="../icon/schedule-n.png" onmouseover='this.src="../icon/schedule-w.png"' onmouseout='this.src="../icon/schedule-n.png"' ></a></li>
+					<li><a class="menuLink" href=""><img src="../icon/cash-w.png" ></a></li>
 				</ul>
 			</div>
 			
 			<div class="topMenu_logInOut">
 				<ul>
-					<!-- <li><img src="./image/m01.jpg" style=""></li> -->
+					<!-- <li><img src="../image/m01.jpg" style=""></li> -->
 					<li>사용자 이름</li>
 					<li>　|　</li>
 					<li><a href="">로그아웃</a></li>
@@ -397,7 +335,22 @@ ul li a:hover, ul li a:focus {
 			
 	<!-- 우측 본문 -->
 	<article>
-		<div id="calendar"></div>
+		<div id="calendar"></div>	
+		<div id="fullCalModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+                <h4 id="modalTitle" class="modal-title"></h4>
+            </div>
+            <div id="modalBody" class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button class="btn btn-primary"><a id="eventUrl" target="_blank" style="color: white; font-weight: 100">Event Page</a></button>
+            </div>
+        </div>
+    </div>
+</div>
 	</article>
 		
 	<footer>Copyright &copy; BizPayDay</footer>

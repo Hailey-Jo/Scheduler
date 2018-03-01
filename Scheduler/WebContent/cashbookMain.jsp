@@ -1,40 +1,15 @@
-<%@page import="Schedule.ScheduleDTO"%>
-<%@page import="java.util.List"%>
-<%@page import="Schedule.ScheduleDAO"%>
-<%@page import="Schedule.iScheduleDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<%iScheduleDAO dao = ScheduleDAO.getInstance();
-List<ScheduleDTO> list = dao.getAllSchedulList();
-String eventstring = "";
-for(int i=0; i<list.size();i++){	
-	
-	eventstring +="{";	
-	eventstring += "title : '"+list.get(i).getTitle()+"',";
-	eventstring += "id : '"+list.get(i).getSeq()+"',";
-	eventstring += "start : '"+list.get(i).getStartDate().substring(0, 10)+"',";
-	eventstring += "end : '"+list.get(i).getEndDate().substring(0, 10)+"',";
-	eventstring += "description : '"+list.get(i).getContent()+"',";	
-	eventstring += "backgroundColor : '"+list.get(i).getCategory()+"',";
-	if(list.get(i).getImportant()==1){
-		eventstring += "imageurl : " +" '.\\"+"\\image\\"+"\\"+"star.png',";
-	}	
-	eventstring +="},"+"\n";
-	
-}
-%>
 <!DOCTYPE HTML>
 <html>
 
 <head>
-<link rel="stylesheet" type="text/css" href="./css/header.css">
-<link rel="stylesheet" type="text/css" href="./css/calendar.css">  
+<link rel="stylesheet" type="text/css" href="./css/header.css"> 
 <style type="text/css">
 
 aside{
 	float: left;
-	/* width: 300px; */
+	width: 300px;
     max-width: 300px;
     height : auto;
     margin: 0;
@@ -72,9 +47,7 @@ body {
      패딩값을 적당하게 올려주시면 됩니다.*/
 }
 
-div.fc-center h2{
-	size: 0.8em;
-}
+
 
 #calendar {
 
@@ -111,10 +84,7 @@ padding : 50px;
         font-weight:bold;
     }
     
-ul li a:hover, ul li a:focus {  
-    color:#fff;  
-    background-color:#f40;  
-}  
+
 
 </style>
 <link href="./fullcalendar-3.8.2/fullcalendar.css" rel="stylesheet"/>
@@ -141,51 +111,9 @@ ul li a:hover, ul li a:focus {
 <script type="text/javascript">
 
     jQuery(document).ready(function() {
-    	 jQuery(document).ready(function() {
-    	        jQuery("#calendar-mini").fullCalendar({
-    	        	fixedWeekCount : false,
-    	            header : {
-    	                  left : "prev"
-    	                , center : "title"
-    	                , right: 'next'
-    	            }     	   
-    	        	        
-    		        , navLinks: true // can click day/week names to navigate views
-    		        , selectable: true
-    		        , selectHelper: true
-    	        	, navLinks: false
-    	            , locale : "ko"
-    	            , editable : true
-    	            , eventLimit : true
-					, height : 347
-    	            , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
-
-    	            , eventSources : [
-    	                // 대한민국의 공휴일
-    	                {
-    	                      googleCalendarId : "ko.south_korea#holiday@group.v.calendar.google.com"
-    	                    , className : "koHolidays"
-    	                    , color : "#FF0000"
-    	                    , textColor : "#FFFFFF"
-    	                    , editable : false
-    	                }
-    	            ]
-    	            , loading:function(bool) {
-    	                jQuery("#loading").toggle(bool);
-    	            }
-    	        , events: [
-    	            <%=eventstring %>
-    	        ]    	            
-    	        });
-    	        $('#my-today-button').click(function() {
-    	            $('#calendar').fullCalendar('today');
-    	        });
-    	        
-    	    });
         jQuery("#calendar").fullCalendar({
-        	fixedWeekCount : false,
             header : {
-                  left : "prevYear, prev"
+                  left : "prevYear, prev, myCustomButton"
                 , center : "title, today"
                 , right: 'myCustomButton2,month,agendaWeek,agendaDay, next, nextYear'
             }        	    
@@ -193,11 +121,13 @@ ul li a:hover, ul li a:focus {
 	        , navLinks: true // can click day/week names to navigate views
 	        , selectable: true
 	        , selectHelper: true
-        	, height : 580
+        
             , locale : "ko"
             , editable : true
             , eventLimit : true
+
             , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
+
             , eventSources : [
                 // 대한민국의 공휴일
                 {
@@ -205,40 +135,78 @@ ul li a:hover, ul li a:focus {
                     , className : "koHolidays"
                     , color : "#FF0000"
                     , textColor : "#FFFFFF"
-                    , editable : false                    
+                    , editable : false
                 }
             ]
             , loading:function(bool) {
                 jQuery("#loading").toggle(bool);
             }
             , events: [
-                <%=eventstring %>
-            ], eventRender: function(event, eventElement) { 
-            	if (event.imageurl)
-        		{             		
-        		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
-        		} 
-       		 },
-       	  eventClick:  function(event, jsEvent, view) {
-              $('#modalTitle').html(event.title);
-              $('#modalBody').html(event.description);
-              $('#eventUrl').attr('href','updateschedule.jsp?seq='+event.id);
-              $('#fullCalModal').modal();
-          },
+                {
+                    title  : 'event1',
+                    start  : '2018-02-01'
+                },
+                {
+                    title  : 'event2',
+                    start  : '2018-02-05',
+                    end    : '2018-02-07',
+                },
+                {
+                    title  : 'event3',
+                    start  : '2018-02-09T12:30:00',
+                    allDay : false // will make the time show
+                }
+            ]
+            , select: function(start, end) {
+                // Display the modal.
+                // You could fill in the start and end fields based on the parameters
+                $('.modal').modal('show');
+
+            },
+            eventClick: function(event, element) {
+                // Display the modal and set the values to the event values.
+                $('.modal').modal('show');
+                $('.modal').find('#title').val(event.title);
+                $('.modal').find('#starts-at').val(event.start);
+                $('.modal').find('#ends-at').val(event.end);
+
+            },
             editable: true,
             eventLimit: true // allow "more" link when too many events
-	
-        }); 
+
+        });
         $('#my-today-button').click(function() {
             $('#calendar').fullCalendar('today');
-        });       
- 
+        });
+        
+
+        // Bind the dates to datetimepicker.
+        // You should pass the options you need
+        $("#starts-at, #ends-at").datetimepicker();
+
+        // Whenever the user clicks on the "save" button om the dialog
+        $('#save-event').on('click', function() {
+            var title = $('#title').val();
+            if (title) {
+                var eventData = {
+                    title: title,
+                    start: $('#starts-at').val(),
+                    end: $('#ends-at').val()
+                };
+                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+            }
+            $('#calendar').fullCalendar('unselect');
+
+            // Clear modal inputs
+            $('.modal').find('input').val('');
+
+            // hide modal
+            $('.modal').modal('hide');
+        });
     });
 
     // addEventSource, removeEventSource의 기능하는데 구별값은 googleCalendarId 이다.
     // 그렇기에 googleCalendarId는 반드시 입력해야한다.
-    
-    
     function scheduleChoice(num, id, distinct, color, text) {
         if(jQuery(".swingBar").eq(num).is(":checked")) {
             jQuery("#calendar").fullCalendar("addEventSource", { googleCalendarId : id, className : distinct, color : color, textColor : text });
@@ -246,7 +214,7 @@ ul li a:hover, ul li a:focus {
             jQuery("#calendar").fullCalendar("removeEventSource", { googleCalendarId : id });
         }
     }
-     
+    
 </script>
 </head>
 <body>
@@ -283,57 +251,57 @@ ul li a:hover, ul li a:focus {
 	<aside>
 	<!-- 하단 -->
 		<!-- 좌측 서브 메뉴 -->
-		<div align="center">
-			<div class="btn-group">
-			  <button type="button" class="btn btn-info" style="width: 230px">Write Menu</button>
-			  <button type="button" class="btn btn-info dropdown-toggle" style="height: 34px" data-toggle="dropdown" aria-expanded="false">
-			    <span class="caret"></span>
-			    <span class="sr-only">Toggle Dropdown</span>
-			  </button>
-			  <ul class="dropdown-menu" role="menu" style="width: 230px">
-			    <li><a href="addschedule.jsp">Write Scheduler</a></li>
-			    <li><a href="#">Write MoneyBook</a></li>    
-			  </ul>
+		<div class="leftBtn" align="center">
+			<div id="cashBtn" style="height:auto; overflow: y:hidden;" >
+				<button type="button" class="btn btn-primary btn-sm">　　　수입　　　</button>
+				<button type="button" class="btn btn-primary btn-sm">　　　지출　　　</button>
+				<hr>
 			</div>
 		</div>
-	<br>
-		<div id="calendar-mini"></div>
-	
-	<div style="padding: 10px" class="tablediv">
-			<table style="padding-top: 10px">
-				<tr>
-					<td>　</td>
-				</tr>
-				<tr>
-					<td style="width: 300px"><button type="button" class="btn btn-primary btn-lg btn-block">중요일정보기</button></td>
-				</tr>
-				<tr>
-					<td>
-				</tr>
 			
-			</table>
+		<div class="left_totalMonth">
+			<div id="cashList" style="height:auto; overflow: y:hidden;">
+				<b>이달의 가계</b><br><br>
+				<ul class="list-group">
+					<li class="list-group-item d-flex justify-content-between align-items-center">
+					  수입
+						<span class="badge badge-primary badge-pill">+ 2,000</span>
+					</li>
+					<li class="list-group-item d-flex justify-content-between align-items-center">
+					  지출
+						<span class="badge badge-primary badge-pill">- 1,000</span>
+					</li>
+					<li class="list-group-item d-flex justify-content-between align-items-center">
+					  총액
+						<span class="badge badge-primary badge-pill">1,000</span>
+					</li>
+				</ul>
+				<hr>
+			</div>
+		</div>
+			
+		<div class="left_freshList">
+			<div id="" style="height: auto; overflow: y:hidden;">
+			<b>최근 내역</b><br><br>
+				<ul class="list-group">
+					<li class="list-group-item d-flex justify-content-between align-items-center">점심식사
+						<span class="badge badge-primary badge-pill">- 2,000</span>
+					</li>
+					<li class="list-group-item d-flex justify-content-between align-items-center">교통비
+						<span class="badge badge-primary badge-pill">- 1,000</span>
+					</li>
+					<li class="list-group-item d-flex justify-content-between align-items-center">회비
+						<span class="badge badge-primary badge-pill">-1,000</span>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</aside>
 		
 			
 	<!-- 우측 본문 -->
 	<article>
-		<div id="calendar"></div>	
-		<div id="fullCalModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
-                <h4 id="modalTitle" class="modal-title"></h4>
-            </div>
-            <div id="modalBody" class="modal-body"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button class="btn btn-primary"><a id="eventUrl" target="_blank" style="color: white; font-weight: 100">Event Page</a></button>
-            </div>
-        </div>
-    </div>
-</div>
+		<div id="calendar"></div>
 	</article>
 		
 	<footer>Copyright &copy; BizPayDay</footer>
