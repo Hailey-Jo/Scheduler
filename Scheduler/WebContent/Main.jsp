@@ -246,7 +246,9 @@ jQuery(document).ready(function() {
             	var target = $(this).find('a').attr('href', '#');
             	alert(target);
                 return false
-            	
+
+                
+                
                 // Display the modal and set the values to the event values.
                 $('.modal').modal('show');
                 $('.modal').find('#title').val(event.title);
