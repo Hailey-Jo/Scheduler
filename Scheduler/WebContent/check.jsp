@@ -68,7 +68,6 @@
 		System.out.println("등록 실패");
 	}
 	
-	opener.parent.location="/.cashbookMain.jsp";
 %>
  
 </body>

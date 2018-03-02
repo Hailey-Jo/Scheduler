@@ -176,36 +176,6 @@ aside .badge-info:hover {
 	float: right;
 }
 
-
-/* modal 조정 */
-
- .modal {
-	        text-align: center;
-}
- 
-@media screen and (min-width: 768px) { 
-        .modal:before {
-                display: inline-block;
-                vertical-align: middle;
-                content: " ";
-                height: 100%;
-        }
-}
- 
-.modal-dialog {
-        display: inline-block;
-        text-align: left;
-        vertical-align: middle;
-}
-
-.modal-content {
-	align-content: center;
-	width: 150%;
-	height: auto;
- }
-
-
-
  
 /* 수입 */
 
@@ -407,8 +377,9 @@ jQuery(document).ready(function() {
    	                $('.modal').find('#title').val(event.title);
    	                $('.modal').find('#starts-at').val(event.start);
    	                $('.modal').find('#ends-at').val(event.end); */
-					$('#datepicker .modal').modal('show');
-   	                alert($('#datepicker .modal').val(event.start));
+					//$('#datepicker .modal').modal('show');
+   	             	alert('Clicked ' + eventObj.title);
+   	                //alert($('#datepicker .modal').val(event.start));
    	            }
    	        });
    	        $('#my-today-button').click(function() {
@@ -658,17 +629,18 @@ function scheduleChoice(num, id, distinct, color, text) {
 							//수입일 때
 							if(cList.get(i).getIoMoney()==0){
 								%>
-								<li class="list-group-item d-flex justify-content-between align-items-center">
-								<%=cList.get(i).getContent() %>
+								<li><a href="#" class="list-group-item list-group-item-action"><%=cList.get(i).getContent() %>
 								<span class="badge badge-info">+ <%=priceAf  %> 원</span>
+								</a>
 								</li>
 								<%
 							}else{
 								//지출일 때
 								%>
-								<li class="list-group-item d-flex justify-content-between align-items-center">
+								<li><a href="#" class="list-group-item list-group-item-action">
 								<%=cList.get(i).getContent() %>
 								<span class="badge badge-error">- <%=priceAf %> 원</span>
+								</a>
 								</li>
 								<%
 							}
@@ -683,17 +655,19 @@ function scheduleChoice(num, id, distinct, color, text) {
 							//수입일 때
 							if(cList.get(i).getIoMoney()==0){
 								%>
-								<li class="list-group-item d-flex justify-content-between align-items-center">
+								<li><a href="#" class="list-group-item list-group-item-action">
 								<%=cList.get(i).getContent() %>
 								<span class="badge badge-info">+ <%=priceAf  %> 원</span>
+								</a>
 								</li>
 								<%
 							}else{
 								//지출일 때
 								%>
-								<li class="list-group-item d-flex justify-content-between align-items-center">
+								<li><a href="#" class="list-group-item list-group-item-action">
 								<%=cList.get(i).getContent() %>
 								<span class="badge badge-error">- <%=priceAf %> 원</span>
+								</a>
 								</li>
 								<%
 							}
@@ -765,8 +739,9 @@ function scheduleChoice(num, id, distinct, color, text) {
 <!-------------------------------------------------------------------------------
 	 수입내역입력 기능
  ------------------------------------------------------------------------------->
-<div class="modal fade" id="inCashMyModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
-  <div class="modal-dialog" role="document">
+ 
+<div class="modal fade" id="inCashMyModal" role="dialog">
+    <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -776,6 +751,7 @@ function scheduleChoice(num, id, distinct, color, text) {
       <div class="modal-body">
 	      <div class="modal-outLeft">
 				<div id="calendar-mini"></div>
+				<div>선택한 날짜</div>
 		  </div>
 		<div class="container">
 		    <table class="table">
@@ -784,12 +760,11 @@ function scheduleChoice(num, id, distinct, color, text) {
 		          <th class="th_inContent">수입 내역</th>
 		          <th class="th_inPrice">금액</th>
 		          <th class="th_inCategory">분류</th>
+		          <th class="th_inDelete">아이콘</th>
 		          <th class="th_inDelete">삭제</th>
-		          <!-- <th class="th_inDelete">아이콘</th> -->
 		        </tr>
 		      </thead>
 		      <tbody>
-		      
 		        <tr>
 		          <td>
 		            <input type="text" id="inContent" class="form-control" size="16" placeholder="내역 입력" name="cashContent"/>
@@ -838,8 +813,8 @@ function scheduleChoice(num, id, distinct, color, text) {
 <!-------------------------------------------------------------------------------
 	 지출내역입력
  ------------------------------------------------------------------------------->
-<div class="modal fade" id="outCashMyModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
-  <div class="modal-dialog" role="document">
+  <div class="modal fade" id="outCashMyModal" role="dialog">
+    <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -938,20 +913,30 @@ function scheduleChoice(num, id, distinct, color, text) {
 	        <th>금액</th>
 	        <th>분류</th>
 	        <th>삭제</th> */
+
 	        
 	        cols += '<td><input type="text" class="form-control" size="16" placeholder="내역 입력" name="cashContent'+ counter +'" id="inContent'+counter+'"/></td>';
 	        cols += '<td><div class="input-group"><span class="input-group-addon"><i class="fas fa-won-sign"></i></span><input type="number" class="form-control" value="0" size="15" placeholder="금액 입력" name="cashPrice'+counter+'" id="inPrice'+counter+'" /></div></td>';
 	        cols += '<td><select class="form-control match-content" id="inCategory'+counter+'"><option selected="selected">주수입</option><option>부수입</option><option>기타</option></select></td>';
-	        cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="삭제"></td>';
+	        cols += '<td><a href="#iconPlus'+counter+'" class="btn btn-info" data-toggle="collapse">+</a></td>';
+	        cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="-"></td>';
+	        
 	        newRow.append(cols);
 	        $("#inCashMyModal .table").append(newRow);
+	        
+	        newRow = $("<tr>");
+	        cols = "";
+	        cols += '<td colspan="6"><div id="iconPlus'+counter+'" class="collapse">Lorem ipsum dolor text....</div></td>';
+	        newRow.append(cols);
+	        $("#inCashMyModal .table").append(newRow);
+	        
 	        counter++;
 	    });
 
 
 		/* 삭제 */
 	    $("#inCashMyModal .table").on("click", ".ibtnDel", function (event) {
-	        $(this).closest("tr").remove();       
+	        $(this).closest("tr").remove();
 	        counter -= 1
 	    });
 
@@ -1119,7 +1104,6 @@ $(document).ready(function () {
 	});
 });
 </script>
-
 
 
 </body>
