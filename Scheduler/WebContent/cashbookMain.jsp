@@ -38,18 +38,14 @@ System.out.println("지출 : " +spending);
 %>
 
 <%
-iScheduleDAO dao = ScheduleDAO.getInstance();
-List<ScheduleDTO> list = dao.getAllSchedulList();
-String eventstring = "";
-for(int i=0; i<list.size();i++){
-	System.out.println(list.get(i).toString());
-	eventstring +="{";
-	eventstring += "title : '"+list.get(i).getTitle()+"',";
-	eventstring += "start : '"+list.get(i).getStartDate().substring(0, 10)+"',";
-	eventstring += "end : '"+list.get(i).getEndDate().substring(0, 10)+"'";
-	eventstring +="},";
+String eventCash = "";
+for(int i=0; i<cList.size();i++){
+	eventCash +="{";
+	eventCash += "title : '"+cList.get(i).getContent()+"  "+cList.get(i).getPrice()+"',";
+	eventCash += "start : '"+cList.get(i).getMoneyDate().substring(0, 10)+"',";
+	eventCash +="},";
 	
-	System.out.println(eventstring);
+	System.out.println(eventCash);
 }
 %>
 
@@ -204,7 +200,7 @@ aside .badge-info:hover {
 
 .modal-content {
 	align-content: center;
-	width: 140%;
+	width: 150%;
 	height: auto;
  }
 
@@ -233,8 +229,6 @@ aside .badge-info:hover {
  	height: inherit;
  	overflow-y: scroll;
  }
- 
-
  
  .modal-body .modal-outLeft{
 	float: left;
@@ -271,10 +265,8 @@ aside .badge-info:hover {
 <script type="text/javascript" src="./fullcalendar-3.8.2/locale-all.js"></script>
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
 <!-- 부가적인 테마 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
@@ -308,7 +300,7 @@ jQuery(document).ready(function() {
             , locale : "ko"
             , editable : true
             , eventLimit : true
-, height : 347
+			, height : 347
             , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
 
             , eventSources : [
@@ -325,7 +317,7 @@ jQuery(document).ready(function() {
                 jQuery("#loading").toggle(bool);
             }
         , events: [
-            <%=eventstring %>
+            <%=eventCash %>
         ]
             , select: function(start, end) {
                 // Display the modal.
@@ -401,13 +393,14 @@ jQuery(document).ready(function() {
    	                jQuery("#loading").toggle(bool);
    	            }
    	        , events: [
-   	            <%=eventstring %>
+   	            <%=eventCash %>
    	        ]
    	            , select: function(start, end) {
    	                // Display the modal.
    	                // You could fill in the start and end fields based on the parameters
    	                $('#datepicker .modal').modal('show');
 
+   	                
    	            }, eventClick: function(event, element) {
    	                // Display the modal and set the values to the event values.
    	                /* $('.modal').modal('show');
@@ -416,7 +409,6 @@ jQuery(document).ready(function() {
    	                $('.modal').find('#ends-at').val(event.end); */
 					$('#datepicker .modal').modal('show');
    	                alert($('#datepicker .modal').val(event.start));
-   	                
    	            }
    	        });
    	        $('#my-today-button').click(function() {
@@ -485,7 +477,7 @@ jQuery("#calendar").fullCalendar({
         jQuery("#loading").toggle(bool);
     }
     , events: [
-        <%=eventstring %>
+        <%=eventCash %>
         ], eventRender: function(event, eventElement) {        
         	eventElement.find("td.fc-event-container").remove();
         	if (event.imageurl)
@@ -833,6 +825,8 @@ function scheduleChoice(num, id, distinct, color, text) {
 		    </table>
 		  </div>
       </div>
+		<div id="myAlert">
+		</div>
       <div class="modal-footer">
         <button type="button" id="btn_saveIo" class="btn btn btn-primary" data-dismiss="modal">Save</button>
         <button type="button" class="btn btn-orange" data-dismiss="modal">Cancel</button>
@@ -1056,53 +1050,76 @@ function scheduleChoice(num, id, distinct, color, text) {
 <!-- 수입 입력 내역 가져오기 -->
 <script type="text/javascript">
 $(document).ready(function () {
-	/* $("#btn_saveIo").on("click", function () { */
 	$("#btn_saveIo").click(function () {	
 		//수입내역
 		//counter
         alert("addrow 후 counter 값 :" +counter);
 		var row = parseInt(counter);
 		alert(typeof row);
-				
 		
+		var checkNull = -1;
 		for(var i=0; i<row; i++){
-           /* alert("수입내역 : "+$("#inContent"+i).val());
-           alert("금액 : "+ parseInt($("#inPrice"+i).val()));
-           alert("금액 : "+ parseInt($("#inCategory"+i).val())); */
+			alert($("#inPrice"+i).val());
+			var inContentAf = $("#inContent"+i).val();
+			var inPriceAf = $("#inPrice"+i).val();
+	
+			if(inContentAf==null || inPriceAf==null || inPriceAf=="0"){
+				checkNull=i;
+			}
         };
         
-        var arr = [];
-        for(var i=0; i<row; i++){
-        	arr.push($("#inContent"+i).val());
-        	arr.push($("#inPrice"+i).val());
-        	arr.push($("#inCategory"+i).val());
-    	};
-    	
-		$.ajax({
-			
-            type : "get",
-            url : "./check.jsp",
-            //여러개 데이터 보낼 때 Json 방식
-            data : {
-				"test" : arr
-			},
-			dataType : "text",
-			contentType : "application; charset=utf-8",
-			traditional : true,
-			
-            success : function(data){
-                alert("success");
-            },
-            error : function(request,status,error){
-                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-            }
-        
+        if(checkNull==-1){
+        	
+        	var arr = [];
+            for(var i=0; i<row; i++){
+            	arr.push($("#inCategory"+i).val());
+            	arr.push($("#inPrice"+i).val());
+            	arr.push($("#inContent"+i).val());
+        	};
+        	
+    		$.ajax({
+    			
+                type : "get",
+                url : "./check.jsp",
+                //여러개 데이터 보낼 때 Json 방식
+                data : {
+    				"test" : arr
+    			},
+    			dataType : "text",
+    			contentType : "application; charset=utf-8",
+    			traditional : true,
+    			
+                success : function(data){
+                    alert("success");
+                },
+                error : function(request,status,error){
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                }
             
-        });
+            });
+      	}else{
+      		var newRow = $("<div>");
+      		var cols="";
+      		cols += '<div class="alert alert-danger">';
+	        cols += '<a href="#" class="close">&times;</a>';
+	        cols += '<strong>Hey you!</strong> Try to close this alert message.';
+	        cols += '</div>';
+	        newRow.append(cols);
+	        $("#myAlert").append(newRow);
+	        
+	       	$('#inCashMyModal').modal({
+	       	  backdrop: 'static',
+	       	  keyboard: false
+	       	});
+      	
+      	}
+        
+        
         
 	});
 });
 </script>
+
 
 
 </body>
