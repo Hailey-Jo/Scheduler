@@ -249,4 +249,16 @@ public class userDAO implements iuserDAO {
 		return pw;
 		
 	}
+
+	@Override
+	public boolean modifyUserInfo(String id, String pw) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean exitUser(String id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
