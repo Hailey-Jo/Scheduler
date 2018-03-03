@@ -19,15 +19,16 @@
 	String id = request.getParameter("login_username");  
 	System.out.println("id : "+id);
 
-	System.out.println("check.jsp 도착================================= ");
+	System.out.println("cashioaf.jsp 도착================================= ");
 
-	String[] arr = request.getParameterValues("test");
-	System.out.println("check로 들어온 배열 크기 : " + arr.length);
+	String[] arr = request.getParameterValues("cashioaf");
+	System.out.println("cashioaf 들어온 배열 크기 : " + arr.length);
 	
 	for(int i=0; i<arr.length; i++){
 		System.out.println(arr[i]);
 	}
 
+	
 	iCashbookDAO cashDao = CashbookDAO.getInstance();
 	
 	List<CashbookDTO> cList = new ArrayList<CashbookDTO>();
@@ -56,9 +57,10 @@
 };
 
 */
-	for(int i=0; i<arr.length; i=i+3){
-		
-		cList.add(new CashbookDTO(0,"creepin",arr[i],"20180302",0,0,Integer.parseInt(arr[i+1]),arr[i+2],0));
+	for(int i=0; i<arr.length; i=i+5){
+		System.out.println("========================== 아이콘 번호 : " +Integer.parseInt(arr[i+2]));
+		System.out.println("========================== 날짜 : " +Integer.parseInt(arr[i+1]));
+		cList.add(new CashbookDTO(0,"creepin",arr[i],arr[i+1],0,Integer.parseInt(arr[i+2]),Integer.parseInt(arr[i+3]),arr[i+4],0));
 	}
 	boolean isS = cashDao.addCashbook(cList);
 	
