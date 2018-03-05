@@ -52,7 +52,7 @@ String fupload = application.getRealPath("/upload");
 
 System.out.println("file Upload : "+fupload);
 
-String yourTempDirectory = fupload;
+String yourTempDirectory = String.valueOf(fupload);
 
 int yourMaxRequestSize = 100*1024*1024; // 1M byte
 int yourMaxMemorySize = 100*1024;
@@ -113,7 +113,18 @@ if(isMultipart){ //Multipart set true?
 			}
 		}else{ //fileload
 			if(item.getFieldName().equals("Fichier1")){
-				filename = processUploadedFile(item, fupload, out);	
+				
+				fupload = "C:"+File.separator+"upload"+File.separator+id+File.separator;
+				File file = new File(fupload);
+				
+				if (!file.exists()) {
+					file.mkdirs();
+					filename = processUploadedFile(item, fupload, out);
+					System.out.println("mkdir!!!!");
+				}else{
+					filename = processUploadedFile(item, fupload, out);
+				}
+		
 			}
 			System.out.println("filename(Fichier1) : "+filename);
 		}
@@ -135,19 +146,8 @@ System.out.println("agree:" + agree);
 
 
 try{
+	boolean isS = false;
 	
-	
-boolean isS = false;
-/* boolean ok = false;
-
-
-if(agree==null){
-	ok = false;	
-}else{
-	ok = true;
-} */
-	
-/* if(ok){ */
 	iuserDAO dao = userDAO.getInstance();
 	userDTO user = new userDTO();
 	

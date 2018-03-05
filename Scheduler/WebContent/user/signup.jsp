@@ -76,7 +76,7 @@ $(function() {
 		<nav id="topMenu">
 			<div class="topMenu_siteTitle">
 				<ul>
-					<li>Sign Up</li>
+					<li><a href="../index.jsp">BizPayDay</a></li>
 				</ul>
 			</div>
 		</nav>
