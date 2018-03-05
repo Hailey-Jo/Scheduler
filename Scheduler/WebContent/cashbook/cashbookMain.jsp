@@ -644,8 +644,8 @@ function scheduleChoice(num, id, distinct, color, text) {
 			
 			<div class="topMenu_icon" align="center">
 				<ul>
-					<li><a class="menuLink" href="NewFile.jsp"><img src="../icon/home-n.png" onmouseover='this.src="../icon/home-w.png"' onmouseout='this.src="../icon/home-n.png"' ></a></li>
-					<li><a class="menuLink" href="NewFile.jsp"><img src="../icon/schedule-n.png" onmouseover='this.src="../icon/schedule-w.png"' onmouseout='this.src="../icon/schedule-n.png"' ></a></li>
+					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/home-n.png" onmouseover='this.src="../icon/home-w.png"' onmouseout='this.src="../icon/home-n.png"' ></a></li>
+					<li><a class="menuLink" href="../schedule/scheduleMain.jsp"><img src="../icon/schedule-n.png" onmouseover='this.src="../icon/schedule-w.png"' onmouseout='this.src="../icon/schedule-n.png"' ></a></li>
 					<li><a class="menuLink" href=""><img src="../icon/cash-w.png" ></a></li>
 				</ul>
 			</div>
@@ -742,7 +742,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 							//수입일 때
 							if(cList.get(i).getIoMoney()==0){
 								%>
-								<li><a href="#" class="list-group-item list-group-item-action"><%=cList.get(i).getContent() %>
+								<li><a href="#" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#popupInfo"><%=cList.get(i).getContent() %>
 								<span class="badge badge-info">+ <%=priceAf  %> 원</span>
 								</a>
 								</li>
@@ -750,7 +750,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 							}else{
 								//지출일 때
 								%>
-								<li><a href="#" class="list-group-item list-group-item-action">
+								<li><a href="#" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#popupInfo">
 								<%=cList.get(i).getContent() %>
 								<span class="badge badge-error">- <%=priceAf %> 원</span>
 								</a>
@@ -768,7 +768,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 							//수입일 때
 							if(cList.get(i).getIoMoney()==0){
 								%>
-								<li><a href="#" class="list-group-item list-group-item-action">
+								<li><a href="#" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#popupInfo">
 								<%=cList.get(i).getContent() %>
 								<span class="badge badge-info">+ <%=priceAf  %> 원</span>
 								</a>
@@ -777,7 +777,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 							}else{
 								//지출일 때
 								%>
-								<li><a href="#" class="list-group-item list-group-item-action">
+								<li><a href="#" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#popupInfo">
 								<%=cList.get(i).getContent() %>
 								<span class="badge badge-error">- <%=priceAf %> 원</span>
 								</a>
@@ -879,26 +879,29 @@ function scheduleChoice(num, id, distinct, color, text) {
 		        </tr>
 		      </thead>
 		      <tbody>
-		        <tr>
+		        <tr onclick='myFunction(this)'>
 		          <td>
-		            <input type="text" id="inContent" class="form-control" size="16" placeholder="내역 입력" name="cashContent"/>
+		            <input type="text" class="form-control" size="16" placeholder="내역 입력" id="inContent"/>
 		          </td>
 		          
 		          <td>
 		            <div class="input-group">
-		              <span class="input-group-addon"><i class="fas fa-won-sign"></i></span>
-		              <input type="number" class="form-control" value="0" size="15" placeholder="금액 입력" name="cashPrice" id="inPrice"/>
+		            <span class="input-group-addon">
+		            <i class="fas fa-won-sign"></i>
+		            </span>
+		            <input type="number" class="form-control" value="0" size="15" placeholder="금액 입력" id="inPrice" />
 		            </div>
 		          </td>
 		          
 		          <td>
-		            <select class="form-control match-content" name="cashCategory">
-		              <option selected="selected">주수입</option>
-		              <option>부수입</option>
-		              <option>기타</option>
+		            <select class="form-control match-content" id="inTitle">
+		            <option selected="selected">주수입</option>
+		            <option>부수입</option>
+		            <option>기타</option>
 		            </select>
 		          </td>
-					<td><a class="deleteRow"></a></td>
+		          	<td><a href="#iconPlus" class="btn btn-info" data-toggle="collapse">+</a></td>
+					<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="-"></td>
 		        </tr>
 		      </tbody>
 		       <tfoot>
@@ -1308,7 +1311,32 @@ $(document).ready(function () {
 </script>
 
 
-
+<!-- 최근 list 클릭하면 modal 창으로 상세 정보 보여주기 -->
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="popupInfo" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+			<button type="button" class="btn btn-default">수정</button>
+			<button type="button" class="btn btn-default">삭제</button>
+			<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+  
 
 
 
