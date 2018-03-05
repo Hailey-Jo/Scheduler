@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import Schedule.ScheduleDTO;
 import db.DBClose;
 import db.DBConnection;
 
@@ -65,72 +66,47 @@ public class userDAO implements iuserDAO {
 		return count>0?true:false;
 	}
 
-	@Override
-	public userDTO login(userDTO dto) {
+	@Override	
+	public userDTO login(String id, String pw) {
+		String sql = " SELECT USER_SEQ, ID, NAME, BIRTH, EMAIL, PIC, DEL "
+				+ " FROM USERDTO "
+				+ " WHERE ID='" + id + "' AND PASSWORD='" + pw + "'";
 		
-		userDTO user = null;
+		System.out.println("1/6 login");
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		
-		String sql = " SELECT USER_SEQ, ID, NAME, BIRTH, EMAIL, PIC, DEL "
-				+ " FROM USERDTO "
-				+ " WHERE ID=? AND PASSWORD=? ";
+		userDTO user = new userDTO();
 		
-		
-		System.out.println(dto.toString());
 		
 		try {
-
 			conn = DBConnection.makeConnection();
 			psmt = conn.prepareStatement(sql);
-			System.out.println("1/6 login Success");
-
-			psmt.setString(1, dto.getId());
-			psmt.setString(2, dto.getPassword());
-			System.out.println("2/6 login Success");
-
-			
 			rs = psmt.executeQuery();
-			System.out.println("3/6 login Success");
 			
-			// rs 데이터 체크한 것
-			boolean found;
+			System.out.println("2/6 login");
 			
-			found = rs.next();
-			if(found) {
-				System.out.println("record found");
-			}else {
-				System.out.println("record not found");
+			while(rs.next()) {
+				user.setSeq(rs.getInt(1));
+				user.setId(rs.getString(2));
+				user.setName(rs.getString(3));
+				user.setBirth(rs.getString(4));
+				user.setEmail(rs.getString(5));
+				user.setPic(rs.getString(6));
+				user.setDel(rs.getInt(7));
 			}
 			
-			
-				int seq = rs.getInt(1);
-				String id = rs.getString(2);
-				String name = rs.getString(3);
-				String birth = rs.getString(4);
-				String email = rs.getString(5);
-				String pic = rs.getString(6);
-				int del = rs.getInt(7);
-				System.out.println("4/6 login Success");
-
-				
-				user = new userDTO(seq, id, null, name, birth, email, pic, del);
-				System.out.println("5/6 login Success");
-
-
+			System.out.println("3/6 login");
 		} catch (SQLException e) {
-			System.out.println("로그인 실패");
+			System.out.println("login fail");
 			e.printStackTrace();
 		} finally {
 			DBClose.close(psmt, conn, rs);
-			System.out.println("6/6 login Success");
-
 		}
-		
+		System.out.println("4/6 login");
 		return user;
-
 	}
 
 	@Override

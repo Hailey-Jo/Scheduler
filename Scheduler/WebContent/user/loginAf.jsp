@@ -16,7 +16,7 @@ String id = request.getParameter("input_id");
 String pw = request.getParameter("input_pw");
 
 iuserDAO dao = userDAO.getInstance();
-userDTO user = dao.login(new userDTO(0, id, pw, null, null, null, null, 0));
+userDTO user = dao.login(id, pw);
 
 if(user != null && !user.getId().equals("")){
 	session.setAttribute("login", user);

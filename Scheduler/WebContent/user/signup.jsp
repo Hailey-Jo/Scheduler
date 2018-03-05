@@ -83,7 +83,7 @@ $(function() {
 	</header>
 	<article class="container">
         <div class="col-md-6 col-md-offset-3">
-          <form role="form-group" action="signupAf.jsp" method="post">
+          <form role="form-group" action="signupAf.jsp" method="post" enctype="multipart/form-data">
       	<div class="form-group">
           <label for="input-id">아이디</label>
           <input type="text" class="form-control" name="input-id" placeholder="아이디">

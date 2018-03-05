@@ -1,3 +1,4 @@
+<%@page import="User.userDTO"%>
 <%@page import="Schedule.ScheduleDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="Schedule.ScheduleDAO"%>
@@ -19,11 +20,19 @@ for(int i=0; i<list.size();i++){
 	}
 	eventstring +="},"+"\n";
 	
+	String userimgPath = "";
+	
 	//System.out.println(eventstring);
 }
 
-String id = request.getParameter("login__username");  
+userDTO user = new userDTO();
 
+user = (userDTO)session.getAttribute("login");
+
+String id = user.getId();
+String pic = user.getPic();
+
+System.out.println("pic==>"+pic);
 System.out.println("id===>"+id);
 %>
 <!DOCTYPE HTML>
@@ -33,7 +42,10 @@ System.out.println("id===>"+id);
 <link rel="stylesheet" type="text/css" href="./css/header.css">
 <link rel="stylesheet" type="text/css" href="./css/calendar.css">  
 <style type="text/css">
-
+#topMenu a:hover {
+	text-decoration:none;
+    background-color: #006699;
+}
 aside{
 	float: left;
 	/* width: 300px; */
@@ -196,6 +208,7 @@ jQuery(document).ready(function() {
 //우측 fullcalendar
 jQuery(document).ready(function() {
     jQuery("#calendar").fullCalendar({
+    	
             header : {
                   left : "prevYear, prev, myCustomButton"
                 , center : "title, today"
@@ -234,6 +247,7 @@ jQuery(document).ready(function() {
             	}
             	
             	$('#calendar td .fc-event-container').find('a').removeAttr("href");
+            	
             }
             , select: function(start, end) {
                 // Display the modal.
@@ -242,13 +256,20 @@ jQuery(document).ready(function() {
 
             },
             eventClick: function(event, element) {
-            	
-            	var target = $(this).find('a').attr('href', '#');
-            	alert(target);
-                return false
-
-                
-                
+ 
+       			var moment = $('#calendar').fullCalendar('getDate').format('YYYYMM');
+	     	
+       			if(event.id.length > 10){
+    				var target = $(this).find('a').attr('href', '#');
+    				return false
+    			}
+       			else{
+         				$('#modalTitle').html(event.title);
+         				$('#modalBody').html(event.description);
+         				$('#eventUrl').attr('href','updateschedule.jsp?seq='+event.id);
+         				$('#fullCalModal').modal();
+         		}
+           
                 // Display the modal and set the values to the event values.
                 $('.modal').modal('show');
                 $('.modal').find('#title').val(event.title);
@@ -256,7 +277,7 @@ jQuery(document).ready(function() {
                 $('.modal').find('#ends-at').val(event.end);
             },
 
-        });
+        });    
 
         $('#my-today-button').click(function() {
             $('#calendar').fullCalendar('today');
@@ -285,8 +306,11 @@ jQuery(document).ready(function() {
             $('.modal').modal('hide');
         });
     });
-    
+
 </script>
+<%
+	
+%>
 <title>BizPayDay</title>
 </head>
 <body>
@@ -306,6 +330,7 @@ jQuery(document).ready(function() {
 				</ul>
 			</div>
 			<div class="login_info" style=" float: left; width: 18%; height: 30px;">
+				<img alt="프로필이미지" src="<%=pic%>">
 		      <ul class="nav navbar-nav navbar-right">
 		        <li class="dropdown">
 		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style=" padding:5px; height: 30px;"><%=id %><span class="caret"></span></a>
