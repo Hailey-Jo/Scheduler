@@ -1,3 +1,4 @@
+<%@page import="java.io.File"%>
 <%@page import="User.userDTO"%>
 <%@page import="Schedule.ScheduleDTO"%>
 <%@page import="java.util.List"%>
@@ -32,8 +33,22 @@ user = (userDTO)session.getAttribute("login");
 String id = user.getId();
 String pic = user.getPic();
 
+String imgPath = "";
+String serverPath = request.getRequestURL().substring(0,request.getRequestURL().indexOf(request.getRequestURI()));
+String packagePath = request.getContextPath();
+
+System.out.println("urltest2==>"+serverPath+packagePath);
+
+if(pic==null){
+	imgPath = serverPath+packagePath+File.separator+"icon"+File.separator+"user-g.png";
+}else{
+	imgPath = File.separator+"img"+File.separator+id+File.separator+pic;
+}
+
 System.out.println("pic==>"+pic);
 System.out.println("id===>"+id);
+System.out.println("imgpath==>"+imgPath);
+
 %>
 <!DOCTYPE HTML>
 <html>
@@ -48,7 +63,6 @@ System.out.println("id===>"+id);
 }
 aside{
 	float: left;
-	/* width: 300px; */
     max-width: 300px;
     height : auto;
     margin: 0;
@@ -208,7 +222,6 @@ jQuery(document).ready(function() {
 //우측 fullcalendar
 jQuery(document).ready(function() {
     jQuery("#calendar").fullCalendar({
-    	
             header : {
                   left : "prevYear, prev, myCustomButton"
                 , center : "title, today"
@@ -276,35 +289,7 @@ jQuery(document).ready(function() {
                 $('.modal').find('#starts-at').val(event.start);
                 $('.modal').find('#ends-at').val(event.end);
             },
-
         });    
-
-        $('#my-today-button').click(function() {
-            $('#calendar').fullCalendar('today');
-        });
-            	
-        //날짜 선택 시 datepicker 로 날짜 선택
-        $("#starts-at, #ends-at").datetimepicker();
-
-        // Whenever the user clicks on the "save" button om the dialog
-        $('#save-event').on('click', function() {
-            var title = $('#title').val();
-            if (title) {
-                var eventData = {
-                    title: title,
-                    start: $('#starts-at').val(),
-                    end: $('#ends-at').val()
-                };
-                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-            }
-            $('#calendar').fullCalendar('unselect');
-
-            // Clear modal inputs
-            $('.modal').find('input').val('');
-
-            // hide modal
-            $('.modal').modal('hide');
-        });
     });
 
 </script>
@@ -330,14 +315,14 @@ jQuery(document).ready(function() {
 				</ul>
 			</div>
 			<div class="login_info" style=" float: left; width: 18%; height: 30px;">
-				<img alt="프로필이미지" src="<%=pic%>">
 		      <ul class="nav navbar-nav navbar-right">
+		      	<img alt="프로필이미지" src="<%=imgPath%>" class="img-circle" width="40">
 		        <li class="dropdown">
 		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style=" padding:5px; height: 30px;"><%=id %><span class="caret"></span></a>
 		          <ul class="dropdown-menu" role="menu">
 		            <li><a href="#">My List</a></li>
 		            <li><a href="#">My Info</a></li>
-		            <li><a href="login.html">Log out</a></li>
+		            <li><a href="index.jsp">Log out</a></li>
 		          </ul>
 		        </li>
 		      </ul>

@@ -18,24 +18,23 @@ String pw = request.getParameter("input_pw");
 iuserDAO dao = userDAO.getInstance();
 userDTO user = dao.login(id, pw);
 
-if(user != null && !user.getId().equals("")){
+if(user.getId() != null && !user.getId().equals("")){
 	session.setAttribute("login", user);
 	session.setMaxInactiveInterval(30*60);
 %>
 	<script type="text/javascript">
-	alert("어서오세요<%=user.getId()%>님");
+	alert("어서오세요 <%=user.getId()%>님");
 	location.href = "../Main.jsp";
 	<%
 	session.setAttribute("login", user);
 	%>
-	
 	</script>
 
 
 <%	}else{	%>
 	<script type="text/javascript">
 	alert("아이디와 패스워드를 확인해주세요");
-	location.href = "login.jsp";
+	location.href = "../index.jsp";
 	</script>
 <%	}	%>
 
