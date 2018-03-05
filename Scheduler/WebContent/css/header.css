@@ -12,8 +12,14 @@ nav{
 	 vertical-align: middle;
 }
 
+
 #topMenu {
         height: 35px;
+}
+
+#topMenu a:hover {
+	text-decoration:none;
+    background-color: #006699;
 }
 
 #topMenu ul li {
@@ -27,7 +33,8 @@ img{
 }
 
 #topMenu .menuLink {
-       /* text-decoration:none; */
+       text-decoration:none;
+       background-color: #006699;
        display: block;
        width: 60px;
        clear: left;
@@ -53,9 +60,22 @@ img{
 #topMenu .topMenu_logInOut{
 	font-size: 1.5rem;
 	font-weight: bold;
-	width:30%;
+	width:10%;
 	float:left;
 	overflow:hidden;
 	clear: right;
 	align-content: center;
+}
+
+#topMenu .login_info{
+	font-size: 1.5rem;
+	font-weight: bold;
+	width:10%;
+	float:left;
+	clear: right;
+	align-content: center;
+}
+#topMenu .login_info ul li {
+        list-style: none;
+        float: left;
 }
