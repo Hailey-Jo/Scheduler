@@ -1,0 +1,45 @@
+@charset "UTF-8";
+#calendar {
+    max-width:900px;
+    margin:0 auto;    
+}
+#calendar-mini{
+border: 1px solid #487BE1;
+float: left;
+padding: 10px;
+margin-left: 10px;
+margin-right: 10px;
+/* Calendar-mini 호출시 height: 347 설정하기 */
+}
+#calendar-mini div.fc-content{
+	height: 1px;
+}
+#calendar-mini div.fc-center h2{
+	font-size: 15px;
+}
+#calendar-mini a.fc-day-number{
+	font-size: 5px;
+}
+#calendar{
+border: 1px solid #487BE1;
+float: left;
+width: 80%;
+height: 90%;
+padding: 10px;
+/* Calendar 호출시 height: 650 설정하기  */
+}
+
+h2 { text-align: center; }
+.buttons { display: block; margin: 0 auto; text-align: center; }
+.buttons button { margin-bottom: 5px; }
+
+div.barKategorie {
+    float:left;
+    margin:5px;
+    padding-top:5px;
+    padding-bottom:5px;
+    padding-left:5px;
+    padding-right:10px;
+    border-radius:5px;
+    font-weight:bold;
+}
