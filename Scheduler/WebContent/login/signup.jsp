@@ -25,7 +25,7 @@ html {
 
 body {
 	background-color: #006699;
-	color: white;
+	color: black;
 	font: 400 0.875rem/1.5 "Open Sans", sans-serif;
 	margin: 0;
 	min-height: 100%;
@@ -47,7 +47,7 @@ input {
 	-webkit-flex: 10;
 	-ms-flex: 10;
 	flex: 10;
-	padding: 3rem 0;
+	padding: 6rem 0;
 	background-color: LightGray;
 }
 
@@ -132,6 +132,10 @@ input {
 .no-resize {
 	resize: vertical; /* 상하만 가능 */
 }
+
+h2{
+	color: white;
+}
 </style>
 
 <h2 align="center">회원가입</h2>
@@ -141,27 +145,28 @@ input {
 			
 			<form action="signupAf.jsp" method="post" class="form form--login" name="sign_form">
 				<div class="form__field">
+					<label style="font-size: 30px;">ID  &nbsp&nbsp&nbsp</label>
 					<input class="form__input" name="input-id" type="text" placeholder="아이디">
 				</div> 
 
 				<div class="form__field">
+					<label style="font-size: 30px;">PW  &nbsp</label>
 					<input class="form__input" name="input-pw" type="password" placeholder="비밀번호">
 				</div>
 				
 				<div class="form__field">
+					<label style="font-size: 30px;">PW2 </label>
 					<input class="form__input" name="input-repw" type="password" placeholder="비밀번호 확인">
 				</div>
 				
 				<div class="form__field">
+					<label style="font-size: 30px;">NAME &nbsp</label>				
 					<input class="form__input" name="input-name" type="text" placeholder="이름">
 				</div>
-				
-				<input type=file name='file1' style='display: none;'> 
-				<input type='text' name='file2' id='file2' size="10"> 
-				<img src='이미지경로' border='0' onclick='document.all.file1.click(); document.all.file2.value=document.all.file1.value'> 
-								
+		
 				<div class="form__field">
 					<div>
+						<label style="font-size: 30px;">BIRTH &nbsp</label>				
 						<input type="text" placeholder="생년월일" readonly="readonly"> 						
 					</div>
 					<div>
@@ -170,6 +175,7 @@ input {
 				</div>
 
 				<div class="form__field">
+					<label style="font-size: 30px;">EMAIL &nbsp</label>				
 					<input class="form__input" name="input-email" type="text" placeholder="이메일">
 				</div>
 				
