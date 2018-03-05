@@ -285,8 +285,14 @@ border-bottom:3px solid #78788c
 
 				<div class="form__field">
 					<input type="submit" value="로그인">
+<<<<<<< HEAD
 				</div>				
 				
+=======
+				</div>
+			</form>
+
+>>>>>>> a2fec2cc6ee2aa098b00676840e756e1c2c8fbc4
 			<p class="text--center">
 				회원이 아니신가요? <a href="signup.jsp">지금 가입하세요!</a> <span
 					class="fontawesome-ok-circle"></span>
@@ -301,8 +307,11 @@ border-bottom:3px solid #78788c
 				</label> 
 				<span class="fontawesome-exclamation-sign"></span>
 			</p>
+<<<<<<< HEAD
 			</form>
 
+=======
+>>>>>>> a2fec2cc6ee2aa098b00676840e756e1c2c8fbc4
 		</div>
 
 	</div>
