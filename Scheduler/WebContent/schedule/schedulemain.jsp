@@ -1,8 +1,9 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@page import="Schedule.ScheduleDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="Schedule.ScheduleDAO"%>
 <%@page import="Schedule.iScheduleDAO"%>
-<%request.setCharacterEncoding("utf-8"); %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -10,17 +11,34 @@
 List<ScheduleDTO> list = dao.getAllSchedulList();
 String eventstring = "";
 for(int i=0; i<list.size();i++){	
-	eventstring +="{";
+	
+	eventstring +="{";	
 	eventstring += "title : '"+list.get(i).getTitle()+"',";
+	eventstring += "id : '"+list.get(i).getSeq()+"',";
 	eventstring += "start : '"+list.get(i).getStartDate().substring(0, 10)+"',";
 	eventstring += "end : '"+list.get(i).getEndDate().substring(0, 10)+"',";
+	eventstring += "description : '"+list.get(i).getContent()+"',";	
 	eventstring += "backgroundColor : '"+list.get(i).getCategory()+"',";
 	if(list.get(i).getImportant()==1){
 		eventstring += "imageurl : " +" '..\\"+"\\image\\"+"\\"+"star.png',";
 	}	
-	eventstring +="},"+"\n";	
+	eventstring +="},"+"\n";
+	
 }
-String id = "null";
+String id = request.getParameter("login__username");  
+
+System.out.println("id===>"+id);
+
+Date date = new Date();
+String s = date.toString();
+
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+System.out.println("s: " + sdf.format(date));
+
+String sthismonth  = sdf.format(date).replace("-", "");
+int thismonth = Integer.parseInt(sthismonth);
+System.out.println("thismonth: " + thismonth);
+
 %>
 <!DOCTYPE HTML>
 <html>
@@ -29,6 +47,10 @@ String id = "null";
 <link rel="stylesheet" type="text/css" href="../css/header.css">
 <link rel="stylesheet" type="text/css" href="../css/calendar.css">  
 <style type="text/css">
+#topMenu a:hover {
+	text-decoration:none;
+    background-color: #006699;
+}
 
 aside{
 	float: left;
@@ -38,12 +60,6 @@ aside{
     margin: 0;
     padding: 10px;
     
-}
-
-td.first{
-	
-	text-align: center;
-
 }
 
 article {
@@ -80,10 +96,19 @@ div.fc-center h2{
 	size: 0.8em;
 }
 
-td.addtable{
-	padding: 10px;
+tr.important{
+	border-bottom: 1px solid #EAEAEA;
 }
 
+#calendar {
+
+width:80vm;
+height: 80vm;
+float:left;
+padding : 50px;
+/* padding-right: 100px; */
+
+}
 
 
     #loading {
@@ -91,6 +116,12 @@ td.addtable{
         position:absolute;
         top:10px;
         right:10px;
+    }
+
+    #calendar {
+        max-width:1200px;
+        margin:auto;
+        float:left;
     }
 
     div.barKategorie {
@@ -110,8 +141,6 @@ ul li a:hover, ul li a:focus {
 }  
 
 </style>
-<!-- DatePicker -->
-
 <link href="../fullcalendar-3.8.2/fullcalendar.css" rel="stylesheet"/>
 <link href="../fullcalendar-3.8.2/fullcalendar.print.css" rel="stylesheet" media="print"/>
 <script type="text/javascript" src="../fullcalendar-3.8.2/lib/moment.min.js"></script>
@@ -132,26 +161,6 @@ ul li a:hover, ul li a:focus {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $('#datetimepicker1').datetimepicker({
-        	format : 'YYYY-MM-DD HH:mm',
-        	locale: 'ko'
-        	
-        });
-        $('#datetimepicker2').datetimepicker({
-        	format : 'YYYY-MM-DD HH:mm',
-        	locale: 'ko',        	
-            useCurrent: false //Important! See issue #1075
-        });
-        $("#datetimepicker1").on("dp.change", function (e) {        	
-            $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
-        });
-        $("#datetimepicker2").on("dp.change", function (e) {
-            $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
-        });
-    });
-</script>
 
 <script type="text/javascript">
 
@@ -190,14 +199,90 @@ ul li a:hover, ul li a:focus {
     	            }
     	        , events: [
     	            <%=eventstring %>
-    	        ]
-    	        
-    	        });
+    	        ]    	            
     	    });
-    });
+    	        
+    	        $('#my-today-button').click(function() {
+    	            $('#calendar').fullCalendar('today');
+    	        });
+    	        
+    	    });
+    	 
+        jQuery("#calendar").fullCalendar({
+        	fixedWeekCount : false,
+            header : {
+                  left : "prevYear, prev"
+                , center : "title, today"
+                , right: 'myCustomButton2,month,agendaWeek,agendaDay, next, nextYear'
+            }        	    
+        	        
+	        , navLinks: true // can click day/week names to navigate views
+	        , selectable: true
+	        , selectHelper: true
+        	, height : 580
+            , locale : "ko"
+            , editable : true
+            , eventLimit : true
+            , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
+            , eventSources : [
+                // 대한민국의 공휴일
+                {
+                      googleCalendarId : "ko.south_korea#holiday@group.v.calendar.google.com"
+                    , className : "koHolidays"
+                    , color : "#FF0000"
+                    , textColor : "#FFFFFF"
+                    , editable : false                    
+                }
+            ]
+            , loading:function(bool) {
+                jQuery("#loading").toggle(bool);
+            }
+            , events: [
+                <%=eventstring %>
+            ]
+            , eventRender: function(event, eventElement) {            	
+            	if (event.imageurl)
+        		{             		
+        		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
+        		} 
+       		 }
+       	    , eventClick:  function(event, jsEvent, view) {
+       	    	if(event.id.length > 10){
+					var target = $(this).find('a').attr('href', '#');
+					return false
+				}else{
+					$('#modalTitle').html(event.title);
+					$('#modalBody').html(event.description);
+					$('#eventUrl').attr('href','updateschedule.jsp?seq='+event.id);
+					$('#fullCalModal').modal();
+				}
+	        }
+       	    , dayClick: function(date, allDay, jsEvent, view) {
+       	    	$('#eventUrl').attr('href','addschedule.jsp');
+       	    	$('#fullCalModal').modal();
+       	    }
+       	   
+		  });      
+        var aaa = $("#calendar div.fc-center h2").text();
+        // 2018년 11월
+        if(aaa.length==8){
+        	var thisyear = aaa.substring(0,4);        
+            var thismonth = aaa.substring(6,7);
+            thismonth = "0"+thismonth;
+            var dday = thisyear + thismonth;
+            $(".monthbtn").attr('value',dday);
+        }
+        else if(aaa.length==9){
+        	var thisyear = aaa.substring(0,4); 
+        	var thismonth = aaa.substring(6,8);
+        	var dday = thisyear + thismonth;
+            $(".monthbtn").attr('value',dday);
+        }
+        
+    });    
 
 </script>
-  
+<title>BizPayDay</title>
 </head>
 <body>
 <!-- <div id ="main"> -->
@@ -212,7 +297,7 @@ ul li a:hover, ul li a:focus {
 			</div>
 			<div class="topMenu_icon" align="center" style=" float: left; width: 40%;">
 				<ul>
-					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/home-w.png" onmouseover='this.src="../icon/home-n.png"' onmouseout='this.src="../icon/home-w.png"' ></a></li>
+					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/home-n.png" onmouseover='this.src="../icon/home-w.png"' onmouseout='this.src="../icon/home-n.png"' ></a></li>
 					<li><a class="menuLink" href="schedulemain.jsp"><img src="../icon/schedule-n.png" onmouseover='this.src="../icon/schedule-w.png"' onmouseout='this.src="../icon/schedule-n.png"' ></a></li>
 					<li><a class="menuLink" href="../cashbook/cashbookMain.jsp"><img src="../icon/cash-n.png" ></a></li>
 				</ul>
@@ -243,7 +328,7 @@ ul li a:hover, ul li a:focus {
 			    <span class="sr-only">Toggle Dropdown</span>
 			  </button>
 			  <ul class="dropdown-menu" role="menu" style="width: 230px">
-			    <li><a href="#">Write Scheduler</a></li>
+			    <li><a href="addschedule.jsp">Write Scheduler</a></li>
 			    <li><a href="#">Write MoneyBook</a></li>    
 			  </ul>
 			</div>
@@ -254,115 +339,97 @@ ul li a:hover, ul li a:focus {
 	<div style="padding: 10px" class="tablediv">
 			<table style="padding-top: 10px">
 				<tr>
-					<td>　</td>
+					<td></td>
 				</tr>
 				<tr>
-					<td style="width: 300px"><button type="button" class="btn btn-primary btn-lg btn-block">중요일정보기</button></td>
+				<form action="#importantmodal">
+				<input name="monthbtn" class="monthbtn" type="hidden" value="">
+					<td style="width: 300px"><input type="submit" id="btn1" data-toggle="modal" class="btn btn-primary btn-lg btn-block" data-target="#importantmodal" value="중요일정보기"></td>
+				</form>
 				</tr>
 				<tr>
 					<td>
 				</tr>
 			
 			</table>
-		</div>
+		</div>	
+		
+
 	</aside>
 		
 			
 	<!-- 우측 본문 -->
-	<article style="padding: 20px">
-		<form action="addscheduleAf.jsp" method="post">
-			<table class="table table-striped" style="height: 634px;" >
-	  			<col width="10%"><col width="30%"><col width="10%"><col width="30%">
-	  			<tr bgcolor="#f9f9f9" >
-	  				<td class="first">제목</td>
-	  				<td><input type="text" name="title" style="width: 100%"></td>
-	  				<td><input type="checkbox" name="important"> 중요</td>  
-	  				<td></td>				
-	  			</tr>
-	  			<tr>
-	  				<td class="first">시작일</td>
-	  				<td>
-		  				<div class='input-group date' id='datetimepicker1'>
-		                    <input type='text' class="form-control"  name="startdate" />
-		                    <span class="input-group-addon">
-		                        <span class="glyphicon glyphicon-calendar"></span>
-		                    </span>
-		                </div>
-	                </td>
-	                <td></td>
-	                <td></td>
-	            </tr>
-	            <tr>
-	  				<td class="first">종료일</td>
-	  				<td>
-		  				<div class='input-group date' id='datetimepicker2'>
-		                    <input type='text' class="form-control"  name="enddate" />
-		                    <span class="input-group-addon">
-		                        <span class="glyphicon glyphicon-calendar"></span>
-		                    </span>
-		                </div>
-	                </td>
-	                <td>
-	                <td>
-	  			</tr>
-	  			<tr>
-	  				<td class="first">범주</td>
-	  				<td>
-	  					<div class="btn-group">
-	  <input type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="colorbtn" class="colorbtn" 
-	   value ="Select Color"><!-- <span class="caret" ></span>	   -->
-	  <input type="hidden" value="Select Color" name="colorbtn" class="colorbtn">	  
-	  <ul class="dropdown-menu" role="menu">
-	    <li class="selectcolor"><a href="#" style="color: red">Red</a></li>
-	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: orange;">Orange</a></li>
-	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: yellow;">Yellow</a></li>
-	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: green;">Green</a></li>
-	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: blue;">Blue</a></li>
-	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: navy;">Navy</a></li>
-	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: purple;">Purple</a></li>
-	  </ul>
-	  <script type="text/javascript">
-	  	$(".selectcolor").click(function() {
-	  		alert($(this).children().text());
-	  		alert($(this).children().attr("style"));
-	  			  		
-	  		$("#colorbtn").val($(this).children().text());
-	  		$("#colorbtn").attr("style",$(this).children().attr("style"));
-	  		$(".colorbtn").val($(this).children().text());			
-	});
-	  </script>
-	</div>
-	  				</td>
-	  				<td></td>
-	  				<td></td>
-	  			</tr>
-	  			<tr>
-	  				<td class="first">내용</td>
-	  				<td><textarea rows="10" cols="47" name="content"></textarea></td>
-	  				<td></td>
-	  				<td></td>
-	  			</tr>
-	  			<tr>
-	  				<td class="first"></td>
-	  				<td></td>
-	  				<td></td>
-	  				<td>
-	  					<button type="button" class="btn btn-info" onclick="location='NewFile.jsp'">뒤로가기</button>
-	  					<input type="submit" class="btn btn-info" id="savebtn" value="저장">
-	  				</td>
-	  			</tr>
-			</table>
-		</form>
+	<article>
+		<div id="calendar"></div>	
+		<div id="fullCalModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+                <h4 id="modalTitle" class="modal-title"></h4>
+            </div>
+            <div id="modalBody" class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button class="btn btn-primary"><a id="eventUrl" target="_blank" style="color: white; font-weight: 100">Event Page</a></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+	
+<div class="modal fade" id="importantmodal" tabindex="-1" role="dialog" aria-labelledby="importantmodalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">       
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+         <h5 class="modal-title" id="importantmodalLabel">중요일정보기</h5>
+      </div>
+      <div class="modal-body">
+      	<table style="text-align: center;">
+      		<col width="150"><col width="150"><col width="300">
+      		<tr>
+      			<td colspan="3" style="border-bottom: 1px solid gray">
+      				 
+      			</td>
+      		</tr>
+      		<tr class="important">
+      			<td>시작일</td>
+      			<td>종료일</td>
+      			<td>제목</td>
+      		</tr>
+      		<%
+      		for(int i = 0; i<list.size();i++){
+      			if(list.get(i).getImportant()==1){
+      				String ddday = request.getParameter("monthbtn");
+      				System.out.println("ddday: " + ddday);
+      				int start = Integer.parseInt(list.get(i).getStartDate().substring(0, 10).replace("-", ""));
+      				if(thismonth<=start){
+      		%>
+      			<tr class="important">
+      				<td><%=list.get(i).getStartDate().substring(0, 10) %></td>
+      				<td><%=list.get(i).getEndDate().substring(0, 10) %></td>
+      				<td><%=list.get(i).getTitle() %></td>
+      			</tr>
+      		<%
+      				}
+      			}
+      		}
+      		%>
+      	</table>
+      </div>
+      <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+  </div>
+</div>	
+
 	</article>
 		
 	<footer>Copyright &copy; BizPayDay</footer>
-	
-	
+
 </body>
 </html>

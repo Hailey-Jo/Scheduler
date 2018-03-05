@@ -72,7 +72,7 @@ public class ScheduleDAO implements iScheduleDAO {
 
 	@Override
 	public boolean addSchedule(ScheduleDTO dto) {
-		String sql = "INSERT INTO SCHEDULE VALUES(SHECDELE_SEQ.NEXTVAL, ?,?,?,?,?,?,?,0)";
+		String sql = "INSERT INTO SCHEDULE VALUES(SHECDELE_SEQ.NEXTVAL, ?,?,to_date(?,'YYYY-MM-DD HH24:MI'),to_date(?,'YYYY-MM-DD HH24:MI'),?,?,?,0)";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -155,8 +155,8 @@ public class ScheduleDAO implements iScheduleDAO {
 
 	@Override
 	public boolean updateSchedule(ScheduleDTO dto) {
-		String sql = "UPDATE SCHEDULE SET TITLE=?, IMPORTANT=?, STARTDATE=?, "
-				+ "ENDDATE=?, CONTENT=?, CATEGORY=? WHERE SHECDELE_SEQ="+dto.getSeq();
+		String sql = "UPDATE SCHEDULE SET TITLE=?, IMPORTANT=?, STARTDATE=to_date(?,'YYYY-MM-DD HH24:MI'), "
+				+ "ENDDATE=to_date(?,'YYYY-MM-DD HH24:MI'), CONTENT=?, CATEGORY=? WHERE SHECDELE_SEQ="+dto.getSeq();
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
