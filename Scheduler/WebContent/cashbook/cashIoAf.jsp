@@ -19,10 +19,10 @@
 	String id = request.getParameter("login_username");  
 	System.out.println("id : "+id);
 
-	System.out.println("cashioaf.jsp 도착================================= ");
+	System.out.println("cashIoAf.jsp 도착================================= ");
 
-	String[] arr = request.getParameterValues("cashioaf");
-	System.out.println("cashioaf 들어온 배열 크기 : " + arr.length);
+	String[] arr = request.getParameterValues("cashIoAf");
+	System.out.println("cashIoAf 들어온 배열 크기 : " + arr.length);
 	
 	for(int i=0; i<arr.length; i++){
 		System.out.println(arr[i]);

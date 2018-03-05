@@ -148,9 +148,12 @@ public class CashbookDTO {
 
 	@Override
 	public String toString() {
-		return "CashbookDTO [seq=" + seq + ", id=" + id + ", title=" + title + ", moneyDate=" + moneyDate + ", ioMoney="
-				+ ioMoney + ", category=" + category + ", content=" + content + ", del=" + del + "]";
+		return seq + "%" + id + "%" + title + "%" + moneyDate + "%"
+				+ ioMoney + "%" + category + "%" + price + "%" + content + "%" + del;
 	}
+
+
+
 	
 	
 	

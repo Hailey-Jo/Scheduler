@@ -20,16 +20,17 @@ public class CashbookDAO implements iCashbookDAO{
 		DBConnection.initConnect();
 	}
 	
+	
 	public static CashbookDAO getInstance() {
 		return CashbookDAO;
 	}
 
 	/*---------------------------------------------------------
-	 *CashBook 입력하기 (수입/지출)
+	 // TODO *CashBook 입력하기 (수입/지출)
 	 ---------------------------------------------------------*/
 	@Override
 	public boolean addCashbook(List<CashbookDTO> cashDto) {
-		// TODO Auto-generated method stub
+		
 		
 		/*INSERT INTO MONEYBOOK(MONEYBOOK_SEQ, ID, TITLE, MONEYDATE, IOMONEY, CATEGORY, PRICE, CONTENT, DEL)
 		VALUES (MONEYBOOK_SEQ.NEXTVAL, 'creepin', '식비', '20180227', '1', '0', 18000, '점심 식사', 0);*/
@@ -45,6 +46,7 @@ public class CashbookDAO implements iCashbookDAO{
 				+ " ?, ?, "
 				+ " ?, "
 				+ " ?, 0) ";
+		
 		
 		System.out.println("addCashbook sql : "+sql);
 		int count =0;
@@ -71,11 +73,11 @@ public class CashbookDAO implements iCashbookDAO{
 				psmt.setString(7, cashDto.get(i).getContent()); //CONTENT
 				
 				count = psmt.executeUpdate();
+				
 			}
 			System.out.println("3/6 success addCashbook");
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("3/6 fail addCashbook");
 		}finally {
@@ -90,11 +92,10 @@ public class CashbookDAO implements iCashbookDAO{
 
 
 	/*---------------------------------------------------------
-	 *최근 리스트 불러오기
+	 // TODO 최근 리스트 불러오기
 	 ---------------------------------------------------------*/
 	@Override
 	public List<CashbookDTO> getCashDate(String id) {
-		// TODO Auto-generated method stub
 		
 		/*SELECT MONEYBOOK_SEQ, ID, TITLE, MONEYDATE, IOMONEY, CATEGORY, PRICE, CONTENT, DEL
 		FROM MONEYBOOK
@@ -107,7 +108,7 @@ public class CashbookDAO implements iCashbookDAO{
 				+ " CONTENT, DEL "
 				
 				+ " FROM MONEYBOOK "
-				+ " WHERE ID=? "
+				+ " WHERE ID=? AND DEL=0 "
 				+ " ORDER BY MONEYDATE DESC ";
 		
 		System.out.println("addCashbook sql : "+sql);
@@ -145,7 +146,6 @@ public class CashbookDAO implements iCashbookDAO{
 			System.out.println("4/6 success getCashDate");
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("fail getCashDate");
 		}finally {
@@ -159,12 +159,11 @@ public class CashbookDAO implements iCashbookDAO{
 	
 
 	/*---------------------------------------------------------
-	 * 수입 / 지출 합계 구하기 (이달의 가계)
+	 // TODO 수입 / 지출 합계 구하기 (이달의 가계)
 	 ---------------------------------------------------------*/
 	
 	@Override
 	public int getInOutcome(String id, int ioMoney, String todayDate) {
-		// TODO Auto-generated method stub
 		
 		//System.out.println("getInoutcome id : " + id);
 		
@@ -192,7 +191,8 @@ public class CashbookDAO implements iCashbookDAO{
 				+ " FROM MONEYBOOK "
 				+ " WHERE ID=? "
 				+ " AND IOMONEY=?  "
-				+ " AND TO_CHAR(MONEYDATE, 'YYYYMM') = ? ";
+				+ " AND TO_CHAR(MONEYDATE, 'YYYYMM') = ? "
+				+ " AND DEL=0 ";
 		
 		System.out.println("getInOutcome sql : "+sql);
 		
@@ -225,7 +225,6 @@ public class CashbookDAO implements iCashbookDAO{
 			
 			
 		}catch (Exception e) {
-			// TODO: handle exception
 			System.out.println("fail getInOutcome");
 		}finally {
 			DBClose.close(psmt, conn, rs);
@@ -234,6 +233,68 @@ public class CashbookDAO implements iCashbookDAO{
 		
 		return result;
 	}
+
+
+	/*---------------------------------------------------------
+	 // TODO 삭제하기
+	 ---------------------------------------------------------*/
+	@Override
+	public boolean deleteCashbook(int seq) {
+		
+		/*
+		UPDATE MONEYBOOK
+		SET DEL=1
+		WHERE MONEYBOOK_SEQ=?;*/
+		
+		String sql = " UPDATE MONEYBOOK "
+					+ " SET DEL=1 "
+					+ " WHERE MONEYBOOK_SEQ=? ";
+		
+		System.out.println("deleteCashbook sql : "+sql);
+		int count =0;
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			System.out.println("1/6 success deleteCashbook");
+		
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1,seq);
+			count = psmt.executeUpdate();
+			System.out.println("2/6 success deleteCashbook");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 success deleteCashbook");
+			
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("4/6 fail deleteCashbook");
+		}finally {
+			DBClose.close(psmt, conn, rs);
+			System.out.println("5/6 success deleteCashbook");
+		}
+		
+		
+		return count>0 ? true:false;
+	}
+
+
+	/*---------------------------------------------------------
+	 // TODO 수정하기
+	 ---------------------------------------------------------*/
+	@Override
+	public boolean modifycashbook(CashbookDTO cashDto) {
+		
+		
+		return false;
+	}
+	
+	
 	
 	
 }

@@ -13,5 +13,10 @@ public interface iCashbookDAO {
 	//이달의 총 수입 / 지출
 	public int getInOutcome(String id, int ioMoney, String todayDate);
 	
+	//정보 삭제하기
+	public boolean deleteCashbook(int seq);
+	
+	//정보 수정하기
+	public boolean modifycashbook(CashbookDTO cashDto);
 	
 }
