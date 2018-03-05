@@ -290,8 +290,55 @@ public class CashbookDAO implements iCashbookDAO{
 	@Override
 	public boolean modifycashbook(CashbookDTO cashDto) {
 		
+		/*UPDATE MONEYBOOK
+		SET TITLE=?, MONEYDATE=?, CATEGORY=?, PRICE=?, CONTENT=?
+		WHERE MONEYBOOK_SEQ=?;*/
 		
-		return false;
+		String sql = " UPDATE MONEYBOOK "
+				+ " SET TITLE=?,"
+				+ " MONEYDATE=?,"
+				+ " CATEGORY=?, "
+				+ " PRICE=?, "
+				+ " CONTENT=? "
+				+ " WHERE MONEYBOOK_SEQ=? ";
+	
+		System.out.println("modifycashbook sql : "+sql);
+		int count =0;
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			System.out.println("1/6 success modifycashbook");
+		
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, cashDto.getTitle());
+			psmt.setString(2, cashDto.getMoneyDate());
+			psmt.setInt(3,cashDto.getCategory());
+			psmt.setInt(4,cashDto.getPrice());
+			psmt.setString(5, cashDto.getContent());
+			psmt.setInt(6,cashDto.getSeq());
+			
+			count = psmt.executeUpdate();
+			System.out.println("2/6 success modifycashbook");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 success modifycashbook");
+			
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("4/6 fail modifycashbook");
+		}finally {
+			DBClose.close(psmt, conn, rs);
+			System.out.println("5/6 success modifycashbook");
+		}
+		
+		
+		return count>0 ? true:false;
 	}
 	
 	

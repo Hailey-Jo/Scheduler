@@ -64,12 +64,27 @@ String todayS = year+"-"+monthAf+"-"+dayAf;
 
 String eventCash = "";
 for(int i=0; i<cList.size();i++){
-	if(cList.get(i).getDel()!=1){
+	if(cList.get(i).getIoMoney()==0){
+		//수입
 		eventCash +="{";
+		eventCash +=" id : '"+i+"',";
 		eventCash += "title : '"+cList.get(i).getContent()+"  "+cList.get(i).getPrice()+"',";
 		eventCash += "start : '"+cList.get(i).getMoneyDate().substring(0, 10)+"',";
+		eventCash +=" textColor: '#6699ff' , ";
+		eventCash +=" color: '#ffffff' ";
+		eventCash +="},";
+		
+	}else{
+		//지출
+		eventCash +="{";
+		eventCash +=" id : '"+i+"',";
+		eventCash += "title : '"+cList.get(i).getContent()+"  "+cList.get(i).getPrice()+"',";
+		eventCash += "start : '"+cList.get(i).getMoneyDate().substring(0, 10)+"',";
+		eventCash +=" textColor: '#ff6666' , ";
+		eventCash +=" color: '#ffffff' ";
 		eventCash +="},";
 	}
+		
 }
 
 
@@ -77,9 +92,9 @@ for(int i=0; i<cList.size();i++){
 
 <!DOCTYPE HTML>
 <html>
-
 <head>
 <link rel="stylesheet" type="text/css" href="../css/header.css"> 
+<link rel="stylesheet" type="text/css" href="../css/cashbookCalendar.css"> 
 
 <style type="text/css">
 aside{
@@ -128,69 +143,6 @@ body {
     right:10px;
 }
 
-#calendar {
-width:80vm;
-height: 80vm;
-float:left;
-padding : 50px;
-/* padding-right: 100px; */
-}
-
-/* #calendar-mini{
-border: 1px solid #487BE1;
-width: 100%;
-height: auto;
-float: left;
-padding: 10px;
-margin-left: 10px;
-margin-right: 10px;
-} */
-
-
-/* 본문 캘린더 */
-#calendar-mini div.fc-content{
-	height: 1px;
-}
-#calendar-mini div.fc-center h2{
-	font-size: 15px;
-}
-#calendar-mini a.fc-day-number{
-	font-size: 5px;
-}
-
-#calendar-out div.fc-content{
-	height: 1px;
-}
-#calendar-out div.fc-center h2{
-	font-size: 15px;
-}
-#calendar-out a.fc-day-number{
-	font-size: 5px;
-}
-
-
-#calendar-mini-Modify div.fc-content{
-	height: 1px;
-}
-#calendar-mini-Modify div.fc-center h2{
-	font-size: 15px;
-}
-#calendar-mini-Modify a.fc-day-number{
-	font-size: 5px;
-}
-
-
-#calendar-out-Modify div.fc-content{
-	height: 1px;
-}
-#calendar-out-Modify div.fc-center h2{
-	font-size: 15px;
-}
-#calendar-out-Modify a.fc-day-number{
-	font-size: 5px;
-}
-
-
 div.barKategorie {
     float:left;
     margin:5px;
@@ -227,204 +179,6 @@ aside .badge-info:hover {
 	float: right;
 }
 
- 
-/* 수입  내역 입력 */
-#inCashMyModal  .modal-header {
-    background-color: #337AB7;
-    padding:16px 16px;
-    color:#FFF;
-    border-bottom:2px dashed #337AB7;
- }
-
-#inCashMyModal  .modal-body {
-	height: 500px;
-	padding: 10px;
-	margin-bottom: 30px;
-}
-
-#inCashMyModal .modal-body .container {
- 	width: 70%;
- 	float: right;
- 	height: inherit;
- 	overflow-y: scroll;
- }
-
- 
-#inCashMyModal  .modal-body .modal-inLeft{
-	float: left;
- 	width: 30%;
- 	height: auto;
- 	padding: 5px;
- 	padding-top: 50px;
- }
- 
-#inCashMyModal  .modal-dialog .modal-content .modal-footer {
-    bottom: 0;
-    height: 60px;
-}
-
-#inCashMyModal .th_inTitle{
-	width: 50px;
-}
-
-#inCashMyModal .th_inPrice{
-	width: 150px;
-}
-
-
-/* 모달수정 수입 수정 */
-
-#inCashMyModalModify  .modal-header {
-    background-color: #337AB7;
-    padding:16px 16px;
-    color:#FFF;
-    border-bottom:2px dashed #337AB7;
- }
-
-#inCashMyModalModify  .modal-body {
-	height: 500px;
-	padding: 10px;
-	margin-bottom: 30px;
-}
-
-#inCashMyModalModify .modal-body .container {
- 	width: 70%;
- 	float: right;
- 	height: inherit;
- 	overflow-y: scroll;
- }
- 
-
-#inCashMyModalModify  .modal-body .modal-inLeft{
-	float: left;
- 	width: 30%;
- 	height: auto;
- 	padding: 5px;
- 	padding-top: 50px;
- }
- 
-#inCashMyModalModify  .modal-dialog .modal-content .modal-footer {
-    bottom: 0;
-    height: 60px;
-}
-
-#inCashMyModalModify .th_inTitle{
-	width: 50px;
-}
-
-#inCashMyModalModify .th_inPrice{
-	width: 150px;
-}
-
-
-/* 지출  내역 입력 */
-
-#outCashMyModal  .modal-header {
-    background-color: #337AB7;
-    padding:16px 16px;
-    color:#FFF;
-    border-bottom:2px dashed #337AB7;
- }
- 
-#outCashMyModal .modal-body {
-	height: 500px;
-	padding: 10px;
-	margin-bottom: 30px;
-}
-
-#outCashMyModal  .modal-body .modal-outLeft{
-	float: left;
- 	width: 30%;
- 	height: auto;
- 	padding: 5px;
- 	padding-top: 50px;
- }
- 
-#outCashMyModal .modal-body .container {
- 	width: 70%;
- 	float: right;
- 	height: inherit;
- 	overflow-y: scroll;
- }
- 
- 
-#outCashMyModal .modal-dialog .modal-content .modal-footer {
-    bottom: 0;
-    height: 60px;
-}
-
-
-
-#outCashMyModal .th_outTitle{
-	width: 150px;
-}
-
-#outCashMyModal .th_outPrice{
-	width: 150px;
-}
-
-#outCashMyModal .th_outCategory{
-	width: 60px;
-}
-#outCashMyModal .th_outDelete{
-	width: 50px;
-}
-
-
-
-/* 지출  내역 수정*/
-
-#outCashMyModalModify  .modal-header {
-    background-color: #337AB7;
-    padding:16px 16px;
-    color:#FFF;
-    border-bottom:2px dashed #337AB7;
- }
- 
-#outCashMyModalModify .modal-body {
-	height: 500px;
-	padding: 10px;
-	margin-bottom: 30px;
-}
-
-#outCashMyModalModify  .modal-body .modal-outLeft{
-	float: left;
- 	width: 30%;
- 	height: auto;
- 	padding: 5px;
- 	padding-top: 50px;
- }
- 
-#outCashMyModalModify .modal-body .container {
- 	width: 70%;
- 	float: right;
- 	height: inherit;
- 	overflow-y: scroll;
- }
- 
- 
-#outCashMyModalModify .modal-dialog .modal-content .modal-footer {
-    bottom: 0;
-    height: 60px;
-}
-
-#outCashMyModalModify .th_outTitle{
-	width: 150px;
-}
-
-#outCashMyModalModyfy .th_outPrice{
-	width: 150px;
-}
-
-#outCashMyModalModify .th_outCategory{
-	width: 60px;
-}
-#outCashMyModalModify .th_outDelete{
-	width: 50px;
-}
-
-
-
 /* 아이콘 버튼 스타일 */
 .btn-circle {
         width: 30px;
@@ -454,6 +208,7 @@ aside .badge-info:hover {
 <script type="text/javascript" src="../fullcalendar-3.8.2/fullcalendar.js" charset="euc-kr"></script>
 <script type="text/javascript" src="../fullcalendar-3.8.2/gcal.js"></script>
 <script type="text/javascript" src="../fullcalendar-3.8.2/locale-all.js"></script>
+
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <!-- 부가적인 테마 -->
@@ -469,8 +224,6 @@ aside .badge-info:hover {
 <!-- icon 불러오기 -->
 <!--core first + styles last-->
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-
-
 
 <script type="text/javascript">
 jQuery(document).ready(function() {
@@ -525,35 +278,7 @@ jQuery(document).ready(function() {
 	             //alert('Resource ID: ' + resourceObj.id);
 	           }
         });
-        $('#my-today-button').click(function() {
-            $('#calendar').fullCalendar('today');
-        });
-        // Bind the dates to datetimepicker.
-        // You should pass the options you need
-        $("#starts-at, #ends-at").datetimepicker();
-
-        // Whenever the user clicks on the "save" button om the dialog
-        $('#save-event').on('click', function() {
-            var title = $('#title').val();
-            if (title) {
-                var eventData = {
-                    title: title,
-                    start: $('#starts-at').val(),
-                    end: $('#ends-at').val()
-                };
-                $('calendar-out').fullCalendar('renderEvent', eventData, true); // stick? = true
-            }
-            $('calendar-out').fullCalendar('unselect');
-
-
-            // Clear modal inputs
-            $('.modal fade .modal').find('input').val('');
-
-            // hide modal
-            $('.modal fade .modal').modal('hide');
-        });
     });
-	
 	
 	
 /* -------------------------------------------------------------------------------
@@ -606,33 +331,6 @@ jQuery("#calendar-out-Modify").fullCalendar({
 			$("#outSelectedDateModify").append(outSelectedDateModify);
              //alert('Resource ID: ' + resourceObj.id);
            }
-    });
-    $('#my-today-button').click(function() {
-        $('#calendar').fullCalendar('today');
-    });
-    // Bind the dates to datetimepicker.
-    // You should pass the options you need
-    $("#starts-at, #ends-at").datetimepicker();
-
-    // Whenever the user clicks on the "save" button om the dialog
-    $('#save-event').on('click', function() {
-        var title = $('#title').val();
-        if (title) {
-            var eventData = {
-                title: title,
-                start: $('#starts-at').val(),
-                end: $('#ends-at').val()
-            };
-            $('#calendar-out-Modify').fullCalendar('renderEvent', eventData, true); // stick? = true
-        }
-        $('#calendar-out-Modify').fullCalendar('unselect');
-
-
-        // Clear modal inputs
-        $('.modal fade .modal').find('input').val('');
-
-        // hide modal
-        $('.modal fade .modal').modal('hide');
     });
 });
 
@@ -700,33 +398,6 @@ jQuery("#calendar-out-Modify").fullCalendar({
    	             //alert('Resource ID: ' + resourceObj.id);
    	           }
    	        });
-   	        $('#my-today-button').click(function() {
-   	            $('#calendar').fullCalendar('today');
-   	        });
-   	        // Bind the dates to datetimepicker.
-   	        // You should pass the options you need
-   	        $("#starts-at, #ends-at").datetimepicker();
-
-   	        // Whenever the user clicks on the "save" button om the dialog
-   	        $('#save-event').on('click', function() {
-   	            var title = $('#title').val();
-   	            if (title) {
-   	                var eventData = {
-   	                    title: title,
-   	                    start: $('#starts-at').val(),
-   	                    end: $('#ends-at').val()
-   	                };
-   	                $('#calendar-mini').fullCalendar('renderEvent', eventData, true); // stick? = true
-   	            }
-   	            $('#calendar-mini').fullCalendar('unselect');
-
-
-   	            // Clear modal inputs
-   	            $('.modal fade .modal').find('input').val('');
-
-   	            // hide modal
-   	            $('.modal fade .modal').modal('hide');
-   	        });
    	    });
     	 
 /* -------------------------------------------------------------------------------
@@ -791,33 +462,6 @@ jQuery("#calendar-out-Modify").fullCalendar({
     	             //alert('Resource ID: ' + resourceObj.id);
     	           }
     	        });
-    	        $('#my-today-button').click(function() {
-    	            $('#calendar').fullCalendar('today');
-    	        });
-    	        // Bind the dates to datetimepicker.
-    	        // You should pass the options you need
-    	        $("#starts-at, #ends-at").datetimepicker();
-
-    	        // Whenever the user clicks on the "save" button om the dialog
-    	        $('#save-event').on('click', function() {
-    	            var title = $('#title').val();
-    	            if (title) {
-    	                var eventData = {
-    	                    title: title,
-    	                    start: $('#starts-at').val(),
-    	                    end: $('#ends-at').val()
-    	                };
-    	                $('#calendar-mini-Modify').fullCalendar('renderEvent', eventData, true); // stick? = true
-    	            }
-    	            $('#calendar-mini-Modify').fullCalendar('unselect');
-
-
-    	            // Clear modal inputs
-    	            $('.modal fade .modal').find('input').val('');
-
-    	            // hide modal
-    	            $('.modal fade .modal').modal('hide');
-    	        });
     	    });
 /* -------------------------------------------------------------------------------
 	본문 캘린더
@@ -856,34 +500,31 @@ jQuery("#calendar").fullCalendar({
     }
     , events: [
         <%=eventCash %>
-        ],eventRender: function(event, eventElement) { 
-        	if (event.imageurl)
-    		{             		
-    		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
-    		} 
-   		 },
-   	  eventClick:  function(event, jsEvent, view) {
-
-		var moment = $('#calendar').fullCalendar('getDate').format('YYYYMM');
-		var eid = event.id;
-/* 			
-		alert("moment==>"+moment);
-		alert("eid.substring(0,8)==>"+eid.substring(0,8));
-*/		     	
-		if(eid.indexOf(moment) == 0){
-			var target = $(this).find('a').attr('href', '#');
-			return false
-		}else{
-			$('#modalTitle').html(event.title);
-			$('#modalBody').html(event.description);
-			$('#eventUrl').attr('href','updateschedule.jsp?seq='+event.id);
-			$('#fullCalModal').modal();
-		}
+        ]     
+    ,eventRender: function(eventObj, $el) {
+        $el.popover({
+            title: eventObj.title,
+            content: eventObj.description,
+            trigger: 'hover',
+            placement: 'top',
+            container: 'body'
+          })
+    }
+      ,eventClick: function(event){
+          /* $('#modalTitle').html(event.title);
+          $('#modalBody').html(event.description);
+          $('#fullCalModal').modal(); */
+          var seq = event.id;
+          var seqAf = parseInt(seq);
+          alert(typeof seqAf);
+          
+               
       },
         editable: true,
         eventLimit: true // allow "more" link when too many events
-
     });
+    
+    
     $('#my-today-button').click(function() {
         $('#calendar').fullCalendar('today');
     });
@@ -893,25 +534,6 @@ jQuery("#calendar").fullCalendar({
     // You should pass the options you need
     $("#starts-at, #ends-at").datetimepicker();
 
-    // Whenever the user clicks on the "save" button om the dialog
-    $('#save-event').on('click', function() {
-        var title = $('#title').val();
-        if (title) {
-            var eventData = {
-                title: title,
-                start: $('#starts-at').val(),
-                end: $('#ends-at').val()
-            };
-            $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-        }
-        $('#calendar').fullCalendar('unselect');
-
-        // Clear modal inputs
-        $('.modal fade .modal').find('input').val('');
-
-        // hide modal
-        $('.modal fade .modal').modal('hide');
-    });
 });
 
 // addEventSource, removeEventSource의 기능하는데 구별값은 googleCalendarId 이다.
@@ -924,11 +546,27 @@ function scheduleChoice(num, id, distinct, color, text) {
     }
 }
 </script>
+<title>BizPayDay</title>
 </head>
 <body>
 
 <div id="loading">loading...</div>
 
+<div id="fullCalModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h4 id="modalTitle" class="modal-title"></h4>
+            </div>
+            <div id="modalBody" class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button class="btn btn-primary">Remove</button>
+            </div>
+        </div>
+    </div>
+</div> 
 <!-------------------------------------------------------------------------------
 	상단 메뉴바
  ------------------------------------------------------------------------------->
@@ -1040,7 +678,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 							//수입일 때
 							if(cList.get(i).getIoMoney()==0){
 								%>
-								<li><a href="#" class="list-group-item list-group-item-action" onclick="show('<%=cList.get(i) %>')">
+								<li><a href="#" class="list-group-item list-group-item-action" onclick="myObjectFunc.func1('<%=cList.get(i) %>')">
 								<%=cList.get(i).getContent() %>
 								<span class="badge badge-info">+ <%=priceAf  %> 원</span>
 								</a>
@@ -1067,7 +705,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 							//수입일 때
 							if(cList.get(i).getIoMoney()==0){
 								%>
-								<li><a href="#" class="list-group-item list-group-item-action"  onclick="show('<%=cList.get(i) %>')">
+								<li><a href="#" class="list-group-item list-group-item-action"  onclick="myObjectFunc.func1('<%=cList.get(i) %>')">
 								<%=cList.get(i).getContent() %>
 								<span class="badge badge-info">+ <%=priceAf  %> 원</span>
 								</a>
@@ -1159,8 +797,22 @@ function scheduleChoice(num, id, distinct, color, text) {
 	    </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 	
-		
+<!-------------------------------------------------------------------------------
+	 footer
+ ------------------------------------------------------------------------------->
 	<footer>Copyright &copy; BizPayDay</footer>
+	
+<!-------------------------------------------------------------------------------
+	 event click
+ ------------------------------------------------------------------------------->
+<div id="eventContent" title="Event Details" style="display:none;">
+    Start: <span id="startTime"></span><br>
+    End: <span id="endTime"></span><br><br>
+    <p id="eventInfo"></p>
+    <p><strong><a id="eventLink" href="" target="_blank">Read More</a></strong></p>
+</div>
+
+	
 	
 	
 <!-------------------------------------------------------------------------------
@@ -1507,7 +1159,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 	private int del; //삭제 여부 -->
 
 
-<!-- 수입 입력 내역 가져오기 -->
+<!-- 수입 입력 저장하기 -->
 <script type="text/javascript">
 $(document).ready(function () {
 	$("#btn_saveIo").click(function () {	
@@ -1580,6 +1232,8 @@ $(document).ready(function () {
 	
 </script>
 
+
+<!-- 지출 입력 저장하기 -->
 <script type="text/javascript">
 $(document).ready(function () {
 	$("#btn_saveSpend").click(function () {	
@@ -1656,36 +1310,10 @@ $(document).ready(function () {
 </script>
 
 
-<!-- 최근 list 클릭하면 modal 창으로 상세 정보 보여주기 -->
-<div class="container">
-  <!-- Modal -->
-  <div class="modal fade" id="popupInfo" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-        <div class="modal-body">
-          <p>Some text in the modal.</p>
-        </div>
-        <div class="modal-footer">
-			<button type="button" class="btn btn-default">수정</button>
-			<button type="button" class="btn btn-default">삭제</button>
-			<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-</div>
-  
 
 <!-- 리스트에 있는 항목 클릭하면 호출 -->
 <script type="text/javascript">
-	function show(str){
+function show (str){
 	
 		var afterStr = str.split('%');
 		/* 
@@ -1741,6 +1369,57 @@ $(document).ready(function () {
 			   
 			});
 			
+			$("#btn_modiIo").click(function () {
+								
+				var selectedDateModify = $("#selectedDateModify").html().replace(/\-/g,'');
+			   	var inCategoryModi;
+			   	//alert("날짜 : " + outSelectedDate);
+			   	var arrmodiIn = [];
+			     
+			   	inCategoryModi = $("input[name='inCategoryModi']:checked").val();
+		    		//만약 아이콘 선택 안하면 0으로 입력
+		    		if(inCategoryModi==null){
+		    			inCategoryModi=0;
+		    			//alert("바꾼 후 : " +outCategory)
+		    		}
+			       
+		    		/* arrmodiIn.add($("#inCashMyModalModify #inTitle").val());
+		    		arrmodiIn.add(selectedDateModify);
+		    		arrmodiIn.add(inCategoryModi);
+		    		arrmodiIn.add($("#inCashMyModalModify #inPrice").val());
+		    		arrmodiIn.add($("#inCashMyModalModify #inContent").val()); */
+        	   		
+        	   		
+				$.ajax({
+					
+			           type : "get",
+			           url : "./cashModiAf.jsp",
+			           data : {
+			        	   	"seq" : afterStr[0],
+			        	    "title" : $("#inCashMyModalModify #inTitle").val(),
+				    		"moneyDate" : selectedDateModify,
+				    		"category" : inCategoryModi,
+				    		"price" : $("#inCashMyModalModify #inPrice").val(),
+				    		"content" :$("#inCashMyModalModify #inContent").val(),
+							},
+						dataType : "text",
+						contentType : "application; charset=utf-8",
+						traditional : true,
+						
+			           success : function(data){
+			               alert("success");
+			               $("#inCashMyModalModify").modal().hide();
+			               location.reload();
+			           },
+			           error : function(request,status,error){
+			               alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			           }
+			       
+			       });
+				
+			});
+			
+			
 		}else if(afterStr[4]=="1"){
 			title="지출 내역 수정";
 			$("#outCashMyModalModify .modal-title").html(title);
@@ -1775,6 +1454,56 @@ $(document).ready(function () {
 			           }
 			       
 			       });
+			});
+			
+			$("#btn_modiSpend").click(function () {
+				
+				var outSelectedDateModify = $("#outSelectedDateModify").html().replace(/\-/g,'');
+			   	var inCategoryModi;
+			   	//alert("날짜 : " + outSelectedDate);
+			   	var arrmodiIn = [];
+			     
+			   	outCategoryModi = $("input[name='outCategoryModi']:checked").val();
+		    		//만약 아이콘 선택 안하면 0으로 입력
+		    		if(outCategoryModi==null){
+		    			outCategoryModi=0;
+		    			//alert("바꾼 후 : " +outCategory)
+		    		}
+			       
+		    		/* arrmodiIn.add($("#inCashMyModalModify #inTitle").val());
+		    		arrmodiIn.add(selectedDateModify);
+		    		arrmodiIn.add(inCategoryModi);
+		    		arrmodiIn.add($("#inCashMyModalModify #inPrice").val());
+		    		arrmodiIn.add($("#inCashMyModalModify #inContent").val()); */
+        	   		
+        	   		
+				$.ajax({
+					
+			           type : "get",
+			           url : "./cashModiAf.jsp",
+			           data : {
+			        	   	"seq" : afterStr[0],
+			        	    "title" : $("#outCashMyModalModify #outTitle").val(),
+				    		"moneyDate" : outSelectedDateModify,
+				    		"category" : outCategoryModi,
+				    		"price" : $("#outCashMyModalModify #outPrice").val(),
+				    		"content" :$("#outCashMyModalModify #outContent").val(),
+							},
+						dataType : "text",
+						contentType : "application; charset=utf-8",
+						traditional : true,
+						
+			           success : function(data){
+			               alert("success");
+			               $("#outCashMyModalModify").modal().hide();
+			               location.reload();
+			           },
+			           error : function(request,status,error){
+			               alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			           }
+			       
+			       });
+				
 			});
 		}
 	}
@@ -1837,17 +1566,17 @@ $(document).ready(function () {
 		        <tr id="plusDel">
 				<td colspan="4">
 				<div data-toggle="buttons">
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="1"><i class="far fa-smile"></i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="2"><i class="fab fa-angellist"></i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="3"><i class="fas fa-suitcase"></i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="4"><i class="far fa-thumbs-up"></i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="5"><i class="fas fa-bicycle"></i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="6"><i class="fas fa-bus"></i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="7"><i class="fas fa-camera-retro"></i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="8"><i class="fas fa-coffee"></i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="9"><i class="fas fa-film"></i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="10"><i class="fas fa-gift"></i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="11"><i class="fas fa-headphones"></i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="1"><i class="far fa-smile"></i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="2"><i class="fab fa-angellist"></i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="3"><i class="fas fa-suitcase"></i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="4"><i class="far fa-thumbs-up"></i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="5"><i class="fas fa-bicycle"></i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="6"><i class="fas fa-bus"></i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="7"><i class="fas fa-camera-retro"></i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="8"><i class="fas fa-coffee"></i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="9"><i class="fas fa-film"></i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="10"><i class="fas fa-gift"></i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="11"><i class="fas fa-headphones"></i></label>
 				</div></td></tr>
 		      </tbody>
 		       <tfoot>
@@ -1861,7 +1590,7 @@ $(document).ready(function () {
 		<div id="myAlert">
 		</div>
       <div class="modal-footer">
-        <button type="button" id="btn_saveIo" class="btn btn btn-primary">Save</button>
+        <button type="button" id="btn_modiIo" class="btn btn btn-primary">Save</button>
         <button type="button" id="btn_delIo" class="btn btn-danger">Delete</button>
         <button type="button" class="btn btn-orange" data-dismiss="modal">Cancel</button>
       </div>
@@ -1871,7 +1600,7 @@ $(document).ready(function () {
  
  
 <!-------------------------------------------------------------------------------
-	 지출내역입력
+	 지출내역수정
  ------------------------------------------------------------------------------->
   <div class="modal fade" id="outCashMyModalModify" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -1925,17 +1654,17 @@ $(document).ready(function () {
 		        <tr id="minusDel">
 		        <td colspan="3">
 					<div data-toggle="buttons">
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="1"><i class="far fa-smile"></i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="2"><i class="fab fa-angellist"></i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="3"><i class="fas fa-suitcase"></i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="4"><i class="far fa-thumbs-up"></i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="5"><i class="fas fa-bicycle"></i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="6"><i class="fas fa-bus"></i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="7"><i class="fas fa-camera-retro"></i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="8"><i class="fas fa-coffee"></i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="9"><i class="fas fa-film"></i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="10"><i class="fas fa-gift"></i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory" value="11"><i class="fas fa-headphones"></i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="1"><i class="far fa-smile"></i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="2"><i class="fab fa-angellist"></i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="3"><i class="fas fa-suitcase"></i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="4"><i class="far fa-thumbs-up"></i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="5"><i class="fas fa-bicycle"></i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="6"><i class="fas fa-bus"></i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="7"><i class="fas fa-camera-retro"></i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="8"><i class="fas fa-coffee"></i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="9"><i class="fas fa-film"></i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="10"><i class="fas fa-gift"></i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="11"><i class="fas fa-headphones"></i></label>
 					</div></td>
 		        </tr>
 		      </tbody>
@@ -1946,7 +1675,7 @@ $(document).ready(function () {
 		  </div>
       </div>
       <div class="modal-footer">
-		<button type="button" id="btn_saveSpend" class="btn btn btn-primary">Save</button>
+		<button type="button" id="btn_modiSpend" class="btn btn btn-primary">Save</button>
 		<button type="button" id="btn_delSpend" class="btn btn-danger">Delete</button>
         <button type="button" class="btn btn-orange" data-dismiss="modal">Cancel</button>
       </div>
