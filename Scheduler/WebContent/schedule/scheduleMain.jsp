@@ -180,12 +180,14 @@ ul li a:hover, ul li a:focus {
     	        , events: [
     	            <%=eventstring %>
     	        ]    	            
-    	        });
+    	    });
+    	        
     	        $('#my-today-button').click(function() {
     	            $('#calendar').fullCalendar('today');
     	        });
     	        
     	    });
+    	 
         jQuery("#calendar").fullCalendar({
         	fixedWeekCount : false,
             header : {
@@ -217,52 +219,37 @@ ul li a:hover, ul li a:focus {
             }
             , events: [
                 <%=eventstring %>
-            ], eventRender: function(event, eventElement) { 
+            ]
+            , eventRender: function(event, eventElement) { 
             	if (event.imageurl)
         		{             		
         		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
         		} 
-       		 },
-       	  eventClick:  function(event, jsEvent, view) {
-
-			var moment = $('#calendar').fullCalendar('getDate').format('YYYYMM');
-			var eid = event.id;
-/* 			
-			alert("moment==>"+moment);
-			alert("eid.substring(0,8)==>"+eid.substring(0,8));
-*/		     	
-			if(eid.indexOf(moment) == 0){
-				var target = $(this).find('a').attr('href', '#');
-				return false
-			}else{
-				$('#modalTitle').html(event.title);
-				$('#modalBody').html(event.description);
-				$('#eventUrl').attr('href','updateschedule.jsp?seq='+event.id);
-				$('#fullCalModal').modal();
-			}
-          },
-            editable: true,
-            eventLimit: true // allow "more" link when too many events
-	
-        }); 
-        $('#my-today-button').click(function() {
-            $('#calendar').fullCalendar('today');
-        });       
- 
-    });
-
-    // addEventSource, removeEventSource의 기능하는데 구별값은 googleCalendarId 이다.
-    // 그렇기에 googleCalendarId는 반드시 입력해야한다.
-    
-    
-    function scheduleChoice(num, id, distinct, color, text) {
-        if(jQuery(".swingBar").eq(num).is(":checked")) {
-            jQuery("#calendar").fullCalendar("addEventSource", { googleCalendarId : id, className : distinct, color : color, textColor : text });
-        } else {
-            jQuery("#calendar").fullCalendar("removeEventSource", { googleCalendarId : id });
-        }
-    }
-     
+       		 }
+       	    , eventClick:  function(event, jsEvent, view) {
+				alert(event);
+				var moment = $('#calendar').fullCalendar('getDate').format('YYYYMM');
+				var eid = event.id;
+	/* 			
+				alert("moment==>"+moment);
+				alert("eid.substring(0,8)==>"+eid.substring(0,8));
+	*/		     	
+				if(event.id.length > 10){
+					var target = $(this).find('a').attr('href', '#');
+					return false
+				}else{
+					$('#modalTitle').html(event.title);
+					$('#modalBody').html(event.description);
+					$('#eventUrl').attr('href','updateschedule.jsp?seq='+event.id);
+					$('#fullCalModal').modal();
+				}
+	        }
+       	    , dayClick: function(date, allDay, jsEvent, view) {
+       	    	$('#eventUrl').attr('href','addschedule.jsp');
+       	    	$('#fullCalModal').modal();
+       	    }
+	      	}); 
+    });    
 </script>
 <title>BizPayDay</title>
 </head>
@@ -281,7 +268,7 @@ ul li a:hover, ul li a:focus {
 			<div class="topMenu_icon" align="center">
 				<ul>
 					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/home-n.png" onmouseover='this.src="../icon/home-w.png"' onmouseout='this.src="../icon/home-n.png"' ></a></li>
-					<li><a class="menuLink" href="NewFile.jsp"><img src="../icon/schedule-n.png" onmouseover='this.src="../icon/schedule-w.png"' onmouseout='this.src="../icon/schedule-n.png"' ></a></li>
+					<li><a class="menuLink" href="#"><img src="../icon/schedule-n.png" onmouseover='this.src="../icon/schedule-w.png"' onmouseout='this.src="../icon/schedule-n.png"' ></a></li>
 					<li><a class="menuLink" href=""><img src="../icon/cash-w.png" ></a></li>
 				</ul>
 			</div>

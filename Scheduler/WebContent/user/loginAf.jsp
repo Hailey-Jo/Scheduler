@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>loginAf</title>
 </head>
 <body>
 
@@ -24,7 +24,7 @@ if(user != null && !user.getId().equals("")){
 %>
 	<script type="text/javascript">
 	alert("어서오세요<%=user.getId()%>님");
-	location.href = "../NewFile.jsp";
+	location.href = "../Main.jsp";
 	<%
 	session.setAttribute("login", user);
 	%>
