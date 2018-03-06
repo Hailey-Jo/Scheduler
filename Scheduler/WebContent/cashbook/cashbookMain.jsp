@@ -351,6 +351,9 @@ aside .badge-info:hover {
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<!-- 페이징 처리 -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jszip-2.5.0/dt-1.10.16/b-1.5.1/b-html5-1.5.1/b-print-1.5.1/r-2.2.1/datatables.min.css"/>
+ 
 <script type="text/javascript">
 jQuery(document).ready(function() {
 /* -------------------------------------------------------------------------------
@@ -657,7 +660,7 @@ jQuery("#calendar").fullCalendar({
      eventRender: function(event, eventElement) {            	
      	if (event.imageurl)
  		{             		
- 		eventElement.find("div.fc-content").prepend("<i class='material-icons' style='font-size: 12px;'>'"+ event.imageurl +"'</i>"); 
+ 		eventElement.find("div.fc-content").prepend("<i class='material-icons' style='font-size: 12px;'>"+ event.imageurl +"</i>"); 
  		} 
 		 }
 
@@ -1293,28 +1296,28 @@ function scheduleChoice(num, id, distinct, color, text) {
         cols = "";
         cols += '<td colspan="6"><div id="iconPlus'+out_Counter+'" class="collapse">';
         cols += '<div data-toggle="buttons">';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="1"><i class="material-icons">alarm</i></label>';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="2"><i class="material-icons">card_giftcard</i></label>';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="3"><i class="material-icons">card_travel</i></label>';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="4"><i class="material-icons">face</i></label>';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="5"><i class="material-icons">favorite</i></label>';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="6"><i class="material-icons">flight_takeoff</i></label>';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="7"><i class="material-icons">pets</i></label>';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="8"><i class="material-icons">shopping_cart</i></label>';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="9"><i class="material-icons">call</i></label>';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="10"><i class="material-icons">vpn_key</i></label>';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="11"><i class="material-icons">toys</i></label>';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="12"><i class="material-icons">filter_vintage</i></label>';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="13"><i class="material-icons">linked_camera</i></label>';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="14"><i class="material-icons">directions_bus</i></label>';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="15"><i class="material-icons">directions_subway</i></label>';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="16"><i class="material-icons">local_cafe</i></label>';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="17"><i class="material-icons">local_dining</i></label>';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="18"><i class="material-icons">local_hospital</i></label>';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="19"><i class="material-icons">beach_access</i></label>';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="20"><i class="material-icons">school</i></label>';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="21"><i class="material-icons">star</i></label>';
-        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+out_Counter+'" value="22"><i class="material-icons">cake</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="1"><i class="material-icons">alarm</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="2"><i class="material-icons">card_giftcard</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="3"><i class="material-icons">card_travel</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="4"><i class="material-icons">face</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="5"><i class="material-icons">favorite</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="6"><i class="material-icons">flight_takeoff</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="7"><i class="material-icons">pets</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="8"><i class="material-icons">shopping_cart</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="9"><i class="material-icons">call</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="10"><i class="material-icons">vpn_key</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="11"><i class="material-icons">toys</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="12"><i class="material-icons">filter_vintage</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="13"><i class="material-icons">linked_camera</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="14"><i class="material-icons">directions_bus</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="15"><i class="material-icons">directions_subway</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="16"><i class="material-icons">local_cafe</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="17"><i class="material-icons">local_dining</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="18"><i class="material-icons">local_hospital</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="19"><i class="material-icons">beach_access</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="20"><i class="material-icons">school</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="21"><i class="material-icons">star</i></label>';
+        cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategory'+out_Counter+'" value="22"><i class="material-icons">cake</i></label>';
         cols += '</div></div></td></tr>';
         
         newRow.append(cols);
@@ -1901,8 +1904,9 @@ function show (str){
 
 
 
-
-<!-- 미니 달력 선택, 후 뜨는 모달 창 -->
+<!-------------------------------------------------------------------------------
+	 미니 달력 선택, 후 뜨는 모달 창 
+ ------------------------------------------------------------------------------->
 	<div id="infoModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -1925,8 +1929,10 @@ function show (str){
 	</div>
 	
 
-<!-- 최근 리스트 더 보기 누르면 나오는 모달 -->
 
+<!-------------------------------------------------------------------------------
+	최근 리스트 더 보기 누르면 나오는 모달
+ ------------------------------------------------------------------------------->
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -1942,7 +1948,8 @@ function show (str){
                 <div class="row">
                 </div>
             </div>
-            <table class="table table-striped table-hover">
+            <br>
+            <table id="example" class="table table-striped table-hover" cellspacing="0" width="100%">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -1954,7 +1961,7 @@ function show (str){
 						<th></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="exampleBody">
                 	<%
                 	for(int i=0; i<cList.size(); i++){
                 		%>
@@ -1973,18 +1980,16 @@ function show (str){
                         <td><%=String.format("%,d", cList.get(i).getPrice()) %></td>                        
                         <td><%=cList.get(i).getTitle() %></td>
 						<td>
-							<a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-							<a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+							<a href="#" onclick="show('<%=cList.get(i) %>')"  class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+							<a href="#" onclick="ListDelete('<%=cList.get(i).getSeq() %>')" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
 						</td>
                     </tr>
                 	<%
                 	}
                 	%>
-                    
-					
                 </tbody>
             </table>
-			<div class="clearfix" style="float: right;">
+			<%-- <div class="clearfix" style="float: right;">
                 <div class="hint-text">Showing <b>8</b> out of <b><%=cList.size() %></b> entries</div>
                 <ul class="pagination">
                     <li class="page-item disabled"><a href="#">Previous</a></li>
@@ -1995,19 +2000,104 @@ function show (str){
                     <li class="page-item"><a href="#" class="page-link">5</a></li>
                     <li class="page-item"><a href="#" class="page-link">Next</a></li>
                 </ul>
-            </div>
+            </div> --%>
         </div>
     </div>   
-
-
-
-
+    <div class="modal-footer">
+		<button type="button" class="btn btn btn-primary" data-dismiss="modal">확인</button>
+	</div>
     </div>
   </div>
 </div>
 
+ 
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs/jszip-2.5.0/dt-1.10.16/b-1.5.1/b-html5-1.5.1/b-print-1.5.1/r-2.2.1/datatables.min.js"></script>
 
+<!-- 페이지 처리! -->
+<script type="text/javascript">
+$(document).ready(function() {
+	  $.fn.DataTable.ext.pager.numbers_length = 5;
+	    $('#example').DataTable( {
+	       "pagingType":"full_numbers",
+	    } );  
+	} );
+</script>
+
+<script type="text/javascript">
+function ListDelete(seq){
+	$.ajax({
+		
+       type : "get",
+       url : "./cashDelAf.jsp",
+       
+       data : {
+			"cashDelAf" : seq
+			},
+		dataType : "text",
+		contentType : "application; charset=utf-8",
+		traditional : true,
+		
+       success : function(data){
+           alert("success");
+           showempinfo(data);
+       },
+       error : function(request,status,error){
+           alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+       }
+   
+   });
+};
+
+
+function showempinfo(obj) {
+    var div = document.querySelector('#calListBody');
+    console.log(obj);
+    html = '<tr><th>부서번호</th><th>이름</th><th>부서</th></tr>';
+   
+    $("#calListBody .table").html(html);
     
+    var div = document.querySelector('#example');
+    console.log(obj);
+    html = '<table>';
+    html += '<th>#</th><th>수입/지출</th><th>상세내역</th><th>날짜</th><th>금액</th><th>분류</th><th></th>';
+    html += '<tbody id="exampleBody">';
+
+<%-- 	for(var i=0; i<<%=cList.size()%>; i++){
+		
+		<tr>
+        <td><%=i+1 %></td>
+        <td>
+        <% if(cList.get(i).getIoMoney()==0){
+        	%>수입<%
+        }else {
+        	%>지출<%
+        }
+        	%></td>
+        	
+        <td><%=cList.get(i).getContent()%></td>                        
+        <td><%=cList.get(i).getMoneyDate().substring(0, 10) %></td>                        
+        <td><%=String.format("%,d", cList.get(i).getPrice()) %></td>                        
+        <td><%=cList.get(i).getTitle() %></td>
+		<td>
+			<a href="#" onclick="show('<%=cList.get(i) %>')"  class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+			<a href="#" onclick="ListDelete('<%=cList.get(i).getSeq() %>')" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+		</td>
+    </tr>
+	<%
+	}
+	%>
+</tbody> --%>
+
+    console.log("전" + html);
+    div.innerHTML = html;
+    console.log("후" + html);
+
+
+
+}
+
+
+</script>
 	
 </body>
 </html>
