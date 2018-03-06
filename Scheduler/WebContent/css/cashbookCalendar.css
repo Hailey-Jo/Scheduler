@@ -1,0 +1,251 @@
+@charset "UTF-8";
+
+
+/* 본문 캘린더 */
+
+#calendar {
+width:80vm;
+height: 80vm;
+float:left;
+padding : 50px;
+/* padding-right: 100px; */
+}
+
+#calendar-mini div.fc-content{
+	height: 1px;
+}
+#calendar-mini div.fc-center h2{
+	font-size: 15px;
+}
+#calendar-mini a.fc-day-number{
+	font-size: 5px;
+}
+
+#calendar-out div.fc-content{
+	height: 1px;
+}
+#calendar-out div.fc-center h2{
+	font-size: 15px;
+}
+#calendar-out a.fc-day-number{
+	font-size: 5px;
+}
+
+
+#calendar-mini-Modify div.fc-content{
+	height: 1px;
+}
+#calendar-mini-Modify div.fc-center h2{
+	font-size: 15px;
+}
+#calendar-mini-Modify a.fc-day-number{
+	font-size: 5px;
+}
+
+
+#calendar-out-Modify div.fc-content{
+	height: 1px;
+}
+#calendar-out-Modify div.fc-center h2{
+	font-size: 15px;
+}
+#calendar-out-Modify a.fc-day-number{
+	font-size: 5px;
+}
+
+ 
+/* 수입  내역 입력 */
+#inCashMyModal  .modal-header {
+    background-color: #337AB7;
+    padding:16px 16px;
+    color:#FFF;
+    border-bottom:2px dashed #337AB7;
+ }
+
+#inCashMyModal  .modal-body {
+	height: 500px;
+	padding: 10px;
+	margin-bottom: 30px;
+}
+
+#inCashMyModal .modal-body .container {
+ 	width: 70%;
+ 	float: right;
+ 	height: inherit;
+ 	overflow-y: scroll;
+ }
+
+ 
+#inCashMyModal  .modal-body .modal-inLeft{
+	float: left;
+ 	width: 30%;
+ 	height: auto;
+ 	padding: 5px;
+ 	padding-top: 50px;
+ }
+ 
+#inCashMyModal  .modal-dialog .modal-content .modal-footer {
+    bottom: 0;
+    height: 60px;
+}
+
+#inCashMyModal .th_inTitle{
+	width: 50px;
+}
+
+#inCashMyModal .th_inPrice{
+	width: 150px;
+}
+
+
+/* 모달수정 수입 수정 */
+
+#inCashMyModalModify  .modal-header {
+    background-color: #337AB7;
+    padding:16px 16px;
+    color:#FFF;
+    border-bottom:2px dashed #337AB7;
+ }
+
+#inCashMyModalModify  .modal-body {
+	height: 500px;
+	padding: 10px;
+	margin-bottom: 30px;
+}
+
+#inCashMyModalModify .modal-body .container {
+ 	width: 70%;
+ 	float: right;
+ 	height: inherit;
+ 	overflow-y: scroll;
+ }
+ 
+
+#inCashMyModalModify  .modal-body .modal-inLeft{
+	float: left;
+ 	width: 30%;
+ 	height: auto;
+ 	padding: 5px;
+ 	padding-top: 50px;
+ }
+ 
+#inCashMyModalModify  .modal-dialog .modal-content .modal-footer {
+    bottom: 0;
+    height: 60px;
+}
+
+#inCashMyModalModify .th_inTitle{
+	width: 50px;
+}
+
+#inCashMyModalModify .th_inPrice{
+	width: 150px;
+}
+
+
+/* 지출  내역 입력 */
+
+#outCashMyModal  .modal-header {
+    background-color: #337AB7;
+    padding:16px 16px;
+    color:#FFF;
+    border-bottom:2px dashed #337AB7;
+ }
+ 
+#outCashMyModal .modal-body {
+	height: 500px;
+	padding: 10px;
+	margin-bottom: 30px;
+}
+
+#outCashMyModal  .modal-body .modal-outLeft{
+	float: left;
+ 	width: 30%;
+ 	height: auto;
+ 	padding: 5px;
+ 	padding-top: 50px;
+ }
+ 
+#outCashMyModal .modal-body .container {
+ 	width: 70%;
+ 	float: right;
+ 	height: inherit;
+ 	overflow-y: scroll;
+ }
+ 
+ 
+#outCashMyModal .modal-dialog .modal-content .modal-footer {
+    bottom: 0;
+    height: 60px;
+}
+
+
+
+#outCashMyModal .th_outTitle{
+	width: 150px;
+}
+
+#outCashMyModal .th_outPrice{
+	width: 150px;
+}
+
+#outCashMyModal .th_outCategory{
+	width: 60px;
+}
+#outCashMyModal .th_outDelete{
+	width: 50px;
+}
+
+
+
+/* 지출  내역 수정*/
+
+#outCashMyModalModify  .modal-header {
+    background-color: #337AB7;
+    padding:16px 16px;
+    color:#FFF;
+    border-bottom:2px dashed #337AB7;
+ }
+ 
+#outCashMyModalModify .modal-body {
+	height: 500px;
+	padding: 10px;
+	margin-bottom: 30px;
+}
+
+#outCashMyModalModify  .modal-body .modal-outLeft{
+	float: left;
+ 	width: 30%;
+ 	height: auto;
+ 	padding: 5px;
+ 	padding-top: 50px;
+ }
+ 
+#outCashMyModalModify .modal-body .container {
+ 	width: 70%;
+ 	float: right;
+ 	height: inherit;
+ 	overflow-y: scroll;
+ }
+ 
+ 
+#outCashMyModalModify .modal-dialog .modal-content .modal-footer {
+    bottom: 0;
+    height: 60px;
+}
+
+#outCashMyModalModify .th_outTitle{
+	width: 150px;
+}
+
+#outCashMyModalModyfy .th_outPrice{
+	width: 150px;
+}
+
+#outCashMyModalModify .th_outCategory{
+	width: 60px;
+}
+#outCashMyModalModify .th_outDelete{
+	width: 50px;
+}
+

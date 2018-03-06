@@ -44,21 +44,24 @@ public class CashbookDTO {
 	}
 
 	
+
 	
-
-
-	public CashbookDTO(String title, int category, int price, String content) {
+	public CashbookDTO(int seq, String title, String moneyDate, int category, int price, String content) {
 		super();
+		this.seq = seq;
 		this.title = title;
+		this.moneyDate = moneyDate;
 		this.category = category;
 		this.price = price;
 		this.content = content;
 	}
 
-
 	public int getSeq() {
 		return seq;
 	}
+
+
+	
 
 
 	public void setSeq(int seq) {

@@ -12,24 +12,38 @@
 <body>
 
 <%
+/* "seq" : afterStr[0],
+"title" : $("#inCashMyModalModify #inTitle").val(),
+"moneyDate" : selectedDateModify,
+"category" : inCategoryModi,
+"price" : $("#inCashMyModalModify #inPrice").val(),
+"content" :$("#inCashMyModalModify #inContent").val(), */
 
-	String id = request.getParameter("login_username");  
-	System.out.println("id : "+id);
+	System.out.println("cashModiAf.jsp 도착================================= ");
 
-	System.out.println("cashIoAf.jsp 도착================================= ");
-
-	String[] arr = request.getParameterValues("cashIoAf");
-	System.out.println("cashIoAf 들어온 배열 크기 : " + arr.length);
+	String seq = request.getParameter("seq");
+	String title = request.getParameter("title");
+	String moneyDate = request.getParameter("moneyDate");
+	String category = request.getParameter("category");
+	String price = request.getParameter("price");
+	String content = request.getParameter("content");
 	
-	for(int i=0; i<arr.length; i++){
-		System.out.println(arr[i]);
-	}
 	
+	System.out.println("cashModiAf.jsp 도착================================= :" +seq);
+	
+
 	iCashbookDAO cashDao = CashbookDAO.getInstance();
 	CashbookDTO cashDto =null;
 	
-
-	boolean isS = cashDao.modifycashbook(cashDto);
+	/* int seq, String title, String moneyDate, int category, int price, String content */
+	
+	boolean isS = cashDao.modifycashbook(new CashbookDTO(
+									Integer.parseInt(seq), 
+									title, 
+									moneyDate, 
+									Integer.parseInt(category), 
+									Integer.parseInt(price), 
+									content));
 	
 	if(isS){
 		System.out.println("등록 성공");
