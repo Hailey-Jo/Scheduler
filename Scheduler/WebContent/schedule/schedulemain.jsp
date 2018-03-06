@@ -262,24 +262,39 @@ ul li a:hover, ul li a:focus {
        	    	$('#fullCalModal').modal();
        	    }
        	   
+       	 
 		  });      
-        var aaa = $("#calendar div.fc-center h2").text();
-        // 2018년 11월
-        if(aaa.length==8){
-        	var thisyear = aaa.substring(0,4);        
-            var thismonth = aaa.substring(6,7);
-            thismonth = "0"+thismonth;
-            var dday = thisyear + thismonth;
-            $(".monthbtn").attr('value',dday);
-        }
-        else if(aaa.length==9){
-        	var thisyear = aaa.substring(0,4); 
-        	var thismonth = aaa.substring(6,8);
-        	var dday = thisyear + thismonth;
-            $(".monthbtn").attr('value',dday);
-        }
+       
         
     });    
+    
+    $(function() {
+		$("#btn1").click(function() {	
+			
+			var aaa = $("#calendar div.fc-center h2").text();
+		        if(aaa.length==8){
+		        	var thisyear = aaa.substring(0,4);        
+		            var thismonth = aaa.substring(6,7);
+		            thismonth = "0"+thismonth;
+		            var dday = thisyear + thismonth;
+		            alert("before change attr");
+		            $(".monthbtn").attr('value',dday);
+		            alert("after change attr");
+		        }
+		        else if(aaa.length==9){
+		        	var thisyear = aaa.substring(0,4); 
+		        	var thismonth = aaa.substring(6,8);
+		        	var dday = thisyear + thismonth;
+		        	alert("before change attr");
+		            $(".monthbtn").attr('value',dday);
+		            alert("after change attr");
+		        }
+		        
+		        // data-target="#importantmodal"
+		        alert("aaa: " + dday);
+		        $('#importantmodal').modal('show');
+		});
+	});
 
 </script>
 <title>BizPayDay</title>
@@ -342,10 +357,10 @@ ul li a:hover, ul li a:focus {
 					<td></td>
 				</tr>
 				<tr>
-				<form action="#importantmodal">
+				
 				<input name="monthbtn" class="monthbtn" type="hidden" value="">
-					<td style="width: 300px"><input type="submit" id="btn1" data-toggle="modal" class="btn btn-primary btn-lg btn-block" data-target="#importantmodal" value="중요일정보기"></td>
-				</form>
+					<td style="width: 300px"><button type="button" id="btn1" data-toggle="modal" class="btn btn-primary btn-lg btn-block">중요일정보기</button></td>
+				
 				</tr>
 				<tr>
 					<td>
@@ -405,8 +420,9 @@ ul li a:hover, ul li a:focus {
       			if(list.get(i).getImportant()==1){
       				String ddday = request.getParameter("monthbtn");
       				System.out.println("ddday: " + ddday);
-      				int start = Integer.parseInt(list.get(i).getStartDate().substring(0, 10).replace("-", ""));
-      				if(thismonth<=start){
+      				String start = list.get(i).getStartDate().substring(0, 7).replace("-", "");
+      				System.out.println("start: "+start);
+      				if(ddday!=null && ddday.equals(start)){
       		%>
       			<tr class="important">
       				<td><%=list.get(i).getStartDate().substring(0, 10) %></td>

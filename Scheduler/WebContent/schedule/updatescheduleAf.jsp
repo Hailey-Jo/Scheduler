@@ -75,7 +75,7 @@ else{
 }else{
 %>
 <script type="text/javascript">
-	location.href="schedulemain.jsp";
+	location.href="scheduleMain.jsp";
 </script>
 <%
 }

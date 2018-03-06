@@ -252,7 +252,7 @@ ul li a:hover, ul li a:focus {
 			<div class="topMenu_icon" align="center" style=" float: left; width: 40%;">
 				<ul>
 					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/home-w.png" onmouseover='this.src="../icon/home-n.png"' onmouseout='this.src="../icon/home-w.png"' ></a></li>
-					<li><a class="menuLink" href="schedulemain.jsp"><img src="../icon/schedule-n.png" onmouseover='this.src="../icon/schedule-w.png"' onmouseout='this.src="../icon/schedule-n.png"' ></a></li>
+					<li><a class="menuLink" href="scheduleMain.jsp"><img src="../icon/schedule-n.png" onmouseover='this.src="../icon/schedule-w.png"' onmouseout='this.src="../icon/schedule-n.png"' ></a></li>
 					<li><a class="menuLink" href="../cashbook/cashbookMain.jsp"><img src="../icon/cash-n.png" ></a></li>
 				</ul>
 			</div>
