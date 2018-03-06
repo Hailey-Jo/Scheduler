@@ -13,8 +13,8 @@
 String id = request.getParameter("id");
 String email = request.getParameter("email");
 
-System.out.println("af name:" + id);
-System.out.println("af birth:" + email);
+System.out.println("af id:" + id);
+System.out.println("af email:" + email);
 
 
 iuserDAO dao = userDAO.getInstance();
