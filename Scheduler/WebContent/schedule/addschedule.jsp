@@ -20,6 +20,7 @@ for(int i=0; i<list.size();i++){
 	}	
 	eventstring +="},"+"\n";	
 }
+String id = "null";
 %>
 <!DOCTYPE HTML>
 <html>
@@ -134,14 +135,16 @@ ul li a:hover, ul li a:focus {
 <script type="text/javascript">
     $(function () {
         $('#datetimepicker1').datetimepicker({
+        	format : 'YYYY-MM-DD HH:mm',
         	locale: 'ko'
         	
         });
         $('#datetimepicker2').datetimepicker({
+        	format : 'YYYY-MM-DD HH:mm',
         	locale: 'ko',        	
             useCurrent: false //Important! See issue #1075
         });
-        $("#datetimepicker1").on("dp.change", function (e) {
+        $("#datetimepicker1").on("dp.change", function (e) {        	
             $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
         });
         $("#datetimepicker2").on("dp.change", function (e) {
@@ -202,28 +205,30 @@ ul li a:hover, ul li a:focus {
 <!-- 상단 메뉴바 -->
 	<header>
 		<nav id="topMenu">
-			<div class="topMenu_siteTitle">
+			<div class="topMenu_siteTitle" style=" float: left; width: 40%;">
 				<ul>
 					<li>BizPayDay</li>
 				</ul>
 			</div>
-			
-			<div class="topMenu_icon" align="center">
+			<div class="topMenu_icon" align="center" style=" float: left; width: 40%;">
 				<ul>
-					<li><a class="menuLink" href="NewFile.jsp"><img src="../icon/home-n.png" onmouseover='this.src="../icon/home-w.png"' onmouseout='this.src="../icon/home-n.png"' ></a></li>
-					<li><a class="menuLink" href="NewFile.jsp"><img src="../icon/schedule-n.png" onmouseover='this.src="../icon/schedule-w.png"' onmouseout='this.src="../icon/schedule-n.png"' ></a></li>
-					<li><a class="menuLink" href=""><img src="../icon/cash-w.png" ></a></li>
+					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/home-w.png" onmouseover='this.src="../icon/home-n.png"' onmouseout='this.src="../icon/home-w.png"' ></a></li>
+					<li><a class="menuLink" href="schedulemain.jsp"><img src="../icon/schedule-n.png" onmouseover='this.src="../icon/schedule-w.png"' onmouseout='this.src="../icon/schedule-n.png"' ></a></li>
+					<li><a class="menuLink" href="../cashbook/cashbookMain.jsp"><img src="../icon/cash-n.png" ></a></li>
 				</ul>
 			</div>
-			
-			<div class="topMenu_logInOut">
-				<ul>
-					<!-- <li><img src="../image/m01.jpg" style=""></li> -->
-					<li>사용자 이름</li>
-					<li>　|　</li>
-					<li><a href="">로그아웃</a></li>
-				</ul>
-			</div>
+			<div class="login_info" style=" float: left; width: 18%; height: 30px;">
+		      <ul class="nav navbar-nav navbar-right">
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style=" padding:5px; height: 30px;"><%=id %><span class="caret"></span></a>
+		          <ul class="dropdown-menu" role="menu">
+		            <li><a href="#">My List</a></li>
+		            <li><a href="#">My Info</a></li>
+		            <li><a href="login.html">Log out</a></li>
+		          </ul>
+		        </li>
+		      </ul>
+ 		  </div>
 		</nav>
 	</header>
 	

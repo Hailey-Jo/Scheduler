@@ -44,10 +44,6 @@ if(simportant.equals("on")){
 else{
 	important=0;
 }
-startdate = startdate.replace(".","-");
-startdate = startdate.substring(0, 10);
-enddate = enddate.replace(".","-");
-enddate = enddate.substring(0, 10);
 
 b = nullcheck(title);
 b = nullcheck(startdate);
@@ -77,7 +73,7 @@ else{
 }else{
 %>
 <script type="text/javascript">
-	location.href="scheduleMain.jsp";
+	location.href="schedulemain.jsp";
 </script>
 <%
 }
