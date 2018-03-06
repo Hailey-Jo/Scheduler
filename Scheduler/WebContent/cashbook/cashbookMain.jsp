@@ -129,11 +129,10 @@ footer {
 body {
   width: 100%;
   height: 100%;
-  min-width:800px; /* 최소 넓이가 지원되는 브라우져를 위해서 ...FF, IE7, safari */
+  min-width:800px;
   margin: 0px; 
-  padding: 0px;  /* 옵션입니다.*/
-  /* 만약 콘텐츠를 가운데 정렬로 하고 싶은 경우 text-align: center 를 타이핑 하시고, 
-     패딩값을 적당하게 올려주시면 됩니다.*/
+  padding: 0px; 
+
 }
 
 #loading {
