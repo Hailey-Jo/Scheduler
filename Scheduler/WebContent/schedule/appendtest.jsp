@@ -40,6 +40,19 @@ int thismonth = Integer.parseInt(sthismonth);
 System.out.println("thismonth: " + thismonth);
 
 %>
+
+<script type="text/javascript">
+<%
+String startdate[] = new String[list.size()];
+int important[] = new int[list.size()];
+for(int i=0; i<list.size();i++){
+	startdate[i] = list.get(i).getStartDate().substring(0, 7).replace("-", "");
+	important[i] = list.get(i).getImportant();
+	
+}%>
+var startdate = [<% for (int i = 0; i < startdate.length; i++) { %>"<%= startdate[i] %>"<%= i + 1 < startdate.length ? ",":"" %><% } %>];
+var important = [<% for (int i = 0; i < important.length; i++) { %>"<%= important[i] %>"<%= i + 1 < important.length ? ",":"" %><% } %>];
+</script>
 <!DOCTYPE HTML>
 <html>
 
@@ -135,7 +148,7 @@ padding : 50px;
         font-weight:bold;
     }
     
-ul li a:hover, ul li a:focus { 
+ul li a:hover, ul li a:focus {  
     color:#fff;  
     background-color:#f40;  
 }  
@@ -261,12 +274,8 @@ ul li a:hover, ul li a:focus {
        	    , dayClick: function(date, allDay, jsEvent, view) {
        	    	$('#eventUrl').attr('href','addschedule.jsp');
        	    	$('#fullCalModal').modal();
-       	    }
-       	   
-       	 
-		  });      
-        alert("call calendar");
-        
+       	    }     	   
+		  });         
     });    
     
     $(function() {
@@ -277,23 +286,56 @@ ul li a:hover, ul li a:focus {
 		        	var thisyear = aaa.substring(0,4);        
 		            var thismonth = aaa.substring(6,7);
 		            thismonth = "0"+thismonth;
-		            var dday = thisyear + thismonth;
-		            alert("before change attr");
-		            $(".monthbtn").attr('value',dday);
-		            alert("after change attr");
+		            var dday = thisyear + thismonth;		            
+		            $(".monthbtn").attr('value',dday);	
+		            
 		        }
 		        else if(aaa.length==9){
 		        	var thisyear = aaa.substring(0,4); 
 		        	var thismonth = aaa.substring(6,8);
-		        	var dday = thisyear + thismonth;
-		        	alert("before change attr");
-		            $(".monthbtn").attr('value',dday);
-		            alert("after change attr");
+		        	var dday = thisyear + thismonth;		        	
+		            $(".monthbtn").attr('value',dday);		           
+		           
 		        }
-		        
-		        /* data-target="#importantmodal"
-		        alert("aaa: " + dday); */
-		        $('#importantmodal').modal('show'); 
+		    var modalstr = "";
+		    
+		    modalstr += '<div class="modal fade" id="importantmodal" tabindex="-1" role="dialog" aria-labelledby="importantmodalLabel" aria-hidden="true">';
+		    modalstr += '<div class="modal-dialog" role="document">';
+		    modalstr += '<div class="modal-content">';
+		    modalstr += '<div class="modal-header">';
+		    modalstr += '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+		    modalstr += '<span aria-hidden="true">&times;</span>';
+		    modalstr += '</button>';
+		    modalstr += '<h5 class="modal-title" id="importantmodalLabel">중요일정보기</h5>';
+		    modalstr += '</div>';
+		    modalstr += '<div class="modal-body">';
+		    modalstr += '<table style="text-align: center;">';
+		    modalstr += '<col width="150"><col width="150"><col width="300">';
+		    modalstr += '<tr>';
+		    modalstr += '<td colspan="3" style="border-bottom: 1px solid gray">';
+		    modalstr += '</td>';
+		    modalstr += '</tr>';
+		    modalstr += '<tr class="important">';
+		    modalstr += '<td>시작일</td>';
+		    modalstr += '<td>종료일</td>';
+		    modalstr += '<td>제목</td>';
+		    modalstr += '</tr>';	
+		    modalstr += '<script>';
+		    
+	    	modalstr += 'alert("scriptattr: " + $(".monthbtn").attr("value"));'; //
+	    	modalstr += '}';
+		    modalstr += '<'+'/script>';   
+		    modalstr += '</table>';
+		    modalstr += '</div>';
+		    modalstr += '<div class="modal-footer">';
+		    modalstr += '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
+		    modalstr += '</div>';
+		    modalstr += '</div>';
+		    modalstr += '</div>';
+		    modalstr += '</div>';
+		    
+		    $("article").append(modalstr);
+		    
 		});
 	});
 
@@ -352,27 +394,23 @@ ul li a:hover, ul li a:focus {
 	<br>
 		<div id="calendar-mini"></div>
 	<!-- btn1 -->
-	<div style="padding: 10px" class="tablediv">
-	<form action="#importantmodal">
+	<div style="padding: 10px" class="tablediv">	
+	
 		<table style="padding-top: 10px">
 			<tr>
 				<td></td>
 			</tr>
 			<tr>		
-				
 				<input name="monthbtn" class="monthbtn" type="hidden" value="">
-				<td style="width: 300px"><input type="submit" id="btn1" data-toggle="modal" class="btn btn-primary btn-lg btn-block" data-target="#importantmodal" value="중요일정보기"></td>
+				<td style="width: 300px"><button id="btn1" data-toggle="modal" class="btn btn-primary btn-lg btn-block" data-target="#importantmodal">중요일정보기</button></td>
 			</tr>
 			<tr>
 				<td>
 			</tr>
 			
-		</table>
-	</form>
+		</table>	
 			
-		</div>	
-		
-
+	</div>
 	</aside>
 		
 			
@@ -396,60 +434,7 @@ ul li a:hover, ul li a:focus {
 </div>
 
 	
-<div class="modal fade" id="importantmodal" tabindex="-1" role="dialog" aria-labelledby="importantmodalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">       
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-         <h5 class="modal-title" id="importantmodalLabel">중요일정보기</h5>
-      </div>
-      <div class="modal-body">
-      	<table style="text-align: center;">
-      		<col width="150"><col width="150"><col width="300">
-      		<tr>
-      			<td colspan="3" style="border-bottom: 1px solid gray">
-      			
-      			</td>
-      		</tr>
-      		<tr class="important">
-      			<td>시작일</td>
-      			<td>종료일</td>
-      			<td>제목</td>
-      		</tr>
-      		<%
-      		for(int i = 0; i<list.size();i++){
-      			if(list.get(i).getImportant()==1){
-      				String ddday = request.getParameter("monthbtn");
-      				System.out.println("ddday: " + ddday);
-      				String start = list.get(i).getStartDate().substring(0, 7).replace("-", "");
-      				System.out.println("start: "+start);
-      				%>
-    				<script type="text/javascript">
-    				alert($(".monthbtn").attr('value'));
-    				if($(".monthbtn").attr('value').eqluas(<%=start %>))
-    				{
-      			<tr class="important">
-      				<td><%=list.get(i).getStartDate().substring(0, 10) %></td>
-      				<td><%=list.get(i).getEndDate().substring(0, 10) %></td>
-      				<td><%=list.get(i).getTitle() %></td>
-      			</tr>
-      			<%
-      				
-      			}
-      		}
-      		%>
-      		}
-      		</script>
-      	</table>
-      </div>
-      <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-    </div>
-  </div>
-</div>	
+
 
 	</article>
 		
