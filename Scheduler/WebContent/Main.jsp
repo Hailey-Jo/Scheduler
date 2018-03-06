@@ -87,10 +87,6 @@ footer {
 a:hover {
     background-color: #006699;
 }
-.jktCD-click:hover{
-	color:#FFFFFF;
-}
-
 
 #main{
 	position: absolute;
@@ -176,121 +172,48 @@ ul li a:hover, ul li a:focus {
 jQuery(document).ready(function() {
 	jQuery("#calendar-mini").fullCalendar({
 		header : {
-		      left : "prev"
-		    , center : "title"
-		    , right: 'next'
-		}
-		, selectable: true
-		, selectHelper: true
-		, navLinks: false
-		, locale : "ko"
-		, eventLimit : true
-		, fixedWeekCount : false
-		, height : 347
-        , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
-		, eventSources : [
-		    // 대한민국의 공휴일
-		    {
-		          googleCalendarId : "ko.south_korea#holiday@group.v.calendar.google.com"
-		        , className : "koHolidays"
-		        , color : "#FF0000"
-		        , textColor : "#FFFFFF"
-		        , editable : false
-		    }
-		]
-	        
-        , loading:function(bool) {
+			left : "prev",
+			center : "title",
+			right: 'next'
+		},
+		selectable: true,
+		selectHelper: true,
+		navLinks: false,
+		locale : "ko",
+		eventLimit : true,
+		fixedWeekCount : false,
+		height : 347,
+		googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE",      // Google API KEY
+		eventSources : [
+			// 대한민국의 공휴일
+			{
+				googleCalendarId : "ko.south_korea#holiday@group.v.calendar.google.com",
+				className : "koHolidays",
+				color : "#FF0000",
+				textColor : "#FFFFFF",
+				editable : false,
+			}
+		],
+		loading:function(bool) {
 			jQuery("#loading").toggle(bool);
-        }
-        , events: [ <%=eventstring %> ]
-        
-        , eventRender: function(event, eventElement) {
-        	if (event.imageurl){             		
-        		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
-        	}
-        	
-        	$('td .fc-event-container').find('a').removeAttr("href");
-        }
-        , eventClick: function(e) {  
-            var target = $(this).find('a').attr('href', '#');
-            //alert(target);
-            return false
-        }
+		},
+		events: [ <%=eventstring %> ],
+		eventRender: function(event, eventElement) {
+			if (event.imageurl){             		
+				eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
+			}
+			//google link remove
+			$('td .fc-event-container').find('a').removeAttr("href");
+		},
+		eventClick: function(e) {  
+			var target = $(this).find('a').attr('href', '#');
+
+			return false
+		}
 	});
 });	
 
-//우측 fullcalendar
-jQuery(document).ready(function() {
-    jQuery("#calendar").fullCalendar({
-            header : {
-                  left : "prevYear, prev, myCustomButton"
-                , center : "title, today"
-                , right: 'myCustomButton2,month,agendaWeek,agendaDay, next, nextYear'
-            }        	    
-        	        
-	        , navLinks: true // can click day/week names to navigate views
-	        , selectable: true
-	        , selectHelper: true
-        	, height : 580
-            , locale : "ko"
-            , editable : true
-            , eventLimit : true
-        	, fixedWeekCount : false
-
-            , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
-            , eventSources : [
-                // 대한민국의 공휴일
-                {
-                      googleCalendarId : "ko.south_korea#holiday@group.v.calendar.google.com"
-                    , className : "koHolidays"
-                    , color : "#FF0000"
-                    , textColor : "#FFFFFF"
-                    , editable : false
-                }
-            ]
-            , loading:function(bool) {
-                jQuery("#loading").toggle(bool);
-            }
-            , events: [
-                <%=eventstring %>
-            ],
-            eventRender: function(event, eventElement) {
-            	if (event.imageurl){             		
-            		eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
-            	}
-            	
-            	$('#calendar td .fc-event-container').find('a').removeAttr("href");
-            	
-            }
-            , select: function(start, end) {
-                // Display the modal.
-                // You could fill in the start and end fields based on the parameters
-                $('.modal').modal('show');
-
-            },
-            eventClick: function(event, element) {
- 
-       			var moment = $('#calendar').fullCalendar('getDate').format('YYYYMM');
-	     	
-       			if(event.id.length > 10){
-    				var target = $(this).find('a').attr('href', '#');
-    				return false
-    			}
-       			else{
-         				$('#modalTitle').html(event.title);
-         				$('#modalBody').html(event.description);
-         				$('#eventUrl').attr('href','updateschedule.jsp?seq='+event.id);
-         				$('#fullCalModal').modal();
-         		}
-           
-                // Display the modal and set the values to the event values.
-                $('.modal').modal('show');
-                $('.modal').find('#title').val(event.title);
-                $('.modal').find('#starts-at').val(event.start);
-                $('.modal').find('#ends-at').val(event.end);
-            },
-        });    
-    });
+//우측 body
 
 </script>
 <%
@@ -330,45 +253,48 @@ jQuery(document).ready(function() {
 		</nav>
 	</header>
 
-	<aside>
-	<!-- 하단 -->
-		<!-- 좌측 서브 메뉴 -->
-		<div align="center">
-			<div class="btn-group">
-			  <button type="button" class="btn btn-info" style="width: 230px">Write Menu</button>
-			  <button type="button" class="btn btn-info dropdown-toggle" style="height: 34px" data-toggle="dropdown" aria-expanded="false">
-			    <span class="caret"></span>
-			    <span class="sr-only">Toggle Dropdown</span>
-			  </button>
-			  <ul class="dropdown-menu" role="menu" style="width: 230px">
-			    <li><a href="#">Write Scheduler</a></li>
-			    <li><a href="./cashbookIn.jsp">Write MoneyBook</a></li>    
-			  </ul>
-			</div>
-		</div>
-	<br>
+	<div class="col-md-3">
+	<!-- left -->
 	<div id="calendar-mini"></div>
-	
-	<div style="padding: 10px" class="tablediv">
-			<table style="padding-top: 10px">
-				<tr>
-					<td>　</td>
-				</tr>
-				<tr>
-					<td style="width: 300px"><button type="button" class="btn btn-primary btn-lg btn-block">중요일정보기</button></td>
-				</tr>
-				<tr>
-					<td>
-				</tr>
-			
-			</table>
-		</div>
-	</aside>
+	</div>
 
 	<!-- 우측 본문 -->
-	<article>
-		<div id="calendar"></div>
-	</article>
+		<div id="menu" class="col-md-9">
+			<div class="col-md-12" style="padding: 5px;">
+				<div class="col-md-4">
+					<button type="button" class="btn btn-danger"style="padding: 1px; width: 190px; height: 150px;">Danger</button>
+				</div>
+				<div class="col-md-4">
+					<button type="button" class="btn btn-danger"style="padding: 1px; width: 190px; height: 150px;">Danger</button>
+				</div>
+				<div class="col-md-4">
+					<button type="button" class="btn btn-danger"style="padding: 1px; width: 190px; height: 150px;">Danger</button>
+				</div>
+			</div>
+			<br><!-- 3 -->
+			<div class="col-md-12" style="padding: 5px;">
+				<div class="col-md-4">
+					<button type="button" class="btn btn-danger"style="padding: 1px; width: 190px; height: 150px;">Danger</button>
+				</div>
+				<div class="col-md-4">
+					<button type="button" class="btn btn-danger"style="padding: 1px; width: 190px; height: 150px;">Danger</button>
+				</div>
+				<div class="col-md-4">
+					<button type="button" class="btn btn-danger"style="padding: 1px; width: 190px; height: 150px;">Danger</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="col-md-4">
+				<div class="col-md-4">
+					<button type="button" class="btn btn-danger"style="padding: 1px; width: 100px; height: 100px;">Danger</button>
+				</div>
+				<div class="col-md-4">
+					<button type="button" class="btn btn-danger"style="padding: 1px; width: 100px; height: 100px;">Danger</button>
+				</div>
+			</div>
+		</div>
+
 	<!-- footer -->
 	<footer>Copyright &copy; BizPayDay</footer>
 	
