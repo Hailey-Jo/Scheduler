@@ -154,6 +154,8 @@ public class CashbookDTO {
 		return seq + "%" + id + "%" + title + "%" + moneyDate + "%"
 				+ ioMoney + "%" + category + "%" + price + "%" + content + "%" + del;
 	}
+	
+	
 
 
 

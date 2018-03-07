@@ -83,12 +83,13 @@ String todayS = year+"-"+monthAf+"-"+dayAf;
 
 <%
 
+
 String eventCash = "";
 for(int i=0; i<cList.size();i++){
 	if(cList.get(i).getIoMoney()==0){
 		//수입
 		eventCash +="{";
-		eventCash +=" id : '"+i+"',";
+		eventCash +=" id : '"+cList.get(i).getIoMoney()+"%"+cList.get(i).getContent()+"%"+cList.get(i).getPrice()+"%"+cList.get(i).getTitle()+"%"+cList.get(i).getMoneyDate().substring(0, 10)+"',";
 		eventCash += "title : '"+cList.get(i).getContent()+"　+"+String.format("%,d", cList.get(i).getPrice())+"',";
 		eventCash += "start : '"+cList.get(i).getMoneyDate().substring(0, 10)+"',";
 		eventCash +=" textColor: '#6699ff' , ";
@@ -126,7 +127,7 @@ for(int i=0; i<cList.size();i++){
 	}else{
 		//지출
 		eventCash +="{";
-		eventCash +=" id : '"+i+"',";
+		eventCash +=" id : '"+cList.get(i).getIoMoney()+"%"+cList.get(i).getContent()+"%"+cList.get(i).getPrice()+"%"+cList.get(i).getTitle()+"%"+cList.get(i).getMoneyDate().substring(0, 10)+"',";
 		eventCash += "title : '"+cList.get(i).getContent()+"　-"+String.format("%,d", cList.get(i).getPrice())+"',";
 		eventCash += "start : '"+cList.get(i).getMoneyDate().substring(0, 10)+"',";
 		eventCash +=" textColor: '#ff6666' , ";
@@ -172,10 +173,43 @@ for(int i=0; i<cList.size();i++){
 <!DOCTYPE HTML>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="../css/cashbookCalendar.css?ver=1"> 
 <link rel="stylesheet" type="text/css" href="../css/header.css"> 
-<link rel="stylesheet" type="text/css" href="../css/cashbookCalendar.css"> 
 
 <style type="text/css">
+#inCashMyModalModify  .modal-body {
+	height: 400px;
+	padding: 10px;
+	margin-bottom: 30px;
+}
+
+
+#inCashMyModalModify .fc-view fc-month-view fc-basic-view{
+	height: 200px;
+}
+
+
+#inCashMyModalModify  .modal-body .modal-inLeft{
+	float: left;
+ 	width: 30%;
+ 	height: auto;
+ 	padding: 5px;
+ 	padding-top: 15px;
+ }
+
+#outCashMyModalModify .modal-body {
+	height: 400px;
+	padding: 10px;
+	margin-bottom: 30px;
+}
+#outCashMyModalModify  .modal-body .modal-outLeft{
+	float: left;
+ 	width: 30%;
+ 	height: auto;
+ 	padding: 5px;
+ 	padding-top: 15px;
+ }
+ 
 
 aside{
 	float: left;
@@ -319,6 +353,13 @@ aside .badge-info:hover {
 		max-width:800px;
 		height: auto; 
 	}
+	
+	.bs-example-modal-lg .modal-header {
+	background-color: #337AB7;
+    padding:16px 16px;
+    color:#FFF;
+	
+}
 
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -375,7 +416,7 @@ jQuery(document).ready(function() {
             , locale : "ko"
             , editable : true
             , eventLimit : true
-			, height : 347
+			, height : 247
             , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
 
             , eventSources : [
@@ -392,7 +433,7 @@ jQuery(document).ready(function() {
                 jQuery("#loading").toggle(bool);
             }
         , events: [
-            <%=eventCash %>
+           <%--  <%=eventCash %> --%>
         ]
             , select: function(start, end) {
                 // Display the modal.
@@ -433,7 +474,7 @@ jQuery("#calendar-out-Modify").fullCalendar({
         , locale : "ko"
         , editable : true
         , eventLimit : true
-		, height : 347
+		, height : 247
         , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
 
         , eventSources : [
@@ -450,7 +491,7 @@ jQuery("#calendar-out-Modify").fullCalendar({
             jQuery("#loading").toggle(bool);
         }
     , events: [
-        <%=eventCash %>
+       <%--  <%=eventCash %> --%>
     ]
         , select: function(start, end) {
             // Display the modal.
@@ -509,7 +550,7 @@ jQuery("#calendar-out-Modify").fullCalendar({
    	                jQuery("#loading").toggle(bool);
    	            }
    	        , events: [
-   	            <%=eventCash %>
+   	           <%--  <%=eventCash %> --%>
    	        ]
    	            , select: function(start, end) {
    	                // Display the modal.
@@ -577,7 +618,7 @@ jQuery("#calendar-out-Modify").fullCalendar({
     	                jQuery("#loading").toggle(bool);
     	            }
     	        , events: [
-    	            <%=eventCash %>
+    	           <%--  <%=eventCash %> --%>
     	        ]
     	            , select: function(start, end) {
     	                // Display the modal.
@@ -668,11 +709,31 @@ jQuery("#calendar").fullCalendar({
           /* $('#modalTitle').html(event.title);
           $('#modalBody').html(event.description);
           $('#fullCalModal').modal(); */
-          var seq = event.id;
-          var seqAf = parseInt(seq);
-          alert(typeof seqAf);
+          var num = event.id;
+          alert(typeof num);
+          var date = event.start;
+          alert(typeof date);
+          alert(date);
+          var strArr = num.split('%');
           
-               
+          if(strArr[0]==0){
+    
+			$("#inCashMyModalModify .modal-title").html("수입 내역 수정");
+			$("#inCashMyModalModify #inContent").val(strArr[1]);
+			$("#inCashMyModalModify #inPrice").val(strArr[2]);
+			$("#inCashMyModalModify #inTitle").val(strArr[3]);
+			$("#inCashMyModalModify #selectedDateModify").html(strArr[4]);
+			$("#inCashMyModalModify").modal("show");i
+          
+          }else{
+        	  
+        	$("#outCashMyModalModify .modal-title").html("지출 내역 수정");
+  			$("#outCashMyModalModify #outContent").val(strArr[1]);
+  			$("#outCashMyModalModify #outPrice").val(strArr[2]);
+  			$("#outCashMyModalModify #outTitle").val(strArr[3]);
+  			$("#outCashMyModalModify #selectedDateModify").html(strArr[4]);
+  			$("#outCashMyModalModify").modal("show");
+          }
       },
         editable: true,
         eventLimit: true // allow "more" link when too many events
@@ -1524,7 +1585,7 @@ function show (str){
 		[6] : price
 		[7] : content 사용자 입력 내용
 		[8] : del */
-		
+		$(".bs-example-modal-lg").modal('hide')
 		var title="";
 		alert(typeof afterStr[4]);
 		
@@ -1736,6 +1797,7 @@ function show (str){
 		          <th class="th_inContent">수입 내역</th>
 		          <th class="th_inPrice">금액</th>
 		          <th class="th_intitle">분류</th>
+		          <th></th>
 		        </tr>
 		      </thead>
 		      <tbody>
@@ -1760,8 +1822,12 @@ function show (str){
 		            <option>기타</option>
 		            </select>
 		          </td>
+		          <td align="center">
+		          <a href="#iconPlusIn" data-toggle="collapse"><i class="material-icons">&#xE24E;</i></a>
+		          </td>
 		        </tr>
-		        <tr id="plusDel"><td colspan="3"><div id="iconPlus"><div data-toggle="buttons">
+		        <tr id="plusDel">
+		        <td colspan="4"><div id="iconPlusIn" class="collapse"><div data-toggle="buttons">
 				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="1"><i class="material-icons">alarm</i></label>
 				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="2"><i class="material-icons">card_giftcard</i></label>
 				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="3"><i class="material-icons">card_travel</i></label>
@@ -1829,6 +1895,7 @@ function show (str){
 		          <th class="th_outContent">지출 내역</th>
 		          <th class="th_outPrice">금액</th>
 		          <th class="th_outTitle">분류</th>
+		          <th></th>
 		        </tr>
 		      </thead>
 		      <tbody>
@@ -1857,10 +1924,12 @@ function show (str){
 		              <option>기타</option>
 		            </select>
 		          </td>
+		          <td align="center">
+		          <a href="#iconPlusOut" data-toggle="collapse"><i class="material-icons">&#xE24E;</i></a>
+		          </td>
 		        </tr>
 		        <tr id="minusDel">
-		        <td colspan="3">
-					<div data-toggle="buttons">
+		        <td colspan="4"><div id="iconPlusOut" class="collapse"><div data-toggle="buttons">
 					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="1"><i class="material-icons">alarm</i></label>
 					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="2"><i class="material-icons">card_giftcard</i></label>
 					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="3"><i class="material-icons">card_travel</i></label>
@@ -1883,7 +1952,7 @@ function show (str){
 					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="20"><i class="material-icons">school</i></label>
 					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="21"><i class="material-icons">star</i></label>
 					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="22"><i class="material-icons">cake</i></label>
-					</div></td>
+					</div></div></td>
 		        </tr>
 		      </tbody>
 		       <tfoot>
@@ -1939,9 +2008,8 @@ function show (str){
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">×</span></button>
-        <h4 class="modal-title" id="myModalLabel">List</h4>
+        <h4 class="modal-title" id="myModalLabel">가계부 전체 보기</h4>
       </div>
-
 <div class="container" id="calListBody">
         <div class="table-wrapper">
             <div class="table-title">
@@ -2038,8 +2106,21 @@ function ListDelete(seq){
 		traditional : true,
 		
        success : function(data){
-           alert("success");
-           showempinfo(data);
+           alert(data);
+           //showempinfo(data);
+			console.log(data);
+           /* var obj = JSON.parse(data);
+
+			var totalList = obj.totalList;
+			var ioMoney = obj.ioMoney;
+			var content = obj.content;
+			var moneyDate = obj.moneyDate;
+			var price = obj.price;
+			var title = obj.title; */
+			
+			alert(data);
+			
+
        },
        error : function(request,status,error){
            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -2048,8 +2129,13 @@ function ListDelete(seq){
    });
 };
 
+</script>
 
+
+<script type="text/javascript">
 function showempinfo(obj) {
+	
+	alert("showempinfo")
     var div = document.querySelector('#calListBody');
     console.log(obj);
     html = '<tr><th>부서번호</th><th>이름</th><th>부서</th></tr>';
@@ -2061,33 +2147,22 @@ function showempinfo(obj) {
     html = '<table>';
     html += '<th>#</th><th>수입/지출</th><th>상세내역</th><th>날짜</th><th>금액</th><th>분류</th><th></th>';
     html += '<tbody id="exampleBody">';
+    
+   
+	
+	
+	var ioMoney = <%=cList.get(1).getIoMoney()%>;
 
-<%-- 	for(var i=0; i<<%=cList.size()%>; i++){
-		
-		<tr>
-        <td><%=i+1 %></td>
-        <td>
-        <% if(cList.get(i).getIoMoney()==0){
-        	%>수입<%
-        }else {
-        	%>지출<%
-        }
-        	%></td>
-        	
-        <td><%=cList.get(i).getContent()%></td>                        
-        <td><%=cList.get(i).getMoneyDate().substring(0, 10) %></td>                        
-        <td><%=String.format("%,d", cList.get(i).getPrice()) %></td>                        
-        <td><%=cList.get(i).getTitle() %></td>
-		<td>
-			<a href="#" onclick="show('<%=cList.get(i) %>')"  class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-			<a href="#" onclick="ListDelete('<%=cList.get(i).getSeq() %>')" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
-		</td>
-    </tr>
-	<%
+	for(var i=0; i<size; i++){
+		html += '<tr>';
+		html += '<td>'+(i+1)+'</td>';
+		html += '<td>';
+				
+		html += '</td>';
+		html += '</tr>';
+        
 	}
-	%>
-</tbody> --%>
-
+	
     console.log("전" + html);
     div.innerHTML = html;
     console.log("후" + html);
@@ -2096,8 +2171,10 @@ function showempinfo(obj) {
 
 }
 
-
 </script>
-	
+
+
+
+
 </body>
 </html>

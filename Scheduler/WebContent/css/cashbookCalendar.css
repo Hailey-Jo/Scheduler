@@ -11,6 +11,99 @@ padding : 50px;
 /* padding-right: 100px; */
 }
 
+/* 일요일 */
+th.fc-day-header.fc-widget-header.fc-sun span{
+ color: red;
+}
+td.fc-day-top.fc-sun.fc-other-month.fc-past span{
+ color: red;
+}
+
+td.fc-day-top.fc-sun.fc-past a{
+ color: red;
+}
+
+td.fc-day-top.fc-sun.fc-past span{
+ color: red;
+}
+
+td.fc-day-top.fc-sun.fc-future a{
+ color: red;
+}
+
+td.fc-day-top.fc-sun.fc-future span{
+ color: red;
+}
+/* 월요일 */
+td.fc-day-top.fc-mon.fc-past a{
+ color: black;
+}
+
+td.fc-day-top.fc-mon.fc-future a{
+ color: black;
+}
+
+/* 화요일 */
+td.fc-day-top.fc-tue.fc-past a{
+ color: black;
+}
+
+td.fc-day-top.fc-tue.fc-future a{
+ color: black;
+}
+/* 수요일 */
+td.fc-day-top.fc-wed.fc-past a{
+ color: black;
+}
+
+td.fc-day-top.fc-wed.fc-future a{
+ color: black;
+}
+/* 목요일 */
+td.fc-day-top.fc-thu.fc-past a{
+ color: black;
+}
+
+td.fc-day-top.fc-thu.fc-future a{
+ color: black;
+}
+/* 금요일 */
+td.fc-day-top.fc-fri.fc-past a{
+ color: black;
+}
+
+td.fc-day-top.fc-fri.fc-future a{
+ color: black;
+}
+/* 토요일 */
+td.fc-day-top.fc-sat.fc-other-month.fc-past span{
+ color: blue;
+}
+
+th.fc-day-header.fc-widget-header.fc-sat span{
+ color: blue;
+}
+
+td.fc-day-top.fc-sat.fc-past a{
+ color: blue;
+}
+
+td.fc-day-top.fc-sat.fc-past span{
+ color: blue;
+}
+
+td.fc-day-top.fc-sat.fc-future a{
+ color: blue;
+}
+
+td.fc-day-top.fc-sat.fc-future span{
+ color: blue;
+}
+
+ 
+
+ 
+
 #calendar-mini div.fc-content{
 	height: 1px;
 }
@@ -52,6 +145,7 @@ padding : 50px;
 #calendar-out-Modify a.fc-day-number{
 	font-size: 5px;
 }
+
 
  
 /* 수입  내역 입력 */
@@ -108,7 +202,7 @@ padding : 50px;
  }
 
 #inCashMyModalModify  .modal-body {
-	height: 500px;
+	height: 400px;
 	padding: 10px;
 	margin-bottom: 30px;
 }
@@ -116,7 +210,6 @@ padding : 50px;
 #inCashMyModalModify .modal-body .container {
  	width: 70%;
  	float: right;
- 	height: inherit;
  	overflow-y: scroll;
  }
  
@@ -126,7 +219,7 @@ padding : 50px;
  	width: 30%;
  	height: auto;
  	padding: 5px;
- 	padding-top: 50px;
+ 	padding-top: 15px;
  }
  
 #inCashMyModalModify  .modal-dialog .modal-content .modal-footer {
@@ -208,7 +301,7 @@ padding : 50px;
  }
  
 #outCashMyModalModify .modal-body {
-	height: 500px;
+	height: 400px;
 	padding: 10px;
 	margin-bottom: 30px;
 }
@@ -218,7 +311,7 @@ padding : 50px;
  	width: 30%;
  	height: auto;
  	padding: 5px;
- 	padding-top: 50px;
+ 	padding-top: 15px;
  }
  
 #outCashMyModalModify .modal-body .container {
