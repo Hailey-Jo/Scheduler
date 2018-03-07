@@ -43,15 +43,26 @@ System.out.println("thismonth: " + thismonth);
 
 <script type="text/javascript">
 <%
+String fullstartdate[] = new String[list.size()];
+String fullenddate[] = new String[list.size()];
 String startdate[] = new String[list.size()];
+String enddate[] = new String[list.size()];
 int important[] = new int[list.size()];
+String title[] = new String[list.size()];
 for(int i=0; i<list.size();i++){
+	fullstartdate[i] = list.get(i).getStartDate().substring(0, 10).replace("-", "");
+	fullenddate[i] = list.get(i).getEndDate().substring(0, 10).replace("-", "");
 	startdate[i] = list.get(i).getStartDate().substring(0, 7).replace("-", "");
 	important[i] = list.get(i).getImportant();
-	
+	enddate[i] = list.get(i).getEndDate().substring(0, 7).replace("-", "");
+	title[i] = list.get(i).getTitle();
 }%>
+var fullstartdate = [<% for (int i = 0; i < fullstartdate.length; i++) { %>"<%= fullstartdate[i] %>"<%= i + 1 < fullstartdate.length ? ",":"" %><% } %>];
+var fullenddate = [<% for (int i = 0; i < fullenddate.length; i++) { %>"<%= fullenddate[i] %>"<%= i + 1 < fullenddate.length ? ",":"" %><% } %>];
 var startdate = [<% for (int i = 0; i < startdate.length; i++) { %>"<%= startdate[i] %>"<%= i + 1 < startdate.length ? ",":"" %><% } %>];
+var enddate = [<% for (int i = 0; i < enddate.length; i++) { %>"<%= enddate[i] %>"<%= i + 1 < enddate.length ? ",":"" %><% } %>];
 var important = [<% for (int i = 0; i < important.length; i++) { %>"<%= important[i] %>"<%= i + 1 < important.length ? ",":"" %><% } %>];
+var title = [<% for (int i = 0; i < title.length; i++) { %>"<%= title[i] %>"<%= i + 1 < title.length ? ",":"" %><% } %>];
 </script>
 <!DOCTYPE HTML>
 <html>
@@ -110,6 +121,10 @@ div.fc-center h2{
 }
 
 tr.important{
+	border-bottom: 1px solid #EAEAEA;
+}
+
+tr.title{
 	border-bottom: 1px solid #EAEAEA;
 }
 
@@ -275,13 +290,34 @@ ul li a:hover, ul li a:focus {
        	    	$('#eventUrl').attr('href','addschedule.jsp');
        	    	$('#fullCalModal').modal();
        	    }     	   
-		  });         
-    });    
-    
-    $(function() {
-		$("#btn1").click(function() {	
-			
-			var aaa = $("#calendar div.fc-center h2").text();
+		  });
+        
+        $(function() {
+			$(".fc-next-button.fc-button.fc-state-default.fc-corner-left.fc-corner-right").click(function() {
+				
+				var aaa = $("#calendar div.fc-center h2").text();
+		        if(aaa.length==8){
+		        	var thisyear = aaa.substring(0,4);        
+		            var thismonth = aaa.substring(6,7);
+		            thismonth = "0"+thismonth;
+		            var dday = thisyear + thismonth;		            
+		            $(".monthbtn").attr('value',dday);	
+		            
+		        }
+		        else if(aaa.length==9){
+		        	var thisyear = aaa.substring(0,4); 
+		        	var thismonth = aaa.substring(6,8);
+		        	var dday = thisyear + thismonth;		        	
+		            $(".monthbtn").attr('value',dday);			           
+		        }
+		        $("#importanttable tbody").find(".important").remove();
+			});
+		});
+        
+        $(function() {
+			$(".fc-prev-button.fc-button.fc-state-default.fc-corner-left.fc-corner-right").click(function() {
+				
+				var aaa = $("#calendar div.fc-center h2").text();
 		        if(aaa.length==8){
 		        	var thisyear = aaa.substring(0,4);        
 		            var thismonth = aaa.substring(6,7);
@@ -297,7 +333,31 @@ ul li a:hover, ul li a:focus {
 		            $(".monthbtn").attr('value',dday);		           
 		           
 		        }
-		    var modalstr = "";
+		        $("#importanttable tbody").find(".important").remove();
+			});
+		});
+    });    
+    
+    $(function() {
+		$("#btn1").click(function() {	
+			 
+			var aaa = $("#calendar div.fc-center h2").text();
+		        if(aaa.length==8){
+		        	var thisyear = aaa.substring(0,4);        
+		            var thismonth = aaa.substring(6,7);
+		            thismonth = "0"+thismonth;
+		            var dday = thisyear + thismonth;		            
+		            $(".monthbtn").attr('value',dday);	
+		            
+		        }
+		        else if(aaa.length==9){
+		        	var thisyear = aaa.substring(0,4); 
+		        	var thismonth = aaa.substring(6,8);
+		        	var dday = thisyear + thismonth;		        	
+		            $(".monthbtn").attr('value',dday);		           
+		           
+		        } 
+		    var modalstr = "";		    
 		    
 		    modalstr += '<div class="modal fade" id="importantmodal" tabindex="-1" role="dialog" aria-labelledby="importantmodalLabel" aria-hidden="true">';
 		    modalstr += '<div class="modal-dialog" role="document">';
@@ -309,26 +369,42 @@ ul li a:hover, ul li a:focus {
 		    modalstr += '<h5 class="modal-title" id="importantmodalLabel">중요일정보기</h5>';
 		    modalstr += '</div>';
 		    modalstr += '<div class="modal-body">';
-		    modalstr += '<table style="text-align: center;">';
+		      
+		    modalstr += '<table id="importanttable" style="text-align: center; ">';
 		    modalstr += '<col width="150"><col width="150"><col width="300">';
 		    modalstr += '<tr>';
 		    modalstr += '<td colspan="3" style="border-bottom: 1px solid gray">';
 		    modalstr += '</td>';
 		    modalstr += '</tr>';
-		    modalstr += '<tr class="important">';
+		    modalstr += '<tr class="title">';
 		    modalstr += '<td>시작일</td>';
 		    modalstr += '<td>종료일</td>';
 		    modalstr += '<td>제목</td>';
-		    modalstr += '</tr>';	
-		    modalstr += '<script>';
+		    modalstr += '</tr>';			    
 		    
-	    	modalstr += 'alert("scriptattr: " + $(".monthbtn").attr("value"));'; //
-	    	modalstr += '}';
-		    modalstr += '<'+'/script>';   
+		    modalstr += '</tr>';
 		    modalstr += '</table>';
+		    
+			modalstr += '<script>';
+    	    
+		    modalstr += 'for (i = 0; i < startdate.length; i++) { ';
+		    
+		    modalstr += 'if(startdate[i]==$(".monthbtn").attr("value")){'
+		    modalstr += 'if(important[i]==1){'
+	    	modalstr += '$("#importanttable tbody").append("<tr class="+"important"+"><td>"+fullstartdate[i]+"</td><td>"+fullenddate[i]+"</td><td>"+title[i]+"</td></tr>");';
+		    /* modalstr += '$("#importanttable tbody").append("<td>"+fullstartdate[i]+"</td>");';
+		    modalstr += '$("#importanttable tbody").append("<td>"+fullenddate[i]+"</td>");';
+		    modalstr += '$("#importanttable tbody").append("<td>"+title[i]+"</td>");';
+		    modalstr += '$("#importanttable tbody").append("</tr>");'; */
+		    
+		    modalstr += ' }';
+	//	    modalstr += '$(".titletr").append("</tr>");';
+		    modalstr += '}';		    
+		    modalstr += '}';
+		    modalstr += '<\/script>';
 		    modalstr += '</div>';
 		    modalstr += '<div class="modal-footer">';
-		    modalstr += '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
+		    modalstr += '<button type="button" id="closebtn"class="btn btn-secondary" data-dismiss="modal">Close</button>';
 		    modalstr += '</div>';
 		    modalstr += '</div>';
 		    modalstr += '</div>';
@@ -336,6 +412,10 @@ ul li a:hover, ul li a:focus {
 		    
 		    $("article").append(modalstr);
 		    
+		    
+		    $('#importantmodal').on('hidden.bs.modal', function (e) {		    	  
+		    	  $("#importanttable tbody").find(".important").remove();
+		    	});
 		});
 	});
 
@@ -380,7 +460,7 @@ ul li a:hover, ul li a:focus {
 		<!-- 좌측 서브 메뉴 -->
 		<div align="center">
 			<div class="btn-group">
-			  <button type="button" class="btn btn-info" style="width: 230px">Write Menu</button>
+			  <button type="button" class="btn btn-info" style="width: 230px" >Write Menu</button>
 			  <button type="button" class="btn btn-info dropdown-toggle" style="height: 34px" data-toggle="dropdown" aria-expanded="false">
 			    <span class="caret"></span>
 			    <span class="sr-only">Toggle Dropdown</span>
@@ -398,7 +478,7 @@ ul li a:hover, ul li a:focus {
 	
 		<table style="padding-top: 10px">
 			<tr>
-				<td></td>
+				<td>　</td>
 			</tr>
 			<tr>		
 				<input name="monthbtn" class="monthbtn" type="hidden" value="">

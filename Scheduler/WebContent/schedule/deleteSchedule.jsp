@@ -21,7 +21,7 @@ boolean checkdelete = dao.deleteSchedule(seq);
 if(checkdelete){
 %>
 	<script type="text/javascript">
-		location.href="scheduleMain.jsp";
+		location.href="../schedule/schedulemain.jsp";
 	</script>
 <%}else{
 %>

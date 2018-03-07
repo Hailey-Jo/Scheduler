@@ -1,10 +1,7 @@
 ﻿@charset "UTF-8";
-#calendar {
-    max-width:900px;
-    margin:0 auto;    
-}
+
 #calendar-mini{
-border: 1px solid;
+
 float: left;
 padding: 10px;
 margin-left: 10px;
@@ -22,10 +19,10 @@ margin-right: 10px;
 	font-size: 5px;
 }
 #calendar{
-border: 1px solid;
+
 float: left;
-width: 80%;
-height: 90%;
+width: 80vm;
+height: 80vm;
 padding: 10px;
 /* Calendar 호출시 height: 580 설정하기  */
 }
@@ -42,4 +39,93 @@ div.barKategorie {
     padding-right:10px;
     border-radius:5px;
     font-weight:bold;
+}
+
+/* 일요일 */
+th.fc-day-header.fc-widget-header.fc-sun span{
+	color: red;
+}
+td.fc-day-top.fc-sun.fc-other-month.fc-past span{
+	color: red;
+}
+
+td.fc-day-top.fc-sun.fc-past a{
+	color: red;
+}
+
+td.fc-day-top.fc-sun.fc-past span{
+	color: red;
+}
+
+td.fc-day-top.fc-sun.fc-future a{
+	color: red;
+}
+
+td.fc-day-top.fc-sun.fc-future span{
+	color: red;
+}
+/* 월요일 */
+td.fc-day-top.fc-mon.fc-past a{
+	color: black;
+}
+
+td.fc-day-top.fc-mon.fc-future a{
+	color: black;
+}
+
+/* 화요일 */
+td.fc-day-top.fc-tue.fc-past a{
+	color: black;
+}
+
+td.fc-day-top.fc-tue.fc-future a{
+	color: black;
+}
+/* 수요일 */
+td.fc-day-top.fc-wed.fc-past a{
+	color: black;
+}
+
+td.fc-day-top.fc-wed.fc-future a{
+	color: black;
+}
+/* 목요일 */
+td.fc-day-top.fc-thu.fc-past a{
+	color: black;
+}
+
+td.fc-day-top.fc-thu.fc-future a{
+	color: black;
+}
+/* 금요일 */
+td.fc-day-top.fc-fri.fc-past a{
+	color: black;
+}
+
+td.fc-day-top.fc-fri.fc-future a{
+	color: black;
+}
+/* 토요일 */
+td.fc-day-top.fc-sat.fc-other-month.fc-past span{
+	color: blue;
+}
+
+th.fc-day-header.fc-widget-header.fc-sat span{
+	color: blue;
+}
+
+td.fc-day-top.fc-sat.fc-past a{
+	color: blue;
+}
+
+td.fc-day-top.fc-sat.fc-past span{
+	color: blue;
+}
+
+td.fc-day-top.fc-sat.fc-future a{
+	color: blue;
+}
+
+td.fc-day-top.fc-sat.fc-future span{
+	color: blue;
 }

@@ -1,3 +1,4 @@
+<%@page import="User.userDTO"%>
 <%@page import="Schedule.ScheduleDAO"%>
 <%@page import="Schedule.iScheduleDAO"%>
 <%@page import="Schedule.ScheduleDTO"%>
@@ -21,7 +22,9 @@ public boolean nullcheck(String element){
 }
 %>
 <%
-// userDTO user = (userDTO)session.getAttribute("login");
+
+userDTO user = (userDTO)session.getAttribute("login");
+String id = user.getId();
 
 String title = request.getParameter("title");
 String simportant = request.getParameter("important");
@@ -60,7 +63,7 @@ if(!b){
 <%
 }
 else{
-	ScheduleDTO dto = new ScheduleDTO(0,"AAA",title,startdate,enddate,category,content,important,0);
+	ScheduleDTO dto = new ScheduleDTO(0,id,title,startdate,enddate,category,content,important,0);
 	iScheduleDAO dao = ScheduleDAO.getInstance();
 	boolean addcheck = dao.addSchedule(dto);
 	
@@ -73,7 +76,7 @@ else{
 }else{
 %>
 <script type="text/javascript">
-	location.href="scheduleMain.jsp";
+	location.href="../schedule/schedulemain.jsp";
 </script>
 <%
 }
