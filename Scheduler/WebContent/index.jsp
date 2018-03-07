@@ -263,7 +263,8 @@ border-bottom:3px solid #78788c
 
 
 </style>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="http://lab.alexcican.com/set_cookies/cookie.js" type="text/javascript" ></script>
 </head>
 
 <body class="align">
@@ -305,7 +306,7 @@ border-bottom:3px solid #78788c
 			</p>
 			
 			<p class="text--center">
-				<label style="cursor: pointer;">로그인 유지하기  <input type="checkbox" name="save_login">
+				<label style="cursor: pointer;">로그인 유지하기  <input type="checkbox" name="save_login" id="save_login">
 				</label> 
 				<span class="fontawesome-exclamation-sign"></span>
 			</p>
@@ -369,7 +370,28 @@ border-bottom:3px solid #78788c
 				modal.style.display = "none";
 			}
 
+		}		
+
+		var user_id = $.cookie("user_id");
+		if(user_id != null){
+			$("#login__username").val(user_id);
+			$("#save_login").attr("checked","checked");
 		}
+
+		$("#save_login").click(function() {
+			if($("input:checkbox[id='save_login']").is(":checked")){
+				if($("#login__username").val()==""){
+					$(this).attr("checked", false);
+				}
+				else{
+					$.cookie("user_id", $("#login__username").val(), {expires:7, path:"/"});	
+				}
+			}
+			else{			
+				$.removeCookie("user_id", {path:"/"});
+			}
+
+		});
 	</script>
 
 </body>

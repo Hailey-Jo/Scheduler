@@ -23,10 +23,10 @@ public class ScheduleDAO implements iScheduleDAO {
 	}
 
 	@Override
-	public List<ScheduleDTO> getAllSchedulList() {
+	public List<ScheduleDTO> getAllSchedulList(String id) {
 		String sql = " SELECT SHECDELE_SEQ, ID, TITLE, STARTDATE, "
 				+ " ENDDATE, CATEGORY, CONTENT, IMPORTANT, DEL "
-				+ " FROM SCHEDULE ";
+				+ " FROM SCHEDULE WHERE ID = '"+id+"'";
 		
 		System.out.println("1/6 getAllSchedulList");
 		

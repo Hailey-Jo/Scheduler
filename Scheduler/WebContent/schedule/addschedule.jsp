@@ -1,3 +1,4 @@
+<%@page import="User.userDTO"%>
 <%@page import="Schedule.ScheduleDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="Schedule.ScheduleDAO"%>
@@ -6,8 +7,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<%iScheduleDAO dao = ScheduleDAO.getInstance();
-List<ScheduleDTO> list = dao.getAllSchedulList();
+<%
+userDTO user = new userDTO();
+user = (userDTO)session.getAttribute("login");
+String id = user.getId();
+
+iScheduleDAO dao = ScheduleDAO.getInstance();
+List<ScheduleDTO> list = dao.getAllSchedulList(id);
 String eventstring = "";
 for(int i=0; i<list.size();i++){	
 	eventstring +="{";
@@ -20,7 +26,7 @@ for(int i=0; i<list.size();i++){
 	}	
 	eventstring +="},"+"\n";	
 }
-String id = "null";
+
 %>
 <!DOCTYPE HTML>
 <html>
@@ -48,7 +54,7 @@ td.first{
 
 article {
     margin-left: 10px;
-    border-left: 1px solid gray;
+   
     overflow: hidden;
     height: auto;
 }
@@ -170,7 +176,7 @@ ul li a:hover, ul li a:focus {
     		        , selectHelper: true
     	        	, navLinks: false
     	            , locale : "ko"
-    	            , editable : true
+    	            , editable : false
     	            , eventLimit : true
 					, height : 347
     	            , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
@@ -191,6 +197,18 @@ ul li a:hover, ul li a:focus {
     	        , events: [
     	            <%=eventstring %>
     	        ]
+    	        , eventRender: function(event, eventElement) {
+    				if (event.imageurl){             		
+    					eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='12' height='12'>"); 
+    				}
+    				//google link remove
+    				$('td .fc-event-container').find('a').removeAttr("href");
+    			},
+    			eventClick: function(e) {  
+    				var target = $(this).find('a').attr('href', '#');
+
+    				return false
+    			}
     	        
     	        });
     	    });
@@ -207,14 +225,14 @@ ul li a:hover, ul li a:focus {
 		<nav id="topMenu">
 			<div class="topMenu_siteTitle" style=" float: left; width: 40%;">
 				<ul>
-					<li>BizPayDay</li>
+					<li><a href="../Main.jsp" style="color: white">BizPayDay</a></li>
 				</ul>
 			</div>
 			<div class="topMenu_icon" align="center" style=" float: left; width: 40%;">
 				<ul>
-					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/home-w.png" onmouseover='this.src="../icon/home-n.png"' onmouseout='this.src="../icon/home-w.png"' ></a></li>
-					<li><a class="menuLink" href="scheduleMain.jsp"><img src="../icon/schedule-n.png" onmouseover='this.src="../icon/schedule-w.png"' onmouseout='this.src="../icon/schedule-n.png"' ></a></li>
-					<li><a class="menuLink" href="../cashbook/cashbookMain.jsp"><img src="../icon/cash-n.png" ></a></li>
+					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/home-n.png" onmouseover='this.src="../icon/home-w.png"' onmouseout='this.src="../icon/home-n.png"' ></a></li>
+					<li><a class="menuLink" href="../schedule/schedulemain.jsp"><img src="../icon/schedule-w.png" onmouseover='this.src="../icon/schedule-w.png"' onmouseout='this.src="../icon/schedule-w.png"' ></a></li>
+					<li><a class="menuLink" href="../cashbook/cashbookMain.jsp"><img src="../icon/cash-n.png" onmouseover='this.src="../icon/cash-w.png"' onmouseout='this.src="../icon/cash-n.png"'></a></li>
 				</ul>
 			</div>
 			<div class="login_info" style=" float: left; width: 18%; height: 30px;">
@@ -224,7 +242,7 @@ ul li a:hover, ul li a:focus {
 		          <ul class="dropdown-menu" role="menu">
 		            <li><a href="#">My List</a></li>
 		            <li><a href="#">My Info</a></li>
-		            <li><a href="login.html">Log out</a></li>
+		            <li><a href="../login.jsp">Log out</a></li>
 		          </ul>
 		        </li>
 		      </ul>
@@ -236,17 +254,7 @@ ul li a:hover, ul li a:focus {
 	<!-- 하단 -->
 		<!-- 좌측 서브 메뉴 -->
 		<div align="center">
-			<div class="btn-group">
-			  <button type="button" class="btn btn-info" style="width: 230px">Write Menu</button>
-			  <button type="button" class="btn btn-info dropdown-toggle" style="height: 34px" data-toggle="dropdown" aria-expanded="false">
-			    <span class="caret"></span>
-			    <span class="sr-only">Toggle Dropdown</span>
-			  </button>
-			  <ul class="dropdown-menu" role="menu" style="width: 230px">
-			    <li><a href="#">Write Scheduler</a></li>
-			    <li><a href="#">Write MoneyBook</a></li>    
-			  </ul>
-			</div>
+			<button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../schedule/addschedule.jsp' ">스케줄 등록</button>
 		</div>
 	<br>
 		<div id="calendar-mini"></div>
@@ -329,9 +337,7 @@ ul li a:hover, ul li a:focus {
 	  </ul>
 	  <script type="text/javascript">
 	  	$(".selectcolor").click(function() {
-	  		alert($(this).children().text());
-	  		alert($(this).children().attr("style"));
-	  			  		
+	  		
 	  		$("#colorbtn").val($(this).children().text());
 	  		$("#colorbtn").attr("style",$(this).children().attr("style"));
 	  		$(".colorbtn").val($(this).children().text());			
