@@ -416,7 +416,7 @@ jQuery(document).ready(function() {
             , locale : "ko"
             , editable : true
             , eventLimit : true
-			, height : 247
+			, height : 347
             , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
 
             , eventSources : [
@@ -474,7 +474,7 @@ jQuery("#calendar-out-Modify").fullCalendar({
         , locale : "ko"
         , editable : true
         , eventLimit : true
-		, height : 247
+		, height : 347
         , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
 
         , eventSources : [
@@ -723,7 +723,7 @@ jQuery("#calendar").fullCalendar({
 			$("#inCashMyModalModify #inPrice").val(strArr[2]);
 			$("#inCashMyModalModify #inTitle").val(strArr[3]);
 			$("#inCashMyModalModify #selectedDateModify").html(strArr[4]);
-			$("#inCashMyModalModify").modal("show");i
+			$("#inCashMyModalModify").modal({backdrop: 'static', keyboard: false});
           
           }else{
         	  
@@ -732,7 +732,7 @@ jQuery("#calendar").fullCalendar({
   			$("#outCashMyModalModify #outPrice").val(strArr[2]);
   			$("#outCashMyModalModify #outTitle").val(strArr[3]);
   			$("#outCashMyModalModify #selectedDateModify").html(strArr[4]);
-  			$("#outCashMyModalModify").modal("show");
+  			$("#outCashMyModalModify").modal({backdrop: 'static', keyboard: false});
           }
       },
         editable: true,
@@ -1598,7 +1598,7 @@ function show (str){
 			$("#inCashMyModalModify #inPrice").val(afterStr[6]);
 			$("#inCashMyModalModify #inTitle").val(afterStr[2]);
 			$("#inCashMyModalModify #selectedDateModify").html(modiDate);
-			$("#inCashMyModalModify").modal('show');
+			$("#inCashMyModalModify").modal({backdrop: 'static', keyboard: false});
 			
 			//del 버튼 클릭하면
 			$("#btn_delIo").click(function () {	
@@ -1686,7 +1686,7 @@ function show (str){
 			$("#outCashMyModalModify #outPrice").val(afterStr[6]);
 			$("#outCashMyModalModify #outTitle").val(afterStr[2]);
 			$("#outCashMyModalModify #outSelectedDateModify").html(modiDate);
-			$("#outCashMyModalModify").modal('show');
+			$("#outCashMyModalModify").modal({backdrop: 'static', keyboard: false});
 			
 			//del 버튼 클릭하면
 			$("#btn_delSpend").click(function () {	
@@ -1972,7 +1972,6 @@ function show (str){
 
 
 
-
 <!-------------------------------------------------------------------------------
 	 미니 달력 선택, 후 뜨는 모달 창 
  ------------------------------------------------------------------------------->
@@ -2057,22 +2056,10 @@ function show (str){
                 	%>
                 </tbody>
             </table>
-			<%-- <div class="clearfix" style="float: right;">
-                <div class="hint-text">Showing <b>8</b> out of <b><%=cList.size() %></b> entries</div>
-                <ul class="pagination">
-                    <li class="page-item disabled"><a href="#">Previous</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                </ul>
-            </div> --%>
         </div>
     </div>   
     <div class="modal-footer">
-		<button type="button" class="btn btn btn-primary" data-dismiss="modal">확인</button>
+		<button type="button" class="btn btn btn-primary" id="closeReload">확인</button>
 	</div>
     </div>
   </div>
@@ -2107,72 +2094,56 @@ function ListDelete(seq){
 		
        success : function(data){
            alert(data);
+           //alert(typeof data);
            //showempinfo(data);
-			console.log(data);
-           /* var obj = JSON.parse(data);
+			//console.log(data);
+			//var obj = JSON.parse(data);
+			//data = JSON.parse(data);
 
-			var totalList = obj.totalList;
-			var ioMoney = obj.ioMoney;
-			var content = obj.content;
-			var moneyDate = obj.moneyDate;
-			var price = obj.price;
-			var title = obj.title; */
-			
-			alert(data);
-			
-
+			var strArr = new Array();
+			strArr = data.split('"');
+			/* alter(strArr.length); */
+		   var div = document.querySelector('#example');
+		    html = '<table>';
+		    html += '<th>#</th><th>수입/지출</th><th>상세내역</th><th>날짜</th><th>금액</th><th>분류</th><th></th>';
+		    html += '<tbody id="exampleBody">';
+		    
+		     var counter=0;
+		    for(var i=0; i<strArr.length-1; i=i+24){
+		    	counter++;
+				html += '<tr>';
+				html += '<td>'+counter+'</td>';
+				html += '<td>'+strArr[i+3]+'</td>';
+				html += '<td>'+strArr[i+23]+'</td>';
+				html += '<td>'+strArr[i+11]+'</td>';
+				html += '<td>'+strArr[i+7]+'</td>';
+				html += '<td>'+strArr[i+15]+'</td>';
+				html += '<td>';
+				html += '<a href="#" onclick="show('+strArr[i+19]+')"  class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>';
+				html += '<a href="#" onclick="ListDelete('+strArr[i+19]+')" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>';
+				html += '</td>';
+				html += '</tr>';
+			}
+		    
        },
        error : function(request,status,error){
            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
        }
-   
+     
    });
 };
 
 </script>
 
-
+<!-- 모달 확인 버튼 눌러도 부모 테이블 갱신하도록 -->
 <script type="text/javascript">
-function showempinfo(obj) {
-	
-	alert("showempinfo")
-    var div = document.querySelector('#calListBody');
-    console.log(obj);
-    html = '<tr><th>부서번호</th><th>이름</th><th>부서</th></tr>';
-   
-    $("#calListBody .table").html(html);
-    
-    var div = document.querySelector('#example');
-    console.log(obj);
-    html = '<table>';
-    html += '<th>#</th><th>수입/지출</th><th>상세내역</th><th>날짜</th><th>금액</th><th>분류</th><th></th>';
-    html += '<tbody id="exampleBody">';
-    
-   
-	
-	
-	var ioMoney = <%=cList.get(1).getIoMoney()%>;
-
-	for(var i=0; i<size; i++){
-		html += '<tr>';
-		html += '<td>'+(i+1)+'</td>';
-		html += '<td>';
-				
-		html += '</td>';
-		html += '</tr>';
-        
-	}
-	
-    console.log("전" + html);
-    div.innerHTML = html;
-    console.log("후" + html);
-
-
-
-}
-
+$(document).ready(function () {
+	$("#closeReload").click(function () {
+		$("#outCashMyModalModify").modal().hide();
+	    location.reload();
+	});
+});
 </script>
-
 
 
 

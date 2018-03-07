@@ -2,6 +2,7 @@
     <wb-module deploy-name="Scheduler">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/" source-path="/WebContent/WEB-INF/lib"/>
         <property name="context-root" value="Scheduler"/>
         <property name="java-output-path" value="/Scheduler/build/classes"/>
     </wb-module>

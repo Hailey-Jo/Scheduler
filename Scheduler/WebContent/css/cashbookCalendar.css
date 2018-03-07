@@ -157,7 +157,7 @@ td.fc-day-top.fc-sat.fc-future span{
  }
 
 #inCashMyModal  .modal-body {
-	height: 500px;
+	height: 400px;
 	padding: 10px;
 	margin-bottom: 30px;
 }
@@ -175,7 +175,7 @@ td.fc-day-top.fc-sat.fc-future span{
  	width: 30%;
  	height: auto;
  	padding: 5px;
- 	padding-top: 50px;
+ 	padding-top: 15px;
  }
  
 #inCashMyModal  .modal-dialog .modal-content .modal-footer {
@@ -246,7 +246,7 @@ td.fc-day-top.fc-sat.fc-future span{
  }
  
 #outCashMyModal .modal-body {
-	height: 500px;
+	height: 400px;
 	padding: 10px;
 	margin-bottom: 30px;
 }
@@ -256,7 +256,7 @@ td.fc-day-top.fc-sat.fc-future span{
  	width: 30%;
  	height: auto;
  	padding: 5px;
- 	padding-top: 50px;
+ 	padding-top: 15px;
  }
  
 #outCashMyModal .modal-body .container {
