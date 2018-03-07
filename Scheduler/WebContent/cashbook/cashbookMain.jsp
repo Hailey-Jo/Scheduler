@@ -2093,6 +2093,7 @@ $(document).ready(function() {
 
 <script type="text/javascript">
 function ListDelete(seq){
+	var str;
 	$.ajax({
 		
        type : "get",
@@ -2107,26 +2108,50 @@ function ListDelete(seq){
 		
        success : function(data){
            alert(data);
+           //alert(typeof data);
            //showempinfo(data);
-			console.log(data);
-           /* var obj = JSON.parse(data);
-
-			var totalList = obj.totalList;
-			var ioMoney = obj.ioMoney;
-			var content = obj.content;
-			var moneyDate = obj.moneyDate;
-			var price = obj.price;
-			var title = obj.title; */
+			//console.log(data);
+			//var obj = JSON.parse(data);
+			//data = JSON.parse(data);
 			
-			alert(data);
+			var str = data.split('"');
 			
+			alert(str[4]);
+			alert(str[8]);
+			alert(str[12]);
+			alert(str[16]);
+			alert(str[20]);
+			
+		   /*  var div = document.querySelector('#example');
+		    html = '<table>';
+		    html += '<th>#</th><th>수입/지출</th><th>상세내역</th><th>날짜</th><th>금액</th><th>분류</th><th></th>';
+		    html += '<tbody id="exampleBody">';
+		     */
+		 /*    
+		    for(var i=0; i<3; i++){
+				html += '<tr>';
+				html += '<td>'+(i+1)+'</td>';
+				html += '<td>'+ioMoney+'</td>';
+				html += '<td>'+content+'</td>';
+				html += '<td>'+moneyDate+'</td>';
+				html += '<td>'+price+'</td>';
+				html += '<td>'+title+'</td>';
+				html += '</tr>';
+		        
+			}
+		     */
+		    /* console.log("전" + html);
+		    div.innerHTML = html;
+		    console.log("후" + html);
+			 */
 
        },
        error : function(request,status,error){
            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
        }
-   
+     
    });
+	 alert(str);
 };
 
 </script>
