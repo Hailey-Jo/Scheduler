@@ -25,7 +25,7 @@
 	
 	// 1986-05-17
 	if(birth.length() != 10 || Integer.parseInt(birth.substring(5, 7))>12 || Integer.parseInt(birth.substring(5, 7))<1
-		|| Integer.parseInt(birth.substring(8, 10))>12 || Integer.parseInt(birth.substring(8, 10))<1){
+		|| Integer.parseInt(birth.substring(8, 10))>31 || Integer.parseInt(birth.substring(8, 10))<1){
 		System.out.println("birth issue");
 		check = false;
 	}
@@ -45,24 +45,26 @@
 	}else{
 		PhonebookDTO dto = new PhonebookDTO(0,id,name,birth,phone,email);
 		daocheck = dao.addPhonebook(dto);
-	}
+		
+		if(daocheck){
+			%>
+				<script type="text/javascript">
+					location.href="../phonebook/phonebookMain.jsp";
+				</script>
+			<%
+			}
+			else{
+			%>
+				<script type="text/javascript">
+					alert("실패했다");
+					location.href="../phonebook/phonebookMain.jsp";
+				</script>
+			<%
+			}
+			
+	}%>
 	
-	if(daocheck){
-	%>
-		<script type="text/javascript">
-			location.href="../phonebook/phonebookMain.jsp";
-		</script>
-	<%
-	}
-	else{
-	%>
-		<script type="text/javascript">
-			alert("실패했다");
-			location.href="../phonebook/phonebookMain.jsp";
-		</script>
-	<%
-	}
-	%>
+	
 
 </body>
 </html>
