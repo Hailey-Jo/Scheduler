@@ -201,7 +201,7 @@ window.onload = function () {
 				 <button type="button" class="btn btn-defult"style="padding: 1px; width: 100px; height: 50px;" onclick="location.href='./pds/pdslist.jsp'">자료실</button>
 			</div><br>
 			<div class="col-md-12" style="padding:5px;">
-				 <button type="button" class="btn btn-defult"style="padding: 1px; width: 100px; height: 50px;" onclick="location.href='#'">정보수정</button>&nbsp;&nbsp;&nbsp;
+				 <button type="button" class="btn btn-defult"style="padding: 1px; width: 100px; height: 50px;" onclick="location.href='./user/password_change.jsp'">정보수정</button>&nbsp;&nbsp;&nbsp;
 				 <button type="button" class="btn btn-defult"style="padding: 1px; width: 100px; height: 50px;" onclick="location.href='index.jsp'">로그아웃</button>
 			</div>
 		</div>

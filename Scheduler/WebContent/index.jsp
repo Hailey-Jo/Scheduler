@@ -1,6 +1,6 @@
 <!doctype html>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -179,7 +179,7 @@ a:focus, a:hover {
 	width: 90%;
 }
 
-/* ��� css */
+/* 모달 css */
 .findinfo {
 	display: none; /* Hidden by default */
 	position: fixed; /* Stay in place */
@@ -194,7 +194,7 @@ a:focus, a:hover {
 	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
-/* ��� ���� */
+/* 모달 내용 */
 .modal-content {
 	background-color: #fefefe;
 	margin: auto;
@@ -203,7 +203,7 @@ a:focus, a:hover {
 	width: 50%;
 }
 
-/* ��� �ݱ� ��ư */
+/* 모달 닫기 버튼 */
 .close {
 	color: #aaaaaa;
 	float: right;
@@ -265,6 +265,8 @@ border-bottom:3px solid #78788c
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="http://lab.alexcican.com/set_cookies/cookie.js" type="text/javascript" ></script>
+
+<% session.invalidate(); %>
 </head>
 
 <body class="align">
@@ -282,38 +284,68 @@ border-bottom:3px solid #78788c
 				<div class="form__field">
 					<label class="fontawesome-user" for="login__username"><span
 						class="hidden">Username</span></label> <input id="login__username"
-						name="input_id" type="text" class="form__input" placeholder="���̵�" required>
+						name="input_id" type="text" class="form__input" placeholder="아이디" required>
 				</div>
 
 				<div class="form__field">
 					<label class="fontawesome-lock" for="login__password"><span
 						class="hidden">Password</span></label> <input id="login__password"
-						name="input_pw" type="password" class="form__input" placeholder="��й�ȣ" required>
+						name="input_pw" type="password" class="form__input" placeholder="비밀번호" required>
 				</div>
 
 				<div class="form__field">
-					<input type="submit" value="�α���">
+					<input type="submit" value="로그인">
 				</div>
+				
+				<script type="text/javascript">
+				jQuery( function ($) {
+					var form = $(".form");
+					
+					// 쿠키 생성
+					var user_id = $.cookie("user_id");
+					
+					// 기존에 있는 쿠키 불러오기
+					if(user_id != null){
+						$("#login__username").val(user_id);		// 아이디 필드에 쿠키에 들어있는 아이디값을 넣는다
+						$("#save_login").attr("checked", "checked");	// 체크박스를 체크 표시한다
+					}
+					
+					// 체크 박스 해제 시 쿠키 삭제
+					$("#save_login").click(function () {
+						$.removeCookie("user_id", { path: '/'});	
+					});
+	
+					form.submit(function () {		// 로그인 버튼이 눌러졌을 때
+						
+						// 아이디 기억하기 체크 확인
+						if ($("#save_login").is(":checked")){
+							$.cookie("user_id", $("#login__username").val(),{expired:7, path:'/'})	
+						}						
+					});
+				});
+				
+				</script>
+				
 			</form>
 
 			<p class="text--center">
-				ȸ���� �ƴϽŰ���? <a href="./user/signup.jsp">���� �����ϼ���!</a> <span
+				회원이 아니신가요? <a href="./user/signup.jsp">지금 가입하세요!</a> <span
 					class="fontawesome-ok-circle"></span>
 			</p>
 			<p class="text--center">
-				<a href="./user/findUserInfo.jsp">���̵� ��й�ȣ�� �����̳���? </a> <span
+				<a href="./user/findUserInfo.jsp">아이디나 비밀번호를 잊으셨나요? </a> <span
 					class="fontawesome-exclamation-sign"></span>
 			</p>
 			
 			<p class="text--center">
-				<label style="cursor: pointer;">���̵� �����ϱ�  <input type="checkbox" name="save_login" id="save_login">
+				<label style="cursor: pointer;">아이디 저장하기  <input type="checkbox" name="save_login" id="save_login">
 				</label> 
 				<span class="fontawesome-exclamation-sign"></span>
 			</p>
 		</div>
 	</div>
 
-	<script type="text/javascript">	
+	<!-- <script type="text/javascript">	
 
 		var user_id = $.cookie("user_id");
 		if(user_id != null){
@@ -335,7 +367,7 @@ border-bottom:3px solid #78788c
 			}
 
 		});
-	</script>
+	</script> -->
 
 </body>
 </html>
