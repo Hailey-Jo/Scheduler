@@ -27,10 +27,15 @@ if(session.getAttribute("login") != null){
 	id = user.getId();
 	pic = user.getPic();
 	
+	System.out.println("===Main===");
+	System.out.println("pic===>"+pic);
+	
 	if(pic==null){
 		imgPath = serverPath+packagePath+File.separator+"icon"+File.separator+"user-g.png";
+		System.out.println("imgPath==>"+imgPath);
 	}else{
-		imgPath = File.separator+"img"+File.separator+id+File.separator+pic;
+		imgPath = serverPath+File.separator+"img"+File.separator+user.getId()+File.separator+pic;
+		System.out.println("imgPath==>"+imgPath);
 	}
 	
 }else{
@@ -131,10 +136,10 @@ window.onload = function () {
 
 	var options = {
 		title: {
-			text: "이달의 수입 & 지출"
+			text: "총 금액: "+"<%=totMomey%>" + "원"
 		},
 		subtitles: [{
-			text: "총 금액: "+"<%=totMomey%>" + "원"
+			text: ""
 		}],
 		animationEnabled: true,
 		locale: 'ko',

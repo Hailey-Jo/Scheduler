@@ -1,3 +1,4 @@
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="User.userDTO"%>
 <%@page import="User.userDAO"%>
 <%@page import="User.iuserDAO"%>
@@ -44,20 +45,6 @@ public String processUploadedFile(FileItem fileItem, String dir, JspWriter out) 
 %>
 
 <%
-// tomcat upload
-String fupload = application.getRealPath("/upload");
-
-//user folder upload
-//String fupload = "e:\\tmp";
-
-System.out.println("file Upload : "+fupload);
-
-String yourTempDirectory = String.valueOf(fupload);
-
-int yourMaxRequestSize = 100*1024*1024; // 1M byte
-int yourMaxMemorySize = 100*1024;
-
-
 //form field data add
 String id = "";
 String pw = "";
@@ -70,6 +57,20 @@ String agree = "";
 
 //file data
 String filename = "";
+
+//tomcat upload
+//String fupload = application.getRealPath("/upload");
+
+//user folder upload
+String fupload = "c:"+File.separator+"upload"+File.separator;
+
+System.out.println("file Upload : "+fupload);
+
+String yourTempDirectory = String.valueOf(fupload);
+
+int yourMaxRequestSize = 100*1024*1024; // 1M byte
+int yourMaxMemorySize = 100*1024;
+
 
 boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 
@@ -90,6 +91,7 @@ if(isMultipart){ //Multipart set true?
 	//file end
 	
 	List<FileItem> items = upload.parseRequest(request);
+	System.out.println("items==>"+items.toString());
 	
 	Iterator<FileItem> it = items.iterator();
 	
@@ -112,21 +114,17 @@ if(isMultipart){ //Multipart set true?
 				agree = item.getString("utf-8");
 			}
 		}else{ //fileload
-			if(item.getFieldName().equals("Fichier1")){
-				
-				fupload = "C:"+File.separator+"upload"+File.separator+id+File.separator;
-				File file = new File(fupload);
+			if(item.getFieldName().equals("input-pic")){
+				String saveUrl = fupload+id;
+				File file = new File(saveUrl); //upload/a
 				
 				if (!file.exists()) {
 					file.mkdirs();
-					filename = processUploadedFile(item, fupload, out);
-					System.out.println("mkdir!!!!");
+					filename = processUploadedFile(item, saveUrl, out);
 				}else{
-					filename = processUploadedFile(item, fupload, out);
+					filename = processUploadedFile(item, saveUrl, out);
 				}
-		
 			}
-			System.out.println("filename(Fichier1) : "+filename);
 		}
 	}
 	
@@ -135,29 +133,30 @@ if(isMultipart){ //Multipart set true?
 	System.out.println("not multipart!");
 }
 
+//user
+iuserDAO dao = userDAO.getInstance();
+userDTO user = new userDTO();
+
+user.setId(id);
+user.setPassword(pw);
+user.setName(name);
+user.setBirth(birth);
+user.setEmail(email);
+user.setPic(filename);
+
 System.out.println("-----SignUpAF-------");
 		
 System.out.println("id:" + id);
 System.out.println("name:" + name);
 System.out.println("birth:" + birth.replace("-", "")); //.substring(0, 8)
 System.out.println("email:" + email);
-System.out.println("Fichier1:" + filename);
+System.out.println("pic:" + filename);
 System.out.println("agree:" + agree);
 
 
 try{
 	boolean isS = false;
-	
-	iuserDAO dao = userDAO.getInstance();
-	userDTO user = new userDTO();
-	
-	user.setId(id);
-	user.setPassword(pw);
-	user.setName(name);
-	user.setBirth(birth);
-	user.setEmail(email);
-	user.setPic(filename);
-	
+		
 	isS = dao.join(user);
 	
 	if(isS){
@@ -173,14 +172,10 @@ try{
 			location.href = "signup.jsp"
 			</script>
 		<%	}	%>
-		
 <%
 }catch (NullPointerException e){
 	e.printStackTrace();
 }
 %>
-
-<!-- // seq pic 수정할 것 -->
-
 </body>
 </html>

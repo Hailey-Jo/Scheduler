@@ -81,12 +81,23 @@ $(function() {
 			</div>
 		</nav>
 	</header>
+	<script type="text/javascript">
+	$(function() {
+		$("#signup").click(function() {
+			var inputid = $('#input-id').val();
+			alert("inputid==>"+inputid);
+			$('#id').attr("value", inputid);
+			alert($('#id').val());
+		});
+	});
+	</script>
 	<article class="container">
         <div class="col-md-6 col-md-offset-3">
           <form role="form-group" action="signupAf.jsp" method="post" enctype="multipart/form-data">
       	<div class="form-group">
           <label for="input-id">아이디</label>
-          <input type="text" class="form-control" name="input-id" placeholder="아이디">
+          <input type="hidden" name="id" id="id">
+          <input type="text" class="form-control" name="input-id" id="input-id" placeholder="아이디">
         </div>
         <div class="form-group">
           <label for="input-pw">비밀번호</label>
@@ -119,7 +130,7 @@ $(function() {
         
 				<!-- COMPONENT START -->
 				<div class="form-group">
-					<div class="input-group input-file" name="Fichier1">
+					<div class="input-group input-file" name="input-pic">
 						<span class="input-group-btn">
 			        		<button class="btn btn-default btn-choose" type="button">이미지선택</button>
 			    		</span>
