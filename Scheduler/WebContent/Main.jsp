@@ -1,3 +1,6 @@
+<%@page import="phonebook.PhonebookDTO"%>
+<%@page import="phonebook.PhonebookDAO"%>
+<%@page import="phonebook.iPhonebookDAO"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.util.TimeZone"%>
 <%@page import="java.util.Calendar"%>
@@ -60,6 +63,9 @@ footer {
 }
 .row-centered {
     text-align:center;
+}
+#moreBtn{
+	float: right;
 }
 </style>
 <link rel="stylesheet" type="text/css" href="./css/header.css">
@@ -182,7 +188,7 @@ window.onload = function () {
 	</header>
 
 	<!-- left -->
-	<div class="col-md-3" style="height:85vh; background-color:gray;">
+	<div class="col-md-3" style="height:85vh; background-color:#ccc;">
 	 	<div class="row row-centered" style="padding: 30px; height: 80vh;">
 			<div><img src="<%=imgPath%>" class="img-thumbnail" style="height: 200px;"></img></div>
 			<div><br><p align="center"><font size="3" color="white"><%=id %> 님 즐거운 하루 되세요!</font></p></div>
@@ -203,7 +209,7 @@ window.onload = function () {
 	
 	<!-- 우측 본문 -->
 	<div class="col-md-9" style="height: 40vh;">
-		<div class="col-md-6">
+		<div class="col-md-6" style="padding:5px;">
 		<!-- tobe -->
 			<p style="padding:3px; background-color: lightgray">이달의 중요일정</p>
 			<table class="table table-striped">
@@ -221,12 +227,16 @@ window.onload = function () {
 			  <%
 				//list get
 				iScheduleDAO dao = ScheduleDAO.getInstance();
-				List<ScheduleDTO> scheduleList = dao.getImportentSchedulList(id);
-				
-				System.out.println("scheduleList"+scheduleList);
+				List<ScheduleDTO> scheduleList = dao.getImportentSchedulList(id);			
 				
 				for(int i=0; i<scheduleList.size();i++){
-			  %>
+			  		if(i==5){
+			    %>
+			    	<tr><td colspan="5"><a href="./schedule/schedulemain.jsp" id=moreBtn class="badge badge-light" data-backdrop="static" data-keyboard="false" style="background-color: #fff; color: #777;">... 더보기</a></td></tr>
+			    <%
+			    		break;
+			    	}
+			 	%>
 			    <tr>
 			      <th scope="row"><%=i+1 %></th>
 			      <td><%=scheduleList.get(i).getTitle() %></td>
@@ -240,7 +250,7 @@ window.onload = function () {
 			  </tbody>
 			</table>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-6" style="padding:5px;">
 			<p style="padding:3px; background-color: lightgray">이달의 가계</p>
 			<div id="chartContainer" style="width:100%; height:200px;"></div>
 		</div>
@@ -251,32 +261,37 @@ window.onload = function () {
 			<p style="padding:3px; background-color: lightgray">연락처</p>
 						<table class="table">
 			  <thead>
-			    <tr>
-			      <th>#</th>
-			      <th>First Name</th>
-			      <th>Last Name</th>
-			      <th>Username</th>
+			  	<tr>
+			      <th>No</th>
+			      <th>이름</th>
+			      <th>연락처</th>
 			    </tr>
-			  </thead>
+			   </thead>
 			  <tbody>
+			  <tr></tr>
+			  <%
+				//list get
+				iPhonebookDAO phonebookDAO = PhonebookDAO.getInstance();
+				List<PhonebookDTO> PhonebooList = phonebookDAO.getAllPhoneList(id);
+				
+				System.out.println("PhonebooList"+PhonebooList);
+				
+				for(int i=0; i<PhonebooList.size();i++){
+			    	if(i==5){
+			    %>
+			    	<tr><td colspan="3"><a href="./phonebook/phonebookMain.jsp" id=moreBtn class="badge badge-light" data-backdrop="static" data-keyboard="false" style="background-color: #fff; color: #777;">... 더보기</a></td></tr>
+			    <%
+			    		break;
+			    	}
+			 	%>
 			    <tr>
-			      <th scope="row">1</th>
-			      <td>Mark</td>
-			      <td>Otto</td>
-			      <td>@mdo</td>
+			      <th scope="row"><%=i+1 %></th>
+			      <td><%=PhonebooList.get(i).getName() %></td>
+			      <td><%=PhonebooList.get(i).getPhone() %></td>
 			    </tr>
-			    <tr>
-			      <th scope="row">2</th>
-			      <td>Jacob</td>
-			      <td>Thornton</td>
-			      <td>@fat</td>
-			    </tr>
-			    <tr>
-			      <th scope="row">3</th>
-			      <td>Larry</td>
-			      <td>the Bird</td>
-			      <td>@twitter</td>
-			    </tr>
+			    <%
+				}
+			    %>
 			  </tbody>
 			</table>
 		</div>
