@@ -119,6 +119,11 @@ var title = [<% for (int i = 0; i < title.length; i++) { %>"<%= title[i] %>"<%= 
 <link rel="stylesheet" type="text/css" href="../css/calendar.css?ver=2">  
 
 <style type="text/css">
+
+.form-control{
+	display : block;
+}
+
 #topMenu a:hover {
 	text-decoration:none;
     background-color: #006699;
@@ -136,7 +141,7 @@ aside{
 
 article {
     margin-left: 10px;
-    
+    border-left: 1px solid  #e6e6e6;
     overflow: hidden;
     height: auto;
 }
@@ -508,15 +513,17 @@ ul li a:hover, ul li a:focus {
 	<aside>
 	<!-- 하단 -->
 		<!-- 좌측 서브 메뉴 -->
-		<form action="../schedule/searchschedule.jsp" method="post">
+		<form class="form-inline" action="../schedule/searchschedule.jsp" method="post">
 			<div align="center">
-				<input type="text" name="searchtitle" style="width: 236px" placeholder="찾고싶은 제목을 입력하세요.">
-				<input TYPE="IMAGE" src="../icon/search-g.png" id="submit" name="Submit" value="Submit"  align="absmiddle" height="26px" width="26px" style="padding-left: 2px">
+			<input type="text" class="form-control" id="exampleFormControlInput1" name="searchtitle" style="width: 230px" placeholder="찾고싶은 제목을 입력하세요.">
+				<!-- <input type="text" name="searchtitle" style="width: 236px" placeholder="찾고싶은 제목을 입력하세요."> -->
+				<input TYPE="IMAGE" src="../icon/ic_search_black_24px.svg" id="submit" name="Submit" value="Submit"  align="absmiddle" height="26px" width="26px" style="padding-left: 2px">
 
 			</div>	
 		</form>
 		<div align="center" style="padding-top: 10px">
-			<button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../schedule/addschedule.jsp' " >스케줄 등록</button>
+			<!-- <button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../schedule/addschedule.jsp' " >스케줄 등록</button> -->
+			<button type="button" class="btn btn-primary btn-sm" style="width: 260px;" onclick = "location.href = '../schedule/addschedule.jsp' ">스케줄 등록</button>
 		</div>
 		
 	<br>
@@ -530,7 +537,8 @@ ul li a:hover, ul li a:focus {
 			</tr>
 			<tr>		
 				<input name="monthbtn" class="monthbtn" type="hidden" value="">
-				<td style="width: 300px"><button id="btn1" data-toggle="modal" class="btn btn-primary btn-lg btn-block" data-target="#importantmodal">중요일정보기</button></td>
+				<!-- <td style="width: 300px"><button id="btn1" data-toggle="modal" class="btn btn-primary btn-lg btn-block" data-target="#importantmodal">중요일정보기</button></td> -->
+				<td align="center"><button id="btn1" data-toggle="modal" type="button" class="btn btn-primary btn-sm" data-target="#importantmodal" style="width: 260px;">중요일정보기</button></td>
 			</tr>
 			<tr>
 				<td>

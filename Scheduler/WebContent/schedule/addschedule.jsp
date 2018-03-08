@@ -66,7 +66,7 @@ for(int i=0; i<list.size();i++){
 
 aside{
 	float: left;
-	/* width: 300px; */
+	width: 300px;
     max-width: 300px;
     height : auto;
     margin: 0;
@@ -82,7 +82,7 @@ td.first{
 
 article {
     margin-left: 10px;
-   
+   border-left: 1px solid  #e6e6e6;
     overflow: hidden;
     height: auto;
 }
@@ -258,9 +258,11 @@ ul li a:hover, ul li a:focus {
 			</div>
 			<div class="topMenu_icon" align="center" style=" float: left; width: 40%;">
 				<ul>
-					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/home-n.png" onmouseover='this.src="../icon/home-w.png"' onmouseout='this.src="../icon/home-n.png"' ></a></li>
-					<li><a class="menuLink" href="../schedule/schedulemain.jsp"><img src="../icon/schedule-w.png" onmouseover='this.src="../icon/schedule-w.png"' onmouseout='this.src="../icon/schedule-w.png"' ></a></li>
-					<li><a class="menuLink" href="../cashbook/cashbookMain.jsp"><img src="../icon/cash-n.png" onmouseover='this.src="../icon/cash-w.png"' onmouseout='this.src="../icon/cash-n.png"'></a></li>
+					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/ic_home_white_36px.svg" onmouseover='this.src="../icon/ic_home_black_36px.svg"' onmouseout='this.src="../icon/ic_home_white_36px.svg"'></a></li>
+					<li><a class="menuLink" href="#"><img src="../icon/ic_event_available_white_36px.svg"></a></li>
+					<li><a class="menuLink" href="../cashbook/cashbookMain.jsp"><img src="../icon/ic_assessment_white_36px.svg" onmouseover='this.src="../icon/ic_assessment_black_36px.svg"' onmouseout='this.src="../icon/ic_assessment_white_36px.svg"'></a></li>
+					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_cloud_download_white_36px.svg" onmouseover='this.src="../icon/ic_cloud_download_black_36px.svg"' onmouseout='this.src="../icon/ic_cloud_download_white_36px.svg"'></a></li>
+					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_phone_white_36px.svg" onmouseover='this.src="../icon/ic_local_phone_black_36px.svg"' onmouseout='this.src="../icon/ic_phone_white_36px.svg"'></a></li>
 				</ul>
 			</div>
 			<div class="login_info" style=" float: left; width: 18%; height: 30px;">
@@ -282,7 +284,8 @@ ul li a:hover, ul li a:focus {
 	<!-- 하단 -->
 		<!-- 좌측 서브 메뉴 -->
 		<div align="center">
-			<button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../schedule/addschedule.jsp' ">스케줄 등록</button>
+			<!-- <button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../schedule/addschedule.jsp' ">스케줄 등록</button> -->
+			<button type="button" class="btn btn-primary btn-sm" style="width: 260px;" onclick = "location.href = '../schedule/addschedule.jsp' ">스케줄 등록</button>
 		</div>
 	<br>
 		<div id="calendar-mini"></div>
@@ -293,7 +296,8 @@ ul li a:hover, ul li a:focus {
 					<td>　</td>
 				</tr>
 				<tr>
-					<td style="width: 300px"><button type="button" class="btn btn-primary btn-lg btn-block">중요일정보기</button></td>
+					<!-- <td style="width: 300px"><button type="button" class="btn btn-primary btn-lg btn-block">중요일정보기</button></td> -->
+					<td align="center"><button id="btn1" data-toggle="modal" type="button" class="btn btn-primary btn-sm" data-target="#importantmodal" style="width: 260px;">중요일정보기</button></td>
 				</tr>
 				<tr>
 					<td>
@@ -351,17 +355,17 @@ ul li a:hover, ul li a:focus {
 	  <ul class="dropdown-menu" role="menu">
 	    <li class="selectcolor"><a href="#" style="color: red">Red</a></li>
 	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: orange;">Orange</a></li>
+	    <li class="selectcolor"><a href="#" style="color: orange">Orange</a></li>
 	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: yellow;">Yellow</a></li>
+	    <li class="selectcolor"><a href="#" style="color: yellow">Yellow</a></li>
 	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: green;">Green</a></li>
+	    <li class="selectcolor"><a href="#" style="color: green">Green</a></li>
 	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: blue;">Blue</a></li>
+	    <li class="selectcolor"><a href="#" style="color: blue">Blue</a></li>
 	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: navy;">Navy</a></li>
+	    <li class="selectcolor"><a href="#" style="color: navy">Navy</a></li>
 	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: purple;">Purple</a></li>
+	    <li class="selectcolor"><a href="#" style="color: purple">Purple</a></li>
 	  </ul>
 	  <script type="text/javascript">
 	  	$(".selectcolor").click(function() {
@@ -387,8 +391,10 @@ ul li a:hover, ul li a:focus {
 	  				<td></td>
 	  				<td></td>
 	  				<td>
-	  					<button type="button" class="btn btn-info" onclick="location='../schedule/schedulemain.jsp'">뒤로가기</button>
-	  					<input type="submit" class="btn btn-info" id="savebtn" value="저장">
+	  					<!-- <button type="button" class="btn btn-info" onclick="location='../schedule/schedulemain.jsp'">뒤로가기</button>
+	  					<input type="submit" class="btn btn-info" id="savebtn" value="저장"> -->
+	  					<button type="button" class="btn btn-primary btn-sm" onclick="location='../schedule/schedulemain.jsp'">뒤로가기</button>
+	  					<input type="submit" class="btn btn-primary btn-sm" id="savebtn" value="저장">
 	  				</td>
 	  			</tr>
 			</table>
