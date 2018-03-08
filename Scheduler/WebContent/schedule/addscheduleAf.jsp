@@ -1,3 +1,4 @@
+<%@page import="java.io.File"%>
 <%@page import="User.userDTO"%>
 <%@page import="Schedule.ScheduleDAO"%>
 <%@page import="Schedule.iScheduleDAO"%>
@@ -22,9 +23,38 @@ public boolean nullcheck(String element){
 }
 %>
 <%
+String eventstring = "";
+String id = "";
+String pic = "";
+String imgPath = "";
+String serverPath = request.getRequestURL().substring(0,request.getRequestURL().indexOf(request.getRequestURI()));
+String packagePath = request.getContextPath();
 
-userDTO user = (userDTO)session.getAttribute("login");
-String id = user.getId();
+if(session.getAttribute("login") != null){
+
+	//user
+	userDTO user = new userDTO();
+	user = (userDTO)session.getAttribute("login");
+	
+	id = user.getId();
+	pic = user.getPic();
+	
+	if(pic==null){
+		imgPath = serverPath+packagePath+File.separator+"icon"+File.separator+"user-g.png";
+	}else{
+		imgPath = File.separator+"img"+File.separator+id+File.separator+pic;
+	}
+	
+}else{
+%>
+<script type="text/javascript">
+	alert("로그인 후 이용해 주세요.");
+	location.href="index.jsp";
+</script>
+<%	
+}
+%>
+<%
 
 String title = request.getParameter("title");
 String simportant = request.getParameter("important");

@@ -1,3 +1,5 @@
+<%@page import="java.io.File"%>
+<%@page import="User.userDTO"%>
 <%@page import="org.omg.Messaging.SYNC_WITH_TRANSPORT"%>
 <%@page import="phonebook.PhonebookDAO"%>
 <%@page import="phonebook.PhonebookDTO"%>
@@ -12,7 +14,39 @@
 </head>
 <body>
 <%
-	String id = "AAA";
+String eventstring = "";
+String id = "";
+String pic = "";
+String imgPath = "";
+String serverPath = request.getRequestURL().substring(0,request.getRequestURL().indexOf(request.getRequestURI()));
+String packagePath = request.getContextPath();
+
+if(session.getAttribute("login") != null){
+
+	//user
+	userDTO user = new userDTO();
+	user = (userDTO)session.getAttribute("login");
+	
+	id = user.getId();
+	pic = user.getPic();
+	
+	if(pic==null){
+		imgPath = serverPath+packagePath+File.separator+"icon"+File.separator+"user-g.png";
+	}else{
+		imgPath = File.separator+"img"+File.separator+id+File.separator+pic;
+	}
+	
+}else{
+%>
+<script type="text/javascript">
+	alert("로그인 후 이용해 주세요.");
+	location.href="index.jsp";
+</script>
+<%	
+}
+%>
+<%
+	
 	String name = request.getParameter("name");
 	String birth = request.getParameter("birth");
 	String phone = request.getParameter("phone");

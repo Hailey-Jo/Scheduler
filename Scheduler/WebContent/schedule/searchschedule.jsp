@@ -1,3 +1,4 @@
+<%@page import="java.io.File"%>
 <%@page import="User.userDTO"%>
 <%@page import="Schedule.ScheduleDAO"%>
 <%@page import="Schedule.ScheduleDTO"%>
@@ -23,12 +24,39 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jszip-2.5.0/dt-1.10.16/b-1.5.1/b-html5-1.5.1/b-print-1.5.1/r-2.2.1/datatables.min.css"/>
 </head>
 <body>
- <%
- 	userDTO user = new userDTO();
- 	user = (userDTO)session.getAttribute("login");
+<%
+String eventstring = "";
+String id = "";
+String pic = "";
+String imgPath = "";
+String serverPath = request.getRequestURL().substring(0,request.getRequestURL().indexOf(request.getRequestURI()));
+String packagePath = request.getContextPath();
 
- 	String id = user.getId();
- 	
+if(session.getAttribute("login") != null){
+
+	//user
+	userDTO user = new userDTO();
+	user = (userDTO)session.getAttribute("login");
+	
+	id = user.getId();
+	pic = user.getPic();
+	
+	if(pic==null){
+		imgPath = serverPath+packagePath+File.separator+"icon"+File.separator+"user-g.png";
+	}else{
+		imgPath = File.separator+"img"+File.separator+id+File.separator+pic;
+	}
+	
+}else{
+%>
+<script type="text/javascript">
+	alert("로그인 후 이용해 주세요.");
+	location.href="index.jsp";
+</script>
+<%	
+}
+%>
+ <%
  	String searchtitle = request.getParameter("searchtitle");
  	System.out.println("searchtitle: " + searchtitle);
  	ScheduleDAO dao = ScheduleDAO.getInstance();
