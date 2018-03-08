@@ -38,6 +38,7 @@
 	
 	for(int i=0; i<delAfList.size(); i++){
 		
+		System.out.println(delAfList.get(i).getSeq());
 		System.out.println(delAfList.get(i).getIoMoney());
 		System.out.println(delAfList.get(i).getContent());
 		System.out.println(delAfList.get(i).getMoneyDate().substring(0, 10));
@@ -45,6 +46,7 @@
 		System.out.println(delAfList.get(i).getTitle());
 		
 		jsonObj = new JSONObject();
+		jsonObj.put("seq", delAfList.get(i).getSeq()+"");
 		jsonObj.put("ioMoney", delAfList.get(i).getIoMoney()+"");
 		jsonObj.put("content", delAfList.get(i).getContent());
 		jsonObj.put("moneyDate", delAfList.get(i).getMoneyDate().substring(0, 10));

@@ -259,4 +259,55 @@ public class ScheduleDAO implements iScheduleDAO {
 		System.out.println("4/6 deleteSchedule");
 		return count>0? true:false;
 	}
+
+	@Override
+	public List<ScheduleDTO> searchSchedule(String searchtitle, String id) {
+		
+		String stitle = "%"+searchtitle+"%";
+
+		String sql = " SELECT SHECDELE_SEQ, ID, TITLE, STARTDATE, "
+				+ " ENDDATE, CATEGORY, CONTENT, IMPORTANT, DEL "
+				+ " FROM SCHEDULE WHERE ID = ? AND TITLE LIKE ?";
+		
+		List<ScheduleDTO> list = new ArrayList<ScheduleDTO>();
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		
+		try {
+			conn = DBConnection.makeConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, id);
+			psmt.setString(2, stitle);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ScheduleDTO dto = new ScheduleDTO();
+				dto.setSeq(rs.getInt(1));
+				dto.setId(rs.getString(2));
+				dto.setTitle(rs.getString(3));
+				dto.setStartDate(rs.getString(4));
+				dto.setEndDate(rs.getString(5));
+				dto.setCategory(rs.getString(6));
+				dto.setContent(rs.getString(7));
+				dto.setImportant(rs.getInt(8));
+				dto.setDel(rs.getInt(9));
+				
+				list.add(dto);
+			}
+			/*String sql = " SELECT SHECDELE_SEQ, ID, TITLE, STARTDATE, "
+					+ " ENDDATE, CATEGORY, CONTENT, IMPORTANT, DEL "
+					+ " FROM SCHEDULE WHERE TITLE = ?";*/
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		return list;
+	}
+
 }

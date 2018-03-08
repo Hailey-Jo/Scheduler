@@ -9,4 +9,5 @@ public interface iScheduleDAO {
 	public ScheduleDTO findschduel(int seq);
 	public boolean updateSchedule(ScheduleDTO dto);
 	public boolean deleteSchedule(int seq);
+	public List<ScheduleDTO> searchSchedule(String searchtitle, String id);
 }

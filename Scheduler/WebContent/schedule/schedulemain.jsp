@@ -16,6 +16,7 @@ user = (userDTO)session.getAttribute("login");
 String id = user.getId();
 String pic = user.getPic();
 
+
 iScheduleDAO dao = ScheduleDAO.getInstance();
 List<ScheduleDTO> list = dao.getAllSchedulList(id);
 String eventstring = "";
@@ -67,8 +68,9 @@ String enddate[] = new String[list.size()];
 int important[] = new int[list.size()];
 String title[] = new String[list.size()];
 for(int i=0; i<list.size();i++){
-	fullstartdate[i] = list.get(i).getStartDate().substring(0, 10).replace("-", "");
-	fullenddate[i] = list.get(i).getEndDate().substring(0, 10).replace("-", "");
+	// 2018-03-07
+	fullstartdate[i] = list.get(i).getStartDate().substring(0, 10);
+	fullenddate[i] = list.get(i).getEndDate().substring(0, 10);
 	startdate[i] = list.get(i).getStartDate().substring(0, 7).replace("-", "");
 	important[i] = list.get(i).getImportant();
 	enddate[i] = list.get(i).getEndDate().substring(0, 7).replace("-", "");
@@ -87,6 +89,7 @@ var title = [<% for (int i = 0; i < title.length; i++) { %>"<%= title[i] %>"<%= 
 <head>
 <link rel="stylesheet" type="text/css" href="../css/header.css?ver=2">
 <link rel="stylesheet" type="text/css" href="../css/calendar.css?ver=2">  
+
 <style type="text/css">
 #topMenu a:hover {
 	text-decoration:none;
@@ -474,8 +477,15 @@ ul li a:hover, ul li a:focus {
 	<aside>
 	<!-- 하단 -->
 		<!-- 좌측 서브 메뉴 -->
-		<div align="center">
-			<button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../schedule/addschedule.jsp' ">스케줄 등록</button>
+		<form action="../schedule/searchschedule.jsp" method="post">
+			<div align="center">
+				<input type="text" name="searchtitle" style="width: 236px" placeholder="찾고싶은 제목을 입력하세요.">
+				<input TYPE="IMAGE" src="../icon/search-g.png" id="submit" name="Submit" value="Submit"  align="absmiddle" height="26px" width="26px" style="padding-left: 2px">
+
+			</div>	
+		</form>
+		<div align="center" style="padding-top: 10px">
+			<button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../schedule/addschedule.jsp' " >스케줄 등록</button>
 		</div>
 	<br>
 		<div id="calendar-mini"></div>
@@ -523,8 +533,11 @@ ul li a:hover, ul li a:focus {
 
 
 	</article>
-		
-	<footer>Copyright &copy; BizPayDay</footer>
+	<div class="footer navbar-fixed-bottom">	
+		<footer >Copyright &copy; BizPayDay</footer>
+	</div>
+	
 
+</script>
 </body>
 </html>
