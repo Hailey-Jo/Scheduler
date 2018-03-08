@@ -35,6 +35,7 @@ if(session.getAttribute("login") != null){
 	
 }else{
 %>
+
 <script type="text/javascript">
 	alert("로그인 후 이용해 주세요.");
 	location.href="index.jsp";
@@ -56,8 +57,18 @@ footer {
 .row-centered {
     text-align:center;
 }
+
+aside{
+	float: left;
+	width: 300px;
+    max-width: 300px;
+    height : auto;
+    margin: 0;
+    padding: 10px;
+}
+
 </style>
-<link rel="stylesheet" type="text/css" href="./css/header.css">
+<link rel="stylesheet" type="text/css" href="./css/mainHeader.css">
 <link rel="stylesheet" type="text/css" href="./css/calendar.css">  
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
