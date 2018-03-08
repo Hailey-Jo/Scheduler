@@ -395,6 +395,7 @@ aside .badge-info:hover {
 <!-- 페이징 처리 -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jszip-2.5.0/dt-1.10.16/b-1.5.1/b-html5-1.5.1/b-print-1.5.1/r-2.2.1/datatables.min.css"/>
  
+ 
 <script type="text/javascript">
 jQuery(document).ready(function() {
 /* -------------------------------------------------------------------------------
@@ -688,7 +689,7 @@ jQuery("#calendar").fullCalendar({
         <%=eventCash %>
         
         ]     
-    ,/* eventRender: function(eventObj, $el) {
+    , eventRender: function(eventObj, $el) {
         $el.popover({
             title: eventObj.title,
             content: eventObj.description,
@@ -696,14 +697,14 @@ jQuery("#calendar").fullCalendar({
             placement: 'top',
             container: 'body'
           })
-    },
-     */
-     eventRender: function(event, eventElement) {            	
+    }
+     
+    /*  eventRender: function(event, eventElement) {            	
      	if (event.imageurl)
  		{             		
  		eventElement.find("div.fc-content").prepend("<i class='material-icons' style='font-size: 12px;'>"+ event.imageurl +"</i>"); 
  		} 
-		 }
+		 } */
 
       ,eventClick: function(event){
           /* $('#modalTitle').html(event.title);
@@ -744,7 +745,6 @@ jQuery("#calendar").fullCalendar({
         $('#calendar').fullCalendar('today');
     });
     
-
     // Bind the dates to datetimepicker.
     // You should pass the options you need
     $("#starts-at, #ends-at").datetimepicker();
@@ -761,6 +761,7 @@ function scheduleChoice(num, id, distinct, color, text) {
     }
 }
 </script>
+
 <title>BizPayDay</title>
 </head>
 <body>
@@ -782,6 +783,8 @@ function scheduleChoice(num, id, distinct, color, text) {
         </div>
     </div>
 </div> 
+
+
 <!-------------------------------------------------------------------------------
 	상단 메뉴바
  ------------------------------------------------------------------------------->
@@ -794,9 +797,11 @@ function scheduleChoice(num, id, distinct, color, text) {
 			</div>
 			<div class="topMenu_icon" align="center" style=" float: left; width: 40%;">
 				<ul>
-					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/home-n.png" onmouseover='this.src="../icon/home-w.png"' onmouseout='this.src="../icon/home-n.png"' ></a></li>
-					<li><a class="menuLink" href="../schedule/scheduleMain.jsp"><img src="../icon/schedule-n.png" onmouseover='this.src="../icon/schedule-w.png"' onmouseout='this.src="../icon/schedule-n.png"' ></a></li>
-					<li><a class="menuLink" href="#"><img src="../icon/cash-w.png" ></a></li>
+					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/ic_home_white_36px.svg" onmouseover='this.src="../icon/ic_home_black_36px.svg"' onmouseout='this.src="../icon/ic_home_white_36px.svg"'></a></li>
+					<li><a class="menuLink" href="../schedule/schedulemain.jsp"><img src="../icon/ic_event_available_white_36px.svg" onmouseover='this.src="../icon/ic_event_available_black_36px.svg"' onmouseout='this.src="../icon/ic_event_available_white_36px.svg"'></a></li>
+					<li><a class="menuLink" href="#"><img src="../icon/ic_assessment_white_36px.svg" ></a></li>
+					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_cloud_download_white_36px.svg" onmouseover='this.src="../icon/ic_cloud_download_black_36px.svg"' onmouseout='this.src="../icon/ic_cloud_download_white_36px.svg"'></a></li>
+					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_phone_white_36px.svg" onmouseover='this.src="../icon/ic_local_phone_black_36px.svg"' onmouseout='this.src="../icon/ic_phone_white_36px.svg"'></a></li>
 				</ul>
 			</div>
 			<div class="login_info" style=" float: left; width: 18%; height: 30px;">
@@ -983,238 +988,17 @@ function scheduleChoice(num, id, distinct, color, text) {
 	</article>
 	
 
-
-<script type="text/javascript">
-$(function () {
-    $('#datetimepicker2').datetimepicker({
-        locale: 'ko',
-        format: "YYYY-MM-DD"
-     
-    });
-});
-</script>
-
-	
 <!-------------------------------------------------------------------------------
 	 캘린더에서 클릭하면 나오는 수입 내역 상세보기
  ------------------------------------------------------------------------------->
-<div class="modal fade" id="calDetailIo" role="dialog">
-    <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">×</span></button>
-        <h4 class="modal-title" id="myModalLabel">수입 내역 입력</h4>
-      </div>
-      <div class="modal-body">
-		<div class="container" style="width: 850px; height: 350px;">
-		    <table class="table" style="width: 800px;">
-		      <thead>
-		        <tr>
-					<th style="width: 150px;">날짜</th>
-		          <th class="th_inContent">수입 내역</th>
-		          <th class="th_inPrice">금액</th>
-		          <th class="th_intitle">분류</th>
-		          <th></th>
-		        </tr>
-		      </thead>
-		      <tbody>
-		        <tr onclick='myFunction(this)'>
-		        	<td>
-		                <div class='input-group date' id='datetimepicker2'>
-		                    <input type='text' class="form-control" />
-		                    <span class="input-group-addon">
-		                        <span class="glyphicon glyphicon-calendar"></span>
-		                    </span>
-		                </div>
-		        	</td>
-		          <td>
-		            <input type="text" class="form-control" size="16" placeholder="내역 입력" id="inContent"/>
-		          </td>
-		          
-		          <td>
-		            <div class="input-group">
-		            <span class="input-group-addon">
-		            <i class="fas fa-won-sign"></i>
-		            </span>
-		            <input type="number" class="form-control" value="0" size="15" placeholder="금액 입력" id="inPrice" />
-		            </div>
-		          </td>
-		          
-		          <td>
-		            <select class="form-control match-content" id="inTitle">
-		            <option selected="selected">주수입</option>
-		            <option>부수입</option>
-		            <option>기타</option>
-		            </select>
-		          </td>
-		          <td align="center">
-		          <a href="#iconPlusIn" data-toggle="collapse"><i class="material-icons">&#xE24E;</i></a>
-		          </td>
-		        </tr>
-		        <tr id="plusDel">
-		        <td colspan="5"><div id="iconPlusIn" class="collapse"><div data-toggle="buttons">
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="1"><i class="material-icons">alarm</i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="2"><i class="material-icons">card_giftcard</i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="3"><i class="material-icons">card_travel</i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="4"><i class="material-icons">face</i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="5"><i class="material-icons">favorite</i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="6"><i class="material-icons">flight_takeoff</i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="7"><i class="material-icons">pets</i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="8"><i class="material-icons">shopping_cart</i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="9"><i class="material-icons">call</i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="10"><i class="material-icons">vpn_key</i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="11"><i class="material-icons">toys</i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="12"><i class="material-icons">filter_vintage</i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="13"><i class="material-icons">linked_camera</i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="14"><i class="material-icons">directions_bus</i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="15"><i class="material-icons">directions_subway</i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="16"><i class="material-icons">local_cafe</i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="17"><i class="material-icons">local_dining</i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="18"><i class="material-icons">local_hospital</i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="19"><i class="material-icons">beach_access</i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="20"><i class="material-icons">school</i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="21"><i class="material-icons">star</i></label>
-				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="22"><i class="material-icons">cake</i></label>
-				</div></div></td></tr>
-		      </tbody>
-		       <tfoot>
-		        
-		        <tr>
-		        </tr>
-		    </tfoot>
-		    </table>
-		  </div>
-      </div>
-		<div id="myAlert">
-		</div>
-      <div class="modal-footer">
-        <button type="button" id="btn_modiIo" class="btn btn btn-primary">Save</button>
-        <button type="button" id="btn_delIo" class="btn btn-danger">Delete</button>
-        <button type="button" class="btn btn-orange" data-dismiss="modal">Cancel</button>
-      </div>
-    </div>
-  </div>
-</div>
- 
+
  
  
  
 <!-------------------------------------------------------------------------------
 	 캘린더에서 클릭하면 나오는 지출 내역 상세보기
  ------------------------------------------------------------------------------->
- <div class="modal fade" id="calDetailOut" role="dialog">
-    <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">×</span></button>
-        <h4 class="modal-title" id="myModalLabel">지출 내역 입력</h4>
-      </div>
-      
-      <div class="modal-body">
-		<div class="container">
-		    <table class="table" style="width: 830px;">
-		      <thead>
-		        <tr>
-		        <th>날짜</th>
-		          <th class="th_outContent">지출 내역</th>
-		          <th class="th_outPrice">금액</th>
-		          <th class="th_outTitle">분류</th>
-		          <th></th>
-		        </tr>
-		      </thead>
-		      <tbody>
-		        <tr>
-		        <td>
-		        	<div class="container" style="width: 100px;">
-					    <div class="row">
-					        <div class='col-sm-6'>
-					            <input type='text' class="form-control" id='datetimepicker3' style="width: 90px;"/>
-					        </div>
-					        <script type="text/javascript">
-					            $(function () {
-					                $('#datetimepicker3').datetimepicker(){
-					                format:'YYYY-MM-DD',
-					            	locale: 'ko'
-					                }
-					            });
-					        </script>
-					    </div>
-					</div>
-		        	</td>
-		          <td>
-		            <input type="text" class="form-control" size="16" placeholder="내역 입력" id="outContent"/>
-		          </td>
-		          
-		          <td>
-		          <div class="input-group">
-		          <span class="input-group-addon">
-		          <i class="fas fa-won-sign"></i></span>
-		          <input type="number" class="form-control" value="0" size="15" placeholder="금액 입력" id="outPrice" />
-		          </div></td>
-		          
-		          <td>
-		            <select class="form-control match-content" id="outTitle">
-		              <option>식비</option>
-		              <option>통신비</option>
-		              <option>공과금</option>
-		              <option>의류/미용</option>
-		              <option>건강/문화생활</option>
-		              <option>교육/육아</option>
-		              <option>교통/차량</option>
-		              <option>경조사/회비</option>
-		              <option>기타</option>
-		            </select>
-		          </td>
-		          <td align="center">
-		          <a href="#iconPlusOut" data-toggle="collapse"><i class="material-icons">&#xE24E;</i></a>
-		          </td>
-		        </tr>
-		        <tr id="minusDel">
-		        <td colspan="5"><div id="iconPlusOut" class="collapse"><div data-toggle="buttons">
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="1"><i class="material-icons">alarm</i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="2"><i class="material-icons">card_giftcard</i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="3"><i class="material-icons">card_travel</i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="4"><i class="material-icons">face</i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="5"><i class="material-icons">favorite</i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="6"><i class="material-icons">flight_takeoff</i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="7"><i class="material-icons">pets</i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="8"><i class="material-icons">shopping_cart</i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="9"><i class="material-icons">call</i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="10"><i class="material-icons">vpn_key</i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="11"><i class="material-icons">toys</i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="12"><i class="material-icons">filter_vintage</i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="13"><i class="material-icons">linked_camera</i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="14"><i class="material-icons">directions_bus</i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="15"><i class="material-icons">directions_subway</i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="16"><i class="material-icons">local_cafe</i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="17"><i class="material-icons">local_dining</i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="18"><i class="material-icons">local_hospital</i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="19"><i class="material-icons">beach_access</i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="20"><i class="material-icons">school</i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="21"><i class="material-icons">star</i></label>
-					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="22"><i class="material-icons">cake</i></label>
-					</div></div></td>
-		        </tr>
-		      </tbody>
-		       <tfoot>
-		        	
-		    </tfoot>
-		    </table>
-		  </div>
-      </div>
-      <div class="modal-footer">
-		<button type="button" id="btn_modiSpend" class="btn btn btn-primary">Save</button>
-		<button type="button" id="btn_delSpend" class="btn btn-danger">Delete</button>
-        <button type="button" class="btn btn-orange" data-dismiss="modal">Cancel</button>
-      </div>
-    </div>
-  </div>
-</div> 
 
-
- 
 	
 <!-------------------------------------------------------------------------------
 	 데이터 관련 modal
@@ -1258,7 +1042,9 @@ $(function () {
 <!-------------------------------------------------------------------------------
 	 footer
  ------------------------------------------------------------------------------->
-	<footer>Copyright &copy; BizPayDay</footer>
+	<div class="footer navbar-fixed-bottom">
+		<footer>Copyright &copy; BizPayDay</footer>
+	</div>
 	
 <!-------------------------------------------------------------------------------
 	 event click
@@ -1274,7 +1060,7 @@ $(function () {
 	
 	
 <!-------------------------------------------------------------------------------
-	 수입내역입력 기능
+	 수입 내역 입력 modal
  ------------------------------------------------------------------------------->
 <div class="modal fade" id="inCashMyModal" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -1369,7 +1155,7 @@ $(function () {
 </div>
  
 <!-------------------------------------------------------------------------------
-	 지출내역입력
+	 지출 내역 입력 modal
  ------------------------------------------------------------------------------->
   <div class="modal fade" id="outCashMyModal" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -1465,7 +1251,7 @@ $(function () {
 </div> 
 
 <!-------------------------------------------------------------------------------
-	수입내역입력 기능
+	수입 입력 버튼 클릭하면 modal 창 띄우기
  ------------------------------------------------------------------------------->
         	
  <script type="text/javascript">
@@ -1561,7 +1347,7 @@ $(function () {
 
 
 <!-------------------------------------------------------------------------------
-	 지출내역입력 기능
+	 지출 입력 버튼 클릭하면 modal 창 띄우기
  ------------------------------------------------------------------------------->
  <script type="text/javascript">
  var out_Counter = 0;
@@ -1649,7 +1435,9 @@ $(function () {
 	private int del; //삭제 여부 -->
 
 
-<!-- 수입 수정 하기 -->
+<!-------------------------------------------------------------------------------
+	 수입 입력 후 확인 클릭 정보 보내기
+ ------------------------------------------------------------------------------->
 <script type="text/javascript">
 $(document).ready(function () {
 	$("#btn_saveIo").click(function () {	
@@ -1687,7 +1475,6 @@ $(document).ready(function () {
        			inCategory=0;
        			//alert("바꾼 후 : " +inCategory)
        		}
-        	
        		       		
        		arr.push("<%=id%>");
            	arr.push($("#inTitle"+i).val());
@@ -1725,7 +1512,9 @@ $(document).ready(function () {
 </script>
 
 
-<!-- 지출 입력 저장하기 -->
+<!-------------------------------------------------------------------------------
+	지출 입력 후 확인 클릭 정보 보내기
+ ------------------------------------------------------------------------------->
 <script type="text/javascript">
 $(document).ready(function () {
 	$("#btn_saveSpend").click(function () {	
@@ -1802,7 +1591,11 @@ $(document).ready(function () {
 });
 </script>
 
-<!-- 수정 삭제 따로 -->
+
+
+ <!-------------------------------------------------------------------------------
+	수정 삭제 따로
+ ------------------------------------------------------------------------------->
 <script type="text/javascript">
 $(document).ready(function () {
 	$("#btn_delIo").click(function () {	
@@ -1827,14 +1620,15 @@ $(document).ready(function () {
 
 </script>
 
-<!-- 리스트에 있는 항목 클릭하면 호출 -->
+<!-------------------------------------------------------------------------------
+	리스트에 있는 항목 클릭하면 호출
+ ------------------------------------------------------------------------------->
 <script type="text/javascript">
 function show (str){
-	
-	
 	var afterStr = str.split('%');
 	alert("스플릿 한 개수 : " + afterStr.length);
 		
+	//메인에서 올라갈 때
 		if(afterStr.length==9){
 		alert("본문 if문");
 		/* 
@@ -1864,6 +1658,8 @@ function show (str){
 			//del 버튼 클릭하면
 			$("#btn_delIo").click(function () {	
 			   	
+				alert("btn_delIo 버튼 클릭!");
+				
 					$.ajax({
 						
 			           type : "get",
@@ -2010,7 +1806,10 @@ function show (str){
 				
 			});
 		}
+		
+		//모달에서 할 때
 		}else{
+			
 			alert("ioMoney : " +afterStr[0]);
 			alert("seq : " +afterStr[5]);
 			alert("else로 들어옴")
@@ -2148,7 +1947,7 @@ function show (str){
 							
 				           success : function(data){
 				               alert("success");
-				               $("#inCashMyModalModify").modal().hide();
+				               $("#outCashMyModalModify").modal().hide();
 				               location.reload();
 				           },
 				           error : function(request,status,error){

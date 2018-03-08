@@ -1,0 +1,85 @@
+@charset "UTF-8";
+
+header{
+	
+	width :auto;
+	padding : 5px;
+    color: white;
+    background-color: #006699;
+}
+
+nav{
+	 vertical-align: middle;
+}
+
+
+#topMenu {
+        height: 40px;
+}
+
+#topMenu a:hover {
+	text-decoration:none;
+    background-color: #006699;
+}
+
+#topMenu ul li {
+        list-style: none;
+        float: left;
+}
+
+img{
+    max-width: 50%;
+    height: auto;
+}
+
+#topMenu .menuLink {
+       text-decoration:none;
+       background-color: #006699;
+       display: block;
+       width: 60px;
+       clear: left;
+}
+
+
+#topMenu .topMenu_siteTitle ul li{
+	font-weight: bold;
+	font-size: 2rem;
+	width:35%;
+	float:left;
+	overflow:hidden;
+	clear: left;
+	align-content: center;
+	
+}
+
+
+
+#topMenu .topMenu_icon{
+	vertical-align: middle;
+	width:30%;
+	float:left;
+	overflow:hidden;
+}
+
+#topMenu .topMenu_logInOut{
+	font-size: 1.5rem;
+	font-weight: bold;
+	width:10%;
+	float:left;
+	overflow:hidden;
+	clear: right;
+	align-content: center;
+}
+
+#topMenu .login_info{
+	font-size: 1.5rem;
+	font-weight: bold;
+	width:10%;
+	float:left;
+	clear: right;
+	align-content: center;
+}
+#topMenu .login_info ul li {
+        list-style: none;
+        float: left;
+}
