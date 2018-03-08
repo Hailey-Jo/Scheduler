@@ -133,8 +133,8 @@
 	<br>
 	<br>
 	<article class="container">
-		<div class="col-md-8 col-md-offset-2 well well-sm">
-			<form role="form-group" action="signupAf.jsp" method="post" class="signupForm">
+        <div class="col-md-8 col-md-offset-2 well well-sm">
+          <form role="form-group" action="signupAf.jsp" method="post" enctype="multipart/form-data">
 				<div class="form-group row">
 					<div class="col-md-2">
 						<label for="input-id" style="line-height: 35px;">아이디</label>&emsp;
@@ -257,7 +257,7 @@
 				<!-- COMPONENT START -->
 				<div class="form-group row">
 					<div class="col-md-2">
-						<label for="Fichier1" style="line-height: 35px;">프로필 사진</label>
+						<label for="input-pic" style="line-height: 35px;">프로필 사진</label>
 					</div>
 					<div class="input-group input-file col-md-7" name="input-pic">
 						<span class="input-group-btn">
