@@ -449,7 +449,7 @@ ul li a:hover, ul li a:focus {
 	  				<td></td>
 	  				<td>
 	  					<button type="button" class="btn btn-info"
-							onclick="location='NewFile.jsp'">뒤로가기</button>
+							onclick="location='../schedule/schedulemain.jsp'">뒤로가기</button>
 							<button type="button" class="btn btn-info"
 							onclick="location='deleteSchedule.jsp?seq=<%=dto.getSeq() %>'">삭제하기</button>
 	  					<input type="submit" class="btn btn-info" id="savebtn"

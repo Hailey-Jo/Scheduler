@@ -265,7 +265,7 @@ ul li a:hover, ul li a:focus {
 	<!-- 하단 -->
 		<!-- 좌측 서브 메뉴 -->
 		<div align="center">
-			<button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../schedule/addschedule.jsp' ">스케줄 등록</button>
+			<button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../phonebook/addphonebook.jsp' ">연락처 등록</button>
 		</div>
 	<br>
 		<div id="calendar-mini"></div>
@@ -275,9 +275,7 @@ ul li a:hover, ul li a:focus {
 				<tr>
 					<td>　</td>
 				</tr>
-				<tr>
-					<td style="width: 300px"><button type="button" class="btn btn-primary btn-lg btn-block">중요일정보기</button></td>
-				</tr>
+				
 				<tr>
 					<td>
 				</tr>
@@ -322,7 +320,7 @@ ul li a:hover, ul li a:focus {
 	  				<td></td>
 	  				<td></td>
 	  				<td>
-	  					<button type="button" class="btn btn-info" onclick="location='NewFile.jsp'">뒤로가기</button>
+	  					<button type="button" class="btn btn-info" onclick="location='../phonebook/phonebookMain.jsp'">뒤로가기</button>
 	  					<input type="submit" class="btn btn-info" id="savebtn" value="저장">
 	  				</td>
 	  			</tr>

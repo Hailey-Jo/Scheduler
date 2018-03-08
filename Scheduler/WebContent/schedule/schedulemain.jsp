@@ -514,7 +514,7 @@ ul li a:hover, ul li a:focus {
 		<div align="center" style="padding-top: 10px">
 			<button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../schedule/addschedule.jsp' " >스케줄 등록</button>
 		</div>
-		<a href="../phonebook/phonebookMain.jsp">연락처</a>
+		
 	<br>
 		<div id="calendar-mini"></div>
 	<!-- btn1 -->

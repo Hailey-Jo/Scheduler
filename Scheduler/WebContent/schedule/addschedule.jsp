@@ -387,7 +387,7 @@ ul li a:hover, ul li a:focus {
 	  				<td></td>
 	  				<td></td>
 	  				<td>
-	  					<button type="button" class="btn btn-info" onclick="location='NewFile.jsp'">뒤로가기</button>
+	  					<button type="button" class="btn btn-info" onclick="location='../schedule/schedulemain.jsp'">뒤로가기</button>
 	  					<input type="submit" class="btn btn-info" id="savebtn" value="저장">
 	  				</td>
 	  			</tr>
