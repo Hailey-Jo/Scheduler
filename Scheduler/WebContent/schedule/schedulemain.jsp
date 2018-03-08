@@ -8,18 +8,43 @@
 <%@page import="Schedule.iScheduleDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <%
+String eventstring = "";
+String id = "";
+String pic = "";
+String imgPath = "";
+
+String serverPath = request.getRequestURL().substring(0,request.getRequestURL().indexOf(request.getRequestURI()));
+String packagePath = request.getContextPath();
 userDTO user = new userDTO();
-user = (userDTO)session.getAttribute("login");
 
-String id = user.getId();
-String pic = user.getPic();
-
+if(session.getAttribute("login") != null){	
+	
+	user = (userDTO)session.getAttribute("login");
+	
+	id = user.getId();
+	pic = user.getPic();	
+	
+	if(pic==null){
+		imgPath = serverPath+packagePath+File.separator+"icon"+File.separator+"user-g.png";
+	}else{
+		imgPath = File.separator+"img"+File.separator+id+File.separator+pic;
+	}
+	
+}else{
+%>
+<script type="text/javascript">
+	alert("로그인 후 이용해 주세요.");
+	location.href="../index.jsp";
+</script>
+<%	
+}
+%>
+<%
 
 iScheduleDAO dao = ScheduleDAO.getInstance();
 List<ScheduleDTO> list = dao.getAllSchedulList(id);
-String eventstring = "";
+
 for(int i=0; i<list.size();i++){	
 	//2018-03-05 14:12
 	eventstring +="{";	
@@ -36,21 +61,23 @@ for(int i=0; i<list.size();i++){
 	
 }
 
+String birth = user.getBirth();
+String name = user.getName();
 
-Date date = new Date();
-String s = date.toString();
 
-SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-System.out.println("s: " + sdf.format(date));
+String syear = birth.substring(0, 4);
+int year = Integer.parseInt(syear.trim());
 
-String sthismonth  = sdf.format(date).replace("-", "");
-int thismonth = Integer.parseInt(sthismonth);
-System.out.println("thismonth: " + thismonth);
-String imgPath = "";
-String serverPath = request.getRequestURL().substring(0,request.getRequestURL().indexOf(request.getRequestURI()));
-String packagePath = request.getContextPath();
-
-System.out.println("urltest2==>"+serverPath+packagePath);
+for(int i =0; i < 200; i++){
+	eventstring +="{";	
+	eventstring += "title : '"+user.getName()+"님의 생일♡',";	
+	eventstring += "start : '"+(year+i)+birth.substring(4, 10)+"',";
+	eventstring += "allday : true,";
+	eventstring += "backgroundColor : '#FF00DD',"; 
+	eventstring += "borderColor : '#FF00DD',";
+	eventstring += "imageurl : " +" '..\\"+"\\image\\"+"\\"+"cake.png',";
+	eventstring +="},"+"\n";
+}
 
 if(pic==null){
 	imgPath = serverPath+packagePath+File.separator+"icon"+File.separator+"user-g.png";
@@ -294,7 +321,7 @@ ul li a:hover, ul li a:focus {
             	
        		 }
        	    , eventClick:  function(event, jsEvent, view) {
-       	    	if(event.id.length > 10){
+       	    	if(event.id.length > 10 || event.id == null){
 					var target = $(this).find('a').attr('href', '#');
 					return false
 				}else{
@@ -305,6 +332,9 @@ ul li a:hover, ul li a:focus {
 				}
 	        }
        	    , dayClick: function(date, allDay, jsEvent, view) {
+       	    	alert(date.format());
+       	    	$('#modalTitle').html("");
+				$('#modalBody').html("일정을등록하시려면 EventPage 버튼을 눌러주세요");
        	    	$('#eventUrl').attr('href','addschedule.jsp');
        	    	$('#fullCalModal').modal();
        	    }     	   
@@ -487,6 +517,7 @@ ul li a:hover, ul li a:focus {
 		<div align="center" style="padding-top: 10px">
 			<button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../schedule/addschedule.jsp' " >스케줄 등록</button>
 		</div>
+		
 	<br>
 		<div id="calendar-mini"></div>
 	<!-- btn1 -->

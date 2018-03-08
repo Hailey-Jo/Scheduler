@@ -12,20 +12,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%request.setCharacterEncoding("utf-8"); %>
-
 <%
-/* userDTO user = new userDTO();
-user = (userDTO)session.getAttribute("login");
+String eventstring = "";
+String id = "";
+String pic = "";
+String imgPath = "";
+String serverPath = request.getRequestURL().substring(0,request.getRequestURL().indexOf(request.getRequestURI()));
+String packagePath = request.getContextPath();
 
-String id = user.getId();
-String pic = user.getPic(); */
+if(session.getAttribute("login") != null){
 
-String id = "AAA";
-String pic = null;
+	//user
+	userDTO user = new userDTO();
+	user = (userDTO)session.getAttribute("login");
+	
+	id = user.getId();
+	pic = user.getPic();
+	
+	if(pic==null){
+		imgPath = serverPath+packagePath+File.separator+"icon"+File.separator+"user-g.png";
+	}else{
+		imgPath = File.separator+"img"+File.separator+id+File.separator+pic;
+	}
+	
+}else{
+%>
+<script type="text/javascript">
+	alert("로그인 후 이용해 주세요.");
+	location.href="index.jsp";
+</script>
+<%	
+}
+%>
+<%
 
 iScheduleDAO dao = ScheduleDAO.getInstance();
 List<ScheduleDTO> list = dao.getAllSchedulList(id);
-String eventstring = "";
+
 for(int i=0; i<list.size();i++){	
 	//2018-03-05 14:12
 	eventstring +="{";	
@@ -45,13 +68,6 @@ for(int i=0; i<list.size();i++){
 
 iPhonebookDAO pdao = PhonebookDAO.getInstance();
 List<PhonebookDTO> plist = pdao.getAllPhoneList(id);
-
-
-String imgPath = "";
-String serverPath = request.getRequestURL().substring(0,request.getRequestURL().indexOf(request.getRequestURI()));
-String packagePath = request.getContextPath();
-
-System.out.println("urltest2==>"+serverPath+packagePath);
 
 if(pic==null){
 	imgPath = serverPath+packagePath+File.separator+"icon"+File.separator+"user-g.png";

@@ -147,6 +147,52 @@ td.fc-day-top.fc-sat.fc-future span{
 }
 
 
+/* 달력내 클릭 후 상세 수입 내역 입력 */
+
+#calDetailIo  .modal-header {
+    background-color: #337AB7;
+    padding:16px 16px;
+    color:#FFF;
+    border-bottom:2px dashed #337AB7;
+ }
+
+#calDetailIo  .modal-body {
+	height: 400px;
+	padding: 10px;
+	margin-bottom: 30px;
+}
+
+#calDetailIo .modal-body .container {
+ 	width: 70%;
+ 	float: right;
+ 	overflow-y: scroll;
+ }
+ 
+
+#calDetailIo  .modal-body .modal-inLeft{
+	float: left;
+ 	width: 30%;
+ 	height: auto;
+ 	padding: 5px;
+ 	padding-top: 15px;
+ }
+ 
+#calDetailIo  .modal-dialog .modal-content .modal-footer {
+    bottom: 0;
+    height: 60px;
+}
+
+#calDetailIo .th_inTitle{
+	width: 50px;
+}
+
+#calDetailIo .th_inPrice{
+	width: 150px;
+}
+
+
+
+
  
 /* 수입  내역 입력 */
 #inCashMyModal  .modal-header {

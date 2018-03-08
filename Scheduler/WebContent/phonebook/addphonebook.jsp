@@ -1,3 +1,4 @@
+<%@page import="java.io.File"%>
 <%@page import="User.userDTO"%>
 <%@page import="Schedule.ScheduleDTO"%>
 <%@page import="java.util.List"%>
@@ -6,16 +7,43 @@
 <%request.setCharacterEncoding("utf-8"); %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <%
-/* userDTO user = new userDTO();
-user = (userDTO)session.getAttribute("login");
-String id = user.getId(); */
-String id = "AAA";
+String eventstring = "";
+String id = "";
+String pic = "";
+String imgPath = "";
+String serverPath = request.getRequestURL().substring(0,request.getRequestURL().indexOf(request.getRequestURI()));
+String packagePath = request.getContextPath();
+
+if(session.getAttribute("login") != null){
+
+	//user
+	userDTO user = new userDTO();
+	user = (userDTO)session.getAttribute("login");
+	
+	id = user.getId();
+	pic = user.getPic();
+	
+	if(pic==null){
+		imgPath = serverPath+packagePath+File.separator+"icon"+File.separator+"user-g.png";
+	}else{
+		imgPath = File.separator+"img"+File.separator+id+File.separator+pic;
+	}
+	
+}else{
+%>
+<script type="text/javascript">
+	alert("로그인 후 이용해 주세요.");
+	location.href="index.jsp";
+</script>
+<%	
+}
+%>
+<%
 
 iScheduleDAO dao = ScheduleDAO.getInstance();
 List<ScheduleDTO> list = dao.getAllSchedulList(id);
-String eventstring = "";
+
 for(int i=0; i<list.size();i++){	
 	eventstring +="{";
 	eventstring += "title : '"+list.get(i).getTitle()+"',";
@@ -237,7 +265,7 @@ ul li a:hover, ul li a:focus {
 	<!-- 하단 -->
 		<!-- 좌측 서브 메뉴 -->
 		<div align="center">
-			<button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../schedule/addschedule.jsp' ">스케줄 등록</button>
+			<button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../phonebook/addphonebook.jsp' ">연락처 등록</button>
 		</div>
 	<br>
 		<div id="calendar-mini"></div>
@@ -247,9 +275,7 @@ ul li a:hover, ul li a:focus {
 				<tr>
 					<td>　</td>
 				</tr>
-				<tr>
-					<td style="width: 300px"><button type="button" class="btn btn-primary btn-lg btn-block">중요일정보기</button></td>
-				</tr>
+				
 				<tr>
 					<td>
 				</tr>
@@ -294,7 +320,7 @@ ul li a:hover, ul li a:focus {
 	  				<td></td>
 	  				<td></td>
 	  				<td>
-	  					<button type="button" class="btn btn-info" onclick="location='NewFile.jsp'">뒤로가기</button>
+	  					<button type="button" class="btn btn-info" onclick="location='../phonebook/phonebookMain.jsp'">뒤로가기</button>
 	  					<input type="submit" class="btn btn-info" id="savebtn" value="저장">
 	  				</td>
 	  			</tr>

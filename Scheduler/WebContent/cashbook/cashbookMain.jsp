@@ -174,7 +174,7 @@ for(int i=0; i<cList.size();i++){
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="../css/cashbookCalendar.css?ver=1"> 
-<link rel="stylesheet" type="text/css" href="../css/header.css"> 
+<link rel="stylesheet" type="text/css" href="../css/header.css?ver=1"> 
 
 <style type="text/css">
 #inCashMyModalModify  .modal-body {
@@ -718,21 +718,21 @@ jQuery("#calendar").fullCalendar({
           
           if(strArr[0]==0){
     
-			$("#inCashMyModalModify .modal-title").html("수입 내역 수정");
-			$("#inCashMyModalModify #inContent").val(strArr[1]);
-			$("#inCashMyModalModify #inPrice").val(strArr[2]);
-			$("#inCashMyModalModify #inTitle").val(strArr[3]);
-			$("#inCashMyModalModify #selectedDateModify").html(strArr[4]);
-			$("#inCashMyModalModify").modal({backdrop: 'static', keyboard: false});
+			$("#calDetailIo .modal-title").html("수입 내역 수정");
+			$("#calDetailIo #inContent").val(strArr[1]);
+			$("#calDetailIo #inPrice").val(strArr[2]);
+			$("#calDetailIo #inTitle").val(strArr[3]);
+			$("#calDetailIo #selectedDateModify").html(strArr[4]);
+			$("#calDetailIo").modal({backdrop: 'static', keyboard: false});
           
           }else{
         	  
-        	$("#outCashMyModalModify .modal-title").html("지출 내역 수정");
-  			$("#outCashMyModalModify #outContent").val(strArr[1]);
-  			$("#outCashMyModalModify #outPrice").val(strArr[2]);
-  			$("#outCashMyModalModify #outTitle").val(strArr[3]);
-  			$("#outCashMyModalModify #selectedDateModify").html(strArr[4]);
-  			$("#outCashMyModalModify").modal({backdrop: 'static', keyboard: false});
+        	$("#calDetailOut .modal-title").html("지출 내역 수정");
+  			$("#calDetailOut #outContent").val(strArr[1]);
+  			$("#calDetailOut #outPrice").val(strArr[2]);
+  			$("#calDetailOut #outTitle").val(strArr[3]);
+  			$("#calDetailOut #selectedDateModify").html(strArr[4]);
+  			$("#calDetailOut").modal({backdrop: 'static', keyboard: false});
           }
       },
         editable: true,
@@ -825,8 +825,8 @@ function scheduleChoice(num, id, distinct, color, text) {
 				<!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
 				  Launch Modal window
 				</button> -->
-				<button type="button" id="btnInPrice" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#inCashMyModal">　　수입　　</button>
-				<button type="button" id="btnOutPrice" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#outCashMyModal">　　지출　　</button>
+				<button type="button" id="btnInPrice" data-backdrop="static" data-keyboard="false" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#inCashMyModal">　　수입　　</button>
+				<button type="button" id="btnOutPrice" data-backdrop="static" data-keyboard="false" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#outCashMyModal">　　지출　　</button>
 				<hr>
 			</div>
 		</div>
@@ -952,7 +952,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 				
 				<%if(cList.size()>6){
 					%>
-					<a href="#" data-toggle="modal" data-target=".bs-example-modal-lg" id=moreBtn class="badge badge-light" style="background-color: #fff; color: #777;">... 더보기</a>
+					<a href="#" data-toggle="modal" data-target=".bs-example-modal-lg" id=moreBtn class="badge badge-light" data-backdrop="static" data-keyboard="false" style="background-color: #fff; color: #777;">... 더보기</a>
 					<%
 				}
 				%>
@@ -981,6 +981,240 @@ function scheduleChoice(num, id, distinct, color, text) {
     </div>
 </div>
 	</article>
+	
+
+
+<script type="text/javascript">
+$(function () {
+    $('#datetimepicker2').datetimepicker({
+        locale: 'ko',
+        format: "YYYY-MM-DD"
+     
+    });
+});
+</script>
+
+	
+<!-------------------------------------------------------------------------------
+	 캘린더에서 클릭하면 나오는 수입 내역 상세보기
+ ------------------------------------------------------------------------------->
+<div class="modal fade" id="calDetailIo" role="dialog">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="myModalLabel">수입 내역 입력</h4>
+      </div>
+      <div class="modal-body">
+		<div class="container" style="width: 850px; height: 350px;">
+		    <table class="table" style="width: 800px;">
+		      <thead>
+		        <tr>
+					<th style="width: 150px;">날짜</th>
+		          <th class="th_inContent">수입 내역</th>
+		          <th class="th_inPrice">금액</th>
+		          <th class="th_intitle">분류</th>
+		          <th></th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr onclick='myFunction(this)'>
+		        	<td>
+		                <div class='input-group date' id='datetimepicker2'>
+		                    <input type='text' class="form-control" />
+		                    <span class="input-group-addon">
+		                        <span class="glyphicon glyphicon-calendar"></span>
+		                    </span>
+		                </div>
+		        	</td>
+		          <td>
+		            <input type="text" class="form-control" size="16" placeholder="내역 입력" id="inContent"/>
+		          </td>
+		          
+		          <td>
+		            <div class="input-group">
+		            <span class="input-group-addon">
+		            <i class="fas fa-won-sign"></i>
+		            </span>
+		            <input type="number" class="form-control" value="0" size="15" placeholder="금액 입력" id="inPrice" />
+		            </div>
+		          </td>
+		          
+		          <td>
+		            <select class="form-control match-content" id="inTitle">
+		            <option selected="selected">주수입</option>
+		            <option>부수입</option>
+		            <option>기타</option>
+		            </select>
+		          </td>
+		          <td align="center">
+		          <a href="#iconPlusIn" data-toggle="collapse"><i class="material-icons">&#xE24E;</i></a>
+		          </td>
+		        </tr>
+		        <tr id="plusDel">
+		        <td colspan="5"><div id="iconPlusIn" class="collapse"><div data-toggle="buttons">
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="1"><i class="material-icons">alarm</i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="2"><i class="material-icons">card_giftcard</i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="3"><i class="material-icons">card_travel</i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="4"><i class="material-icons">face</i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="5"><i class="material-icons">favorite</i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="6"><i class="material-icons">flight_takeoff</i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="7"><i class="material-icons">pets</i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="8"><i class="material-icons">shopping_cart</i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="9"><i class="material-icons">call</i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="10"><i class="material-icons">vpn_key</i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="11"><i class="material-icons">toys</i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="12"><i class="material-icons">filter_vintage</i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="13"><i class="material-icons">linked_camera</i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="14"><i class="material-icons">directions_bus</i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="15"><i class="material-icons">directions_subway</i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="16"><i class="material-icons">local_cafe</i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="17"><i class="material-icons">local_dining</i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="18"><i class="material-icons">local_hospital</i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="19"><i class="material-icons">beach_access</i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="20"><i class="material-icons">school</i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="21"><i class="material-icons">star</i></label>
+				<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategoryModi" value="22"><i class="material-icons">cake</i></label>
+				</div></div></td></tr>
+		      </tbody>
+		       <tfoot>
+		        
+		        <tr>
+		        </tr>
+		    </tfoot>
+		    </table>
+		  </div>
+      </div>
+		<div id="myAlert">
+		</div>
+      <div class="modal-footer">
+        <button type="button" id="btn_modiIo" class="btn btn btn-primary">Save</button>
+        <button type="button" id="btn_delIo" class="btn btn-danger">Delete</button>
+        <button type="button" class="btn btn-orange" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+ 
+ 
+ 
+<!-------------------------------------------------------------------------------
+	 캘린더에서 클릭하면 나오는 지출 내역 상세보기
+ ------------------------------------------------------------------------------->
+ <div class="modal fade" id="calDetailOut" role="dialog">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="myModalLabel">지출 내역 입력</h4>
+      </div>
+      
+      <div class="modal-body">
+		<div class="container">
+		    <table class="table" style="width: 830px;">
+		      <thead>
+		        <tr>
+		        <th>날짜</th>
+		          <th class="th_outContent">지출 내역</th>
+		          <th class="th_outPrice">금액</th>
+		          <th class="th_outTitle">분류</th>
+		          <th></th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr>
+		        <td>
+		        	<div class="container" style="width: 100px;">
+					    <div class="row">
+					        <div class='col-sm-6'>
+					            <input type='text' class="form-control" id='datetimepicker3' style="width: 90px;"/>
+					        </div>
+					        <script type="text/javascript">
+					            $(function () {
+					                $('#datetimepicker3').datetimepicker(){
+					                format:'YYYY-MM-DD',
+					            	locale: 'ko'
+					                }
+					            });
+					        </script>
+					    </div>
+					</div>
+		        	</td>
+		          <td>
+		            <input type="text" class="form-control" size="16" placeholder="내역 입력" id="outContent"/>
+		          </td>
+		          
+		          <td>
+		          <div class="input-group">
+		          <span class="input-group-addon">
+		          <i class="fas fa-won-sign"></i></span>
+		          <input type="number" class="form-control" value="0" size="15" placeholder="금액 입력" id="outPrice" />
+		          </div></td>
+		          
+		          <td>
+		            <select class="form-control match-content" id="outTitle">
+		              <option>식비</option>
+		              <option>통신비</option>
+		              <option>공과금</option>
+		              <option>의류/미용</option>
+		              <option>건강/문화생활</option>
+		              <option>교육/육아</option>
+		              <option>교통/차량</option>
+		              <option>경조사/회비</option>
+		              <option>기타</option>
+		            </select>
+		          </td>
+		          <td align="center">
+		          <a href="#iconPlusOut" data-toggle="collapse"><i class="material-icons">&#xE24E;</i></a>
+		          </td>
+		        </tr>
+		        <tr id="minusDel">
+		        <td colspan="5"><div id="iconPlusOut" class="collapse"><div data-toggle="buttons">
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="1"><i class="material-icons">alarm</i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="2"><i class="material-icons">card_giftcard</i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="3"><i class="material-icons">card_travel</i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="4"><i class="material-icons">face</i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="5"><i class="material-icons">favorite</i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="6"><i class="material-icons">flight_takeoff</i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="7"><i class="material-icons">pets</i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="8"><i class="material-icons">shopping_cart</i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="9"><i class="material-icons">call</i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="10"><i class="material-icons">vpn_key</i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="11"><i class="material-icons">toys</i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="12"><i class="material-icons">filter_vintage</i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="13"><i class="material-icons">linked_camera</i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="14"><i class="material-icons">directions_bus</i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="15"><i class="material-icons">directions_subway</i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="16"><i class="material-icons">local_cafe</i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="17"><i class="material-icons">local_dining</i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="18"><i class="material-icons">local_hospital</i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="19"><i class="material-icons">beach_access</i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="20"><i class="material-icons">school</i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="21"><i class="material-icons">star</i></label>
+					<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="outCategoryModi" value="22"><i class="material-icons">cake</i></label>
+					</div></div></td>
+		        </tr>
+		      </tbody>
+		       <tfoot>
+		        	
+		    </tfoot>
+		    </table>
+		  </div>
+      </div>
+      <div class="modal-footer">
+		<button type="button" id="btn_modiSpend" class="btn btn btn-primary">Save</button>
+		<button type="button" id="btn_delSpend" class="btn btn-danger">Delete</button>
+        <button type="button" class="btn btn-orange" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div> 
+
+
+ 
 	
 <!-------------------------------------------------------------------------------
 	 데이터 관련 modal
@@ -1415,7 +1649,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 	private int del; //삭제 여부 -->
 
 
-<!-- 수입 입력 저장하기 -->
+<!-- 수입 수정 하기 -->
 <script type="text/javascript">
 $(document).ready(function () {
 	$("#btn_saveIo").click(function () {	
@@ -1568,13 +1802,41 @@ $(document).ready(function () {
 });
 </script>
 
+<!-- 수정 삭제 따로 -->
+<script type="text/javascript">
+$(document).ready(function () {
+	$("#btn_delIo").click(function () {	
+		alert("btn_delIo");
+	});
 
+	$("#btn_modiIo").click(function () {
+		alert("btn_modiIo");
+	});
+
+	$("#btn_delSpend").click(function () {
+		alert("btn_delSpend");
+	});
+
+
+	$("#btn_modiSpend").click(function () {
+		alert("btn_modiSpend");
+	});
+	
+});
+
+
+</script>
 
 <!-- 리스트에 있는 항목 클릭하면 호출 -->
 <script type="text/javascript">
 function show (str){
 	
-		var afterStr = str.split('%');
+	
+	var afterStr = str.split('%');
+	alert("스플릿 한 개수 : " + afterStr.length);
+		
+		if(afterStr.length==9){
+		alert("본문 if문");
 		/* 
 		[0] : seq
 		[1] : id
@@ -1587,7 +1849,6 @@ function show (str){
 		[8] : del */
 		$(".bs-example-modal-lg").modal('hide')
 		var title="";
-		alert(typeof afterStr[4]);
 		
 		var modiDate = afterStr[3].substring(0,10);
 		
@@ -1633,7 +1894,6 @@ function show (str){
 				var selectedDateModify = $("#selectedDateModify").html().replace(/\-/g,'');
 			   	var inCategoryModi;
 			   	//alert("날짜 : " + outSelectedDate);
-			   	var arrmodiIn = [];
 			     
 			   	inCategoryModi = $("input[name='inCategoryModi']:checked").val();
 		    		//만약 아이콘 선택 안하면 0으로 입력
@@ -1641,13 +1901,6 @@ function show (str){
 		    			inCategoryModi=0;
 		    			//alert("바꾼 후 : " +outCategory)
 		    		}
-			       
-		    		/* arrmodiIn.add($("#inCashMyModalModify #inTitle").val());
-		    		arrmodiIn.add(selectedDateModify);
-		    		arrmodiIn.add(inCategoryModi);
-		    		arrmodiIn.add($("#inCashMyModalModify #inPrice").val());
-		    		arrmodiIn.add($("#inCashMyModalModify #inContent").val()); */
-        	   		
         	   		
 				$.ajax({
 					
@@ -1720,7 +1973,6 @@ function show (str){
 				var outSelectedDateModify = $("#outSelectedDateModify").html().replace(/\-/g,'');
 			   	var inCategoryModi;
 			   	//alert("날짜 : " + outSelectedDate);
-			   	var arrmodiIn = [];
 			     
 			   	outCategoryModi = $("input[name='outCategoryModi']:checked").val();
 		    		//만약 아이콘 선택 안하면 0으로 입력
@@ -1729,13 +1981,6 @@ function show (str){
 		    			//alert("바꾼 후 : " +outCategory)
 		    		}
 			       
-		    		/* arrmodiIn.add($("#inCashMyModalModify #inTitle").val());
-		    		arrmodiIn.add(selectedDateModify);
-		    		arrmodiIn.add(inCategoryModi);
-		    		arrmodiIn.add($("#inCashMyModalModify #inPrice").val());
-		    		arrmodiIn.add($("#inCashMyModalModify #inContent").val()); */
-        	   		
-        	   		
 				$.ajax({
 					
 			           type : "get",
@@ -1764,6 +2009,198 @@ function show (str){
 			       });
 				
 			});
+		}
+		}else{
+			alert("ioMoney : " +afterStr[0]);
+			alert("seq : " +afterStr[5]);
+			alert("else로 들어옴")
+			/* 
+			[0] : ioMoney
+			[1] : content
+			[2] : price
+			[3] : Title
+			[4] : date
+			[5] : seq
+			*/
+			
+			var title="";
+			
+			if(afterStr[0]=="0"){
+				title= "수입 내역 수정";
+				alert("ioMoney : " +afterStr[0]);
+				alert("seq : " +afterStr[5]);
+				alert("money : " +afterStr[2]);
+				
+				$("#inCashMyModalModify .modal-title").html(title);
+				$("#inCashMyModalModify #inContent").val(afterStr[1]);
+				$("#inCashMyModalModify #inPrice").val(afterStr[2]);
+				$("#inCashMyModalModify #inTitle").val(afterStr[3]);
+				$("#inCashMyModalModify #selectedDateModify").html(afterStr[4]);
+				$("#chchList").modal().hide();
+				$("#inCashMyModalModify").modal({backdrop: 'static', keyboard: false});
+				
+				//del 버튼 클릭하면
+				$("#btn_delIo").click(function () {	
+				   	
+						$.ajax({
+							
+				           type : "get",
+				           url : "./cashDelAf.jsp",
+				           
+				           data : {
+								"cashDelAf" : afterStr[5]
+								},
+							dataType : "text",
+							contentType : "application; charset=utf-8",
+							traditional : true,
+							
+				           success : function(data){
+				               alert("success");
+				               $("#inCashMyModalModify").modal().hide();
+				               location.reload();
+				           },
+				           error : function(request,status,error){
+				               alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				           }
+				       
+				       });
+				   
+				});
+				
+				
+				$("#btn_modiIo").click(function () {
+					var selectedDateModify = $("#selectedDateModify").html().replace(/\-/g,'');
+				   	var inCategoryModi;
+				   	//alert("날짜 : " + outSelectedDate);
+				     
+				   	inCategoryModi = $("input[name='inCategoryModi']:checked").val();
+			    		//만약 아이콘 선택 안하면 0으로 입력
+			    		if(inCategoryModi==null){
+			    			inCategoryModi=0;
+			    			//alert("바꾼 후 : " +outCategory)
+			    		}
+			    		/* 
+
+						[0] : seq
+						[1] : content
+						[2] : price
+						[3] : Title
+						[4] : date
+						[5] : inMoney
+						*/
+						$.ajax({
+						
+				           type : "get",
+				           url : "./cashModiAf.jsp",
+				           data : {
+				        	   	"seq" : afterStr[5],
+				        	    "title" : $("#inCashMyModalModify #inTitle").val(),
+					    		"moneyDate" : selectedDateModify,
+					    		"category" : inCategoryModi,
+					    		"price" : $("#inCashMyModalModify #inPrice").val(),
+					    		"content" :$("#inCashMyModalModify #inContent").val(),
+								},
+							dataType : "text",
+							contentType : "application; charset=utf-8",
+							traditional : true,
+							
+				           success : function(data){
+				               alert("success");
+				               $("#inCashMyModalModify").modal().hide();
+				               location.reload();
+				           },
+				           error : function(request,status,error){
+				               alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				           }
+				       
+				       });
+					
+				});
+				
+				
+			}else if(afterStr[0]=="1"){
+				alert("seq : " +afterStr[0]);
+				alert("ioMoney : " +afterStr[5]);
+				
+				title="지출 내역 수정";
+				$("#outCashMyModalModify .modal-title").html(title);
+				$("#outCashMyModalModify #outContent").val(afterStr[1]);
+				$("#outCashMyModalModify #outPrice").val(afterStr[2]);
+				$("#outCashMyModalModify #outTitle").val(afterStr[3]);
+				$("#outCashMyModalModify #outSelectedDateModify").html(afterStr[4]);
+				$("#chchList").modal().hide();
+				$("#outCashMyModalModify").modal({backdrop: 'static', keyboard: false});
+				
+				//del 버튼 클릭하면
+				$("#btn_delSpend").click(function () {	
+				   	
+						$.ajax({
+							
+				           type : "get",
+				           url : "./cashDelAf.jsp",
+				           
+				           data : {
+								"cashDelAf" : afterStr[5]
+								},
+							dataType : "text",
+							contentType : "application; charset=utf-8",
+							traditional : true,
+							
+				           success : function(data){
+				               alert("success");
+				               $("#inCashMyModalModify").modal().hide();
+				               location.reload();
+				           },
+				           error : function(request,status,error){
+				               alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				           }
+				       
+				       });
+				});
+				
+				$("#btn_modiSpend").click(function () {
+					var outSelectedDateModify = $("#outSelectedDateModify").html().replace(/\-/g,'');
+				   	var outCategoryModi;
+				   	//alert("날짜 : " + outSelectedDate);
+				     
+				   	outCategoryModi = $("input[name='outCategoryModi']:checked").val();
+			    		//만약 아이콘 선택 안하면 0으로 입력
+			    		if(outCategoryModi==null){
+			    			outCategoryModi=0;
+			    			//alert("바꾼 후 : " +outCategory)
+			    		}
+				     
+	        	   		
+					$.ajax({
+						
+				           type : "get",
+				           url : "./cashModiAf.jsp",
+				           data : {
+				        	   	"seq" : afterStr[5],
+				        	    "title" : $("#outCashMyModalModify #outTitle").val(),
+					    		"moneyDate" : outSelectedDateModify,
+					    		"category" : outCategoryModi,
+					    		"price" : $("#outCashMyModalModify #outPrice").val(),
+					    		"content" :$("#outCashMyModalModify #outContent").val(),
+								},
+							dataType : "text",
+							contentType : "application; charset=utf-8",
+							traditional : true,
+							
+				           success : function(data){
+				               alert("success");
+				               $("#outCashMyModalModify").modal().hide();
+				               location.reload();
+				           },
+				           error : function(request,status,error){
+				               alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				           }
+				       
+				       });
+					
+				});
+			}
+			
 		}
 	}
 </script>
@@ -2001,7 +2438,7 @@ function show (str){
 <!-------------------------------------------------------------------------------
 	최근 리스트 더 보기 누르면 나오는 모달
  ------------------------------------------------------------------------------->
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="chchList">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -2078,6 +2515,8 @@ $(document).ready(function() {
 	} );
 </script>
 
+
+<!-- list에서 수정버튼 누를 때 -->
 <script type="text/javascript">
 function ListDelete(seq){
 	$.ajax({
@@ -2100,8 +2539,7 @@ function ListDelete(seq){
 			//var obj = JSON.parse(data);
 			//data = JSON.parse(data);
 
-			var strArr = new Array();
-			strArr = data.split('"');
+			var strArr = data.split('"');
 			/* alter(strArr.length); */
 		   var div = document.querySelector('#example');
 		    html = '<table>';
@@ -2109,21 +2547,37 @@ function ListDelete(seq){
 		    html += '<tbody id="exampleBody">';
 		    
 		     var counter=0;
+		     var ioMoney ="";
+		     var modiStr ="";
 		    for(var i=0; i<strArr.length-1; i=i+24){
 		    	counter++;
+		    	
+		    	if(strArr[i+3]==0){
+		    		ioMoney="수입";
+		    	}else{
+		    		ioMoney="지출";
+		    	}
+		    	
+		    	modiStr = "'"+strArr[i+3] +"%"+ strArr[i+23] + "%" + strArr[i+7] + "%" + strArr[i+15] + "%" + strArr[i+11]+ "%" + strArr[i+19]+"'";
+		        //alert(modiStr);
+		    	
 				html += '<tr>';
 				html += '<td>'+counter+'</td>';
-				html += '<td>'+strArr[i+3]+'</td>';
+				html += '<td>'+ioMoney+'</td>';
 				html += '<td>'+strArr[i+23]+'</td>';
 				html += '<td>'+strArr[i+11]+'</td>';
 				html += '<td>'+strArr[i+7]+'</td>';
 				html += '<td>'+strArr[i+15]+'</td>';
 				html += '<td>';
-				html += '<a href="#" onclick="show('+strArr[i+19]+')"  class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>';
+				html += '<a href="#" onclick="show('+modiStr+')"  class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>';
 				html += '<a href="#" onclick="ListDelete('+strArr[i+19]+')" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>';
 				html += '</td>';
 				html += '</tr>';
 			}
+		    
+		    console.log("전" + html);
+		    div.innerHTML = html;
+		    console.log("후" + html);
 		    
        },
        error : function(request,status,error){
@@ -2139,7 +2593,7 @@ function ListDelete(seq){
 <script type="text/javascript">
 $(document).ready(function () {
 	$("#closeReload").click(function () {
-		$("#outCashMyModalModify").modal().hide();
+		$(this).modal().hide();
 	    location.reload();
 	});
 });

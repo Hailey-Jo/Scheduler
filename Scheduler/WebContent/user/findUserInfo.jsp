@@ -1,246 +1,194 @@
-<%@page import="User.userDAO"%>
-<%@page import="User.iuserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>아이디 비밀번호 찾기</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<style type="text/css">
-* {
-	box-sizing: border-box;
-}
-
-body {
-	margin: 0;
-}
-
-.page_header {
-	background-color: #006699;
-	padding: 20px;
-	text-align: center;
-	color: white;
-}
-
-.page_row:after {
-	content: "";
-	display: table;
-	clear: both;
-}
-
-.column {
-	float: left;
-	width: 50%;
-	padding: 15px;
-	borde: 6px solid;
-}
-
-.form_field {
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: -ms-flexbox;
-	display: flex;
-	float
-	margin-bottom: 1rem;
-}
-
-input {
-	width: 100%; /* 원하는 너비 설정 */ 
-	height: auto; /* 높이값 초기화 */ 
-	line-height : normal; /* line-height 초기화 */ 
-	padding: .8em .5em; /* 원하는 여백 설정, 상하단 여백으로 높이를 조절 */ 
-	font-family: inherit; /* 폰트 상속 */ 
-	border: 1px solid #999; 
-	border-radius: 0; /* iSO 둥근모서리 제거 */ 
-	outline-style: none; /* 포커스시 발생하는 효과 제거를 원한다면 */ 
-	-webkit-appearance: none; /* 브라우저별 기본 스타일링 제거 */ 
-	-moz-appearance: none; 
-	appearance: none;
-}
-
-/* 모달 부분 */
-.modal {
-	display: none;
-	position: fixed;
-	z-index: 1;
-	padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-.modal_content {
-    position: relative;
-    background-color: #fefefe;
-    margin: auto;
-    padding: 0;
-    border: 1px solid #888;
-    width: 30%;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-    -webkit-animation-name: animatetop;
-    -webkit-animation-duration: 0.4s;
-    animation-name: animatetop;
-    animation-duration: 0.4s
-}
-
-</style>
+  <title>biz payday</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="../css/loading.css" />	<!-- 로딩이미지 -->
+  <style type="text/css">
+	header {
+	    height: 10%;
+	    width: auto;
+	    padding: 5px;
+	    color: white;
+	    background-color: #006699;
+	}
+	
+	.top {
+	    font-weight: bold;
+	    font-size: 2rem;
+	    width: 35%;
+	    float: left;
+	    overflow: hidden;
+	    clear: left;
+	    align-content: center;
+	}
+   
+  </style>
 </head>
 <body>
+<header>
+		<nav id="topMenu" style="height: 35px; vertical-align: middle;">
+			<div class="topMenu_siteTitle">
+				<ul>
+					<li class="top">아이디 비밀번호 찾기</li>
+				</ul>
+			</div>
+		</nav>
+</header>
 
-	<div class="page_header">
-		<h1>아이디 비밀번호 찾기</h1>
-	</div>
+<div class="container">
+	<br><br><br><br>
 
-	<div class="page_row">
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#menu1">아이디 찾기</a></li>
+    <li><a data-toggle="tab" href="#menu2">비밀번호 찾기</a></li>
+  </ul>
 
-		<div class="column">
-			<h1>아이디 찾기</h1>
-				<div class="form_field">
-					<div class="form_input">
-						<input class="input_form" type="text" id="input_name"
+  <div class="tab-content">
+    <div id="menu1" class="tab-pane fade in active">
+      <h3 align="left">아이디 찾기</h3>
+      <hr><br>
+				<div class="form_field well">				
+					<div class="form-group">
+						<label style="font-size: 20px">이름 :&emsp;&emsp;</label>
+						<input class="input_form input-lg" type="text" id="input_name"
 							placeholder="이름">
 					</div>
-					<div class="form_input">
-						<input class="input_form" type="text" id="input_birth"
-							placeholder="생년월일">
+					<div class="form-group">
+						<label style="font-size: 20px">생년월일 : </label>
+						<input class="input_form input-lg" type="text" id="input_birth"
+							placeholder="생년월일(예:2018-01-01)">
 					</div>
-					<div class="form_input">
-						<button id="find_id_btn">아이디 찾기</button>
+					<div class="form-group">
+						<button id="find_id_btn" class="btn btn-primary" data-toggle="modal" data-target="#findId">아이디 찾기</button>
 					</div>
 				</div>
-		</div>
-
-
-		<div class="column">
-			<h1>비밀번호 찾기</h1>
-				<div class="form_field">
-					<div class="form_input">
-						<input class="input_form" type="text" id="input_id"
+    </div>
+    <div id="menu2" class="tab-pane fade">
+      <h3>비밀번호 찾기</h3>
+				<hr><br>
+				<div class="form_field well">				
+					<div class="form-group">
+						<label style="font-size: 20px">아이디 :&emsp;</label>
+						<input class="input_form input-lg" type="text" id="input_id"
 							placeholder="아이디">
 					</div>
-					<div class="form_input">
-						<input class="input_form" type="text" id="input_email"
-							placeholder="이메일">
+					<div class="form-group">
+						<label style="font-size: 20px">이메일 :&emsp;</label>
+						<input class="input_form input-lg" type="email" id="input_email"
+							placeholder="Email">
 					</div>
-					<div class="form_input">
-						<button id="find_pw_btn">비밀번호 찾기</button>
+					<div class="form-group">
+						<button id="find_pw_btn" class="btn btn-primary" data-toggle="modal" data-target="#findPw">비밀번호 찾기</button>
 					</div>
 				</div>
+    </div>
+  </div>
+</div>
+
+<div align="center">
+<button class="btn btn-warning" onclick="location.href='../index.jsp'">뒤로가기</button>
+</div>
+
+
+<!-- 아이디 찾기 modal -->
+<div class="modal fade" id="findId" role="dialog">
+	<div class="modal-dialog">
+	
+		<!-- modal content -->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button> 
+				<h4 class="modal-title">아이디 찾기 결과</h4>
+			</div>
+			<div class="modal-body">
+				<div id="resultId"></div>
+				
+				<script type="text/javascript">
+				$("#find_id_btn").click(function () {
+					$.ajax({
+						type:"post",
+						url:"./findIdAf.jsp",
+						data:{
+							name:$('#input_name').val(),
+							birth:$('#input_birth').val()
+						},
+						success:function(data){
+							$("#resultId").html(data);
+		
+						},
+						error:function(){
+							alert("실패");
+						}
+					});
+						
+				});
+				</script>			
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+			</div>
 		</div>
 	</div>
-
-<!-- modal -->
-<div id="findModal" class="modal">
-	<div class="modal_content">		
-		<h2>아이디 찾기 결과</h2>
-		<div id="resultId"></div>
-		<button id="close_modal_btn">확인</button>
-		
-		
-		<script type="text/javascript">
-		$("#find_id_btn").click(function () {
-			$.ajax({
-				type:"post",
-				url:"./findIdAf.jsp",
-				data:{
-					name:$('#input_name').val(),
-					birth:$('#input_birth').val()
-				},
-				success:function(data){
-					$("#resultId").html(data);
-
-				},
-				error:function(){
-					alert("실패");
-				}
-			});
-				
-		});
-		
-		</script>
-		
-	</div> 
 </div>
 
-<script type="text/javascript">
-var modal = document.getElementById("findModal");
-var btn = document.getElementById("find_id_btn");
-var close_btn = document.getElementById("close_modal_btn");
 
-btn.onclick = function () {
-	modal.style.display = "block";
-}
-
-close_btn.onclick = function () {
-	modal.style.display = "none";
-}
-
-window.onclick = function (event) {
-	if (event.target == modal) {
-		modal.style.display = "none";
-	}
-}
-
-</script>
-
-<div id="findModal2" class="modal">
-	<div class="modal_content">		
-		<h2>비밀번호 찾기 결과</h2>
-		<div id="resultPw"></div>
-		<button id="close_modal_btn2">확인</button>
-		
-		
-		<script type="text/javascript">
-		$("#find_pw_btn").click(function () {
-			$.ajax({
-				type:"post",
-				url:"./findPwAf.jsp",
-				data:{
-					id:$('#input_id').val(),
-					email:$('#input_email').val()
-				},
-				success:function(data){
-					$("#resultPw").html(data);
-
-				},
-				error:function(){
-					alert("실패");
-				}
-			});
+<!-- 비밀번호 찾기 modal -->
+<div class="modal fade" id="findPw" role="dialog">
+	<div class="modal-dialog">
+	
+		<!-- modal content -->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button> 
+				<h4 class="modal-title">비밀번호 찾기 결과</h4>
+			</div>
+			<div class="modal-body">
 				
-		});
+				<div id="resultPw">발송중입니다...
+				  <div>
+				  	<span class="a">
+      					<span class="b">
+      			    	<span class="c">
+      			  	</span>
+      			  </div>
+				</div>
+				
+				<script type="text/javascript">
+				$("#find_pw_btn").click(function () {
+					$.ajax({
+						type:"post",
+						url:"./findPwAf.jsp",
+						data:{
+							id:$('#input_id').val(),
+							email:$('#input_email').val()
+						},
+						success:function(data){
+							$("#resultPw").html(data);
 		
-		</script>
-		
-	</div> 
+						},
+						error:function(){
+							alert("실패");
+						}
+					});
+						
+				});
+				
+				</script>			
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
 </div>
 
-<script type="text/javascript">
-var modal2 = document.getElementById("findModal2");
-var btn2 = document.getElementById("find_pw_btn");
-var close_btn = document.getElementById("close_modal_btn2");
 
-btn2.onclick = function () {
-	modal2.style.display = "block";
-}
-
-close_btn.onclick = function () {
-	modal2.style.display = "none";
-}
-
-window.onclick = function (event) {
-	if (event.target == modal) {
-		modal2.style.display = "none";
-	}
-}
-
-</script>
 </body>
 </html>

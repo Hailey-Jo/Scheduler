@@ -1,14 +1,14 @@
-<%@page import="com.oreilly.servlet.MultipartRequest"%>
-<%@page import="User.userDTO"%>
-<%@page import="User.userDAO"%>
-<%@page import="User.iuserDAO"%>
+<%@page import="java.io.IOException"%>
 <%@page import="java.util.Iterator"%>
+<%@page import="org.apache.commons.fileupload.FileItem"%>
 <%@page import="java.util.List"%>
 <%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
 <%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
 <%@page import="java.io.File"%>
-<%@page import="java.io.IOException"%>
-<%@page import="org.apache.commons.fileupload.FileItem"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
+<%@page import="User.userDTO"%>
+<%@page import="User.userDAO"%>
+<%@page import="User.iuserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -43,7 +43,6 @@ public String processUploadedFile(FileItem fileItem, String dir, JspWriter out) 
 	
 }
 %>
-
 <%
 //form field data add
 String id = "";
@@ -158,6 +157,7 @@ try{
 	boolean isS = false;
 		
 	isS = dao.join(user);
+
 	
 	if(isS){
 		%>

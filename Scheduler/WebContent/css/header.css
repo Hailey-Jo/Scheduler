@@ -14,7 +14,7 @@ nav{
 
 
 #topMenu {
-        height: 35px;
+        height: 60px;
 }
 
 #topMenu a:hover {
@@ -40,6 +40,7 @@ img{
        clear: left;
 }
 
+
 #topMenu .topMenu_siteTitle ul li{
 	font-weight: bold;
 	font-size: 2rem;
@@ -48,6 +49,19 @@ img{
 	overflow:hidden;
 	clear: left;
 	align-content: center;
+	
+}
+
+
+
+.topMenu_siteTitle{
+	margin:15px 0;
+}
+.topMenu_icon{
+	margin:15px 0;
+}
+.login_info{
+	margin:15px 0;
 }
 
 #topMenu .topMenu_icon{
