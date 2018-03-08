@@ -39,7 +39,7 @@ if(session.getAttribute("login") != null){
 %>
 <script type="text/javascript">
 	alert("로그인 후 이용해 주세요.");
-	location.href="index.jsp";
+	location.href="../index.jsp";
 </script>
 <%	
 }
@@ -88,6 +88,10 @@ if(pic==null){
     background-color: #006699;
 }
 
+.form-control{
+	display : block;
+}
+
 aside{
 	float: left;
 	width: 300px;
@@ -100,7 +104,7 @@ aside{
 
 article {
     margin-left: 10px;
-    
+    border-left: 1px solid  #e6e6e6;
     overflow: hidden;
     height: auto;
 }
@@ -298,15 +302,17 @@ tr.phonedetail td{
 	<aside>
 	<!-- 하단 -->
 		<!-- 좌측 서브 메뉴 -->
-		<form action="../phonebook/searchphonebook.jsp" method="post">
+		<form class="form-inline" action="../phonebook/searchphonebook.jsp" method="post">
 			<div align="center">
-				<input type="text" name="searchtitle" style="width: 236px" placeholder="찾고싶은 이름을 입력하세요.">
-				<input TYPE="IMAGE" src="../icon/search-g.png" id="submit" name="Submit" value="Submit"  align="absmiddle" height="26px" width="26px" style="padding-left: 2px">
-
-			</div>	
+				<input type="text" class="form-control" id="exampleFormControlInput1" name="searchtitle" style="width: 230px" placeholder="찾고싶은 이름을 입력하세요.">
+				<!-- <input type="text" name="searchtitle" style="width: 236px" placeholder="찾고싶은 이름을 입력하세요."> -->
+				<input TYPE="IMAGE" src="../icon/ic_search_black_24px.svg" id="submit" name="Submit" value="Submit"  align="absmiddle" height="26px" width="26px" style="padding-left: 2px">
+		</div>
 		</form>	
+		
 		<div align="center" style="padding-top: 10px">
-			<button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../phonebook/addphonebook.jsp' " >연락처 등록</button>
+			<!-- <button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../phonebook/addphonebook.jsp' " >연락처 등록</button> -->
+			<button type="button" class="btn btn-primary btn-sm" data-target="#importantmodal" style="width: 260px;" onclick = "location.href = '../phonebook/addphonebook.jsp' ">연락처 등록</button>
 		</div>
 	<br>
 		<div id="calendar-mini"></div>

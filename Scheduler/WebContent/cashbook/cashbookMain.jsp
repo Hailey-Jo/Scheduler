@@ -123,6 +123,7 @@ for(int i=0; i<cList.size();i++){
 			eventCash += "imageurl : '"+iconName+"',";
 		}	
 		eventCash +="},";
+		System.out.println("eventCash :" +eventCash);
 		
 	}else{
 		//지출
@@ -161,6 +162,7 @@ for(int i=0; i<cList.size();i++){
 			eventCash += "imageurl : '"+iconName+"',";
 		}
 		eventCash +="},";
+		System.out.println("eventCash :" +eventCash);
 	}
 		
 }
@@ -177,39 +179,7 @@ for(int i=0; i<cList.size();i++){
 <link rel="stylesheet" type="text/css" href="../css/header.css?ver=1"> 
 
 <style type="text/css">
-#inCashMyModalModify  .modal-body {
-	height: 400px;
-	padding: 10px;
-	margin-bottom: 30px;
-}
 
-
-#inCashMyModalModify .fc-view fc-month-view fc-basic-view{
-	height: 200px;
-}
-
-
-#inCashMyModalModify  .modal-body .modal-inLeft{
-	float: left;
- 	width: 30%;
- 	height: auto;
- 	padding: 5px;
- 	padding-top: 15px;
- }
-
-#outCashMyModalModify .modal-body {
-	height: 400px;
-	padding: 10px;
-	margin-bottom: 30px;
-}
-#outCashMyModalModify  .modal-body .modal-outLeft{
-	float: left;
- 	width: 30%;
- 	height: auto;
- 	padding: 5px;
- 	padding-top: 15px;
- }
- 
 
 aside{
 	float: left;
@@ -222,7 +192,7 @@ aside{
 
 article {
     margin-left: 10px;
-    border-left: 1px solid gray;
+    border-left: 1px solid  #e6e6e6;
     overflow: hidden;
     height: auto;
 }
@@ -689,7 +659,7 @@ jQuery("#calendar").fullCalendar({
         <%=eventCash %>
         
         ]     
-    , eventRender: function(eventObj, $el) {
+    , /* eventRender: function(eventObj, $el) {
         $el.popover({
             title: eventObj.title,
             content: eventObj.description,
@@ -697,14 +667,14 @@ jQuery("#calendar").fullCalendar({
             placement: 'top',
             container: 'body'
           })
-    }
+    } */
      
-    /*  eventRender: function(event, eventElement) {            	
+   		eventRender: function(event, eventElement) {            	
      	if (event.imageurl)
  		{             		
  		eventElement.find("div.fc-content").prepend("<i class='material-icons' style='font-size: 12px;'>"+ event.imageurl +"</i>"); 
  		} 
-		 } */
+		 } 
 
       ,eventClick: function(event){
           /* $('#modalTitle').html(event.title);
@@ -1307,8 +1277,6 @@ function scheduleChoice(num, id, distinct, color, text) {
         cols += '<label class="btn btn-default btn-circle btn-lg"><input type="radio" name="inCategory'+counter+'" value="22"><i class="material-icons">cake</i></label>';
         cols += '</div></div></td></tr>';
         
-        
-        
         newRow.append(cols);
         $("#inCashMyModal .table").append(newRow);
         counter++;
@@ -1445,7 +1413,7 @@ $(document).ready(function () {
        //alert("addrow 후 counter 값 :" +counter);
 		var row = parseInt(counter);
 		//alert(typeof row);($('input[ var checkNull = -1;
-		//alert($("input[name='inCategory']:checked").val());
+		alert($("input[name='inCategory']:checked").val());
 
 		for(var i=0; i<row; i++){
 			if($("#inContent"+i).val()==null){
@@ -1616,8 +1584,6 @@ $(document).ready(function () {
 	});
 	
 });
-
-
 </script>
 
 <!-------------------------------------------------------------------------------
