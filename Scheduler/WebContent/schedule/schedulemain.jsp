@@ -15,15 +15,14 @@ String pic = "";
 String imgPath = "";
 String serverPath = request.getRequestURL().substring(0,request.getRequestURL().indexOf(request.getRequestURI()));
 String packagePath = request.getContextPath();
+userDTO user = new userDTO();
 
-if(session.getAttribute("login") != null){
-
-	//user
-	userDTO user = new userDTO();
+if(session.getAttribute("login") != null){	
+	
 	user = (userDTO)session.getAttribute("login");
 	
 	id = user.getId();
-	pic = user.getPic();
+	pic = user.getPic();	
 	
 	if(pic==null){
 		imgPath = serverPath+packagePath+File.separator+"icon"+File.separator+"user-g.png";
@@ -59,6 +58,25 @@ for(int i=0; i<list.size();i++){
 	}	
 	eventstring +="},"+"\n";
 	
+}
+
+String birth = user.getBirth();
+String name = user.getName();
+System.out.println("birth: " + birth);
+System.out.println("name: " + name);
+
+String syear = birth.substring(0, 4);
+int year = Integer.parseInt(syear.trim());
+
+for(int i =0; i < 200; i++){
+	eventstring +="{";	
+	eventstring += "title : '"+user.getName()+"님의 생일♡',";	
+	eventstring += "start : '"+(year+i)+birth.substring(4, 10)+"',";
+	eventstring += "allday : true,";
+	eventstring += "backgroundColor : '#FF00DD',"; 
+	eventstring += "borderColor : '#FF00DD',";
+	eventstring += "imageurl : " +" '..\\"+"\\image\\"+"\\"+"cake.png',";
+	eventstring +="},"+"\n";
 }
 
 if(pic==null){
@@ -303,7 +321,7 @@ ul li a:hover, ul li a:focus {
             	
        		 }
        	    , eventClick:  function(event, jsEvent, view) {
-       	    	if(event.id.length > 10){
+       	    	if(event.id.length > 10 || event.id == null){
 					var target = $(this).find('a').attr('href', '#');
 					return false
 				}else{
