@@ -24,7 +24,7 @@ if(isS){
 %>
 <script type="text/javascript">
 alert("비밀번호가 변경되었습니다");
-location.href = "login.jsp"
+location.href = "../Main.jsp"
 </script>
 <%	}else{	%>
 <script type="text/javascript">

@@ -27,15 +27,19 @@ if(session.getAttribute("login") != null){
 	id = user.getId();
 	pic = user.getPic();
 	
+	System.out.println("===Main===");
+	System.out.println("pic===>"+pic);
+	
 	if(pic==null){
 		imgPath = serverPath+packagePath+File.separator+"icon"+File.separator+"user-g.png";
+		System.out.println("imgPath==>"+imgPath);
 	}else{
-		imgPath = File.separator+"img"+File.separator+id+File.separator+pic;
+		imgPath = serverPath+File.separator+"img"+File.separator+user.getId()+File.separator+pic;
+		System.out.println("imgPath==>"+imgPath);
 	}
 	
 }else{
 %>
-
 <script type="text/javascript">
 	alert("로그인 후 이용해 주세요.");
 	location.href="index.jsp";
@@ -57,18 +61,8 @@ footer {
 .row-centered {
     text-align:center;
 }
-
-aside{
-	float: left;
-	width: 300px;
-    max-width: 300px;
-    height : auto;
-    margin: 0;
-    padding: 10px;
-}
-
 </style>
-<link rel="stylesheet" type="text/css" href="./css/mainHeader.css">
+<link rel="stylesheet" type="text/css" href="./css/header.css">
 <link rel="stylesheet" type="text/css" href="./css/calendar.css">  
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -142,10 +136,10 @@ window.onload = function () {
 
 	var options = {
 		title: {
-			text: "이달의 수입 & 지출"
+			text: "총 금액: "+"<%=totMomey%>" + "원"
 		},
 		subtitles: [{
-			text: "총 금액: "+"<%=totMomey%>" + "원"
+			text: ""
 		}],
 		animationEnabled: true,
 		locale: 'ko',
@@ -188,25 +182,25 @@ window.onload = function () {
 	</header>
 
 	<!-- left -->
-	<div class="col-md-3" style="height:90vh; background-color:gray;">
-	 	<div class="row row-centered" style="height: 80vh;">
-			<div><img src="<%=imgPath%>" class="img-thumbnail" style="height: 300px;"></img></div>
+	<div class="col-md-3" style="height:85vh; background-color:gray;">
+	 	<div class="row row-centered" style="padding: 30px; height: 80vh;">
+			<div><img src="<%=imgPath%>" class="img-thumbnail" style="height: 200px;"></img></div>
 			<div><br><p align="center"><font size="3" color="white"><%=id %> 님 즐거운 하루 되세요!</font></p></div>
 			<div class="col-md-12" style="padding:5px;">
 				<button type="button" class="btn btn-defult" style="padding: 1px; width: 100px; height: 50px;" onclick="location.href='./schedule/schedulemain.jsp'">나의 일정</button>&nbsp;&nbsp;&nbsp;
 				<button type="button" class="btn btn-defult" style="padding: 1px; width: 100px; height: 50px;" onclick="location.href='./cashbook/cashbookMain.jsp'">나의 가계</button>
 			</div><br>
 			<div class="col-md-12" style="padding:5px;">
-				 <button type="button" class="btn btn-defult"style="padding: 1px; width: 100px; height: 50px;" onclick="location.href='#'">전화번호부</button>&nbsp;&nbsp;&nbsp;
+				 <button type="button" class="btn btn-defult"style="padding: 1px; width: 100px; height: 50px;" onclick="location.href='./phonebook/phonebookMain.jsp'">전화번호부</button>&nbsp;&nbsp;&nbsp;
 				 <button type="button" class="btn btn-defult"style="padding: 1px; width: 100px; height: 50px;" onclick="location.href='./pds/pdslist.jsp'">자료실</button>
 			</div><br>
 			<div class="col-md-12" style="padding:5px;">
-				 <button type="button" class="btn btn-defult"style="padding: 1px; width: 100px; height: 50px;" onclick="location.href='#'">정보수정</button>&nbsp;&nbsp;&nbsp;
+				 <button type="button" class="btn btn-defult"style="padding: 1px; width: 100px; height: 50px;" onclick="location.href='./user/password_change.jsp'">정보수정</button>&nbsp;&nbsp;&nbsp;
 				 <button type="button" class="btn btn-defult"style="padding: 1px; width: 100px; height: 50px;" onclick="location.href='index.jsp'">로그아웃</button>
 			</div>
 		</div>
 	</div>
-
+	
 	<!-- 우측 본문 -->
 	<div class="col-md-9" style="height: 40vh;">
 		<div class="col-md-6">

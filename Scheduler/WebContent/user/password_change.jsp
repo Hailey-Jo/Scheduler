@@ -114,7 +114,7 @@ System.out.println(old_pwd);
     <br><br>
     <div class="form-group col-md-offset-5">
     	<input type="submit" class="btn btn-primary" value="비밀번호 변경">
-		<button type="button" class="btn btn-warning" onclick="location.href='login.jsp'">뒤로가기<i class="fa fa-times spaceLeft"></i></button>
+		<button type="button" class="btn btn-warning" onclick="location.href='../Main.jsp'">뒤로가기<i class="fa fa-times spaceLeft"></i></button>
     </div>
     
     <script type="text/javascript">
