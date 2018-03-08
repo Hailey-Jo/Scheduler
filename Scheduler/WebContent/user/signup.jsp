@@ -133,8 +133,8 @@
 	<br>
 	<br>
 	<article class="container">
-		<div class="col-md-8 col-md-offset-2 well well-sm">
-			<form role="form-group" action="signupAf.jsp" method="post" class="signupForm">
+        <div class="col-md-8 col-md-offset-2 well well-sm">
+          <form role="form-group" action="signupAf.jsp" method="post" enctype="multipart/form-data">
 				<div class="form-group row">
 					<div class="col-md-2">
 						<label for="input-id" style="line-height: 35px;">아이디</label>&emsp;
@@ -257,9 +257,9 @@
 				<!-- COMPONENT START -->
 				<div class="form-group row">
 					<div class="col-md-2">
-						<label for="Fichier1" style="line-height: 35px;">프로필 사진</label>
+						<label for="input-pic" style="line-height: 35px;">프로필 사진</label>
 					</div>
-					<div class="input-group input-file col-md-7" name="Fichier1">
+					<div class="input-group input-file col-md-7" name="input-pic">
 						<span class="input-group-btn">
 							<button class="btn btn-default btn-choose" type="button" style="margin-left: 15px;">이미지선택</button>
 						</span> 
@@ -277,6 +277,28 @@
 						<a href="#">이용약관</a>에 동의합니다.
 					</label>
 				</div>
+				
+				<!-- 약관 모달 -->
+				  <!-- Modal -->
+				  <div class="modal fade" id="condition" role="dialog">
+				    <div class="modal-dialog">
+				    
+				      <!-- Modal content-->
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          <h4 class="modal-title">약관</h4>
+				        </div>
+				        <div class="modal-body">
+				          <p>여러분은 그냥 사용하세요 ^^</p>
+				        </div>
+				        <div class="modal-footer">
+				          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				        </div>
+				      </div>
+				      
+				    </div>
+				  </div>
+				<!-- 약관 모달 끝 -->
 				
 				<br><br>
 				
