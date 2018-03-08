@@ -1,12 +1,17 @@
-<%@page import="java.io.File"%>
+<%@page import="phonebook.PhonebookDTO"%>
+<%@page import="phonebook.PhonebookDAO"%>
+<%@page import="phonebook.iPhonebookDAO"%>
 <%@page import="User.userDTO"%>
+<%@page import="java.io.File"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@page import="Schedule.ScheduleDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="Schedule.ScheduleDAO"%>
 <%@page import="Schedule.iScheduleDAO"%>
-<%request.setCharacterEncoding("utf-8"); %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%request.setCharacterEncoding("utf-8"); %>
 <%
 String eventstring = "";
 String id = "";
@@ -40,29 +45,48 @@ if(session.getAttribute("login") != null){
 }
 %>
 <%
+
 iScheduleDAO dao = ScheduleDAO.getInstance();
 List<ScheduleDTO> list = dao.getAllSchedulList(id);
 
 for(int i=0; i<list.size();i++){	
-	eventstring +="{";
+	//2018-03-05 14:12
+	eventstring +="{";	
 	eventstring += "title : '"+list.get(i).getTitle()+"',";
-	eventstring += "start : '"+list.get(i).getStartDate().substring(0, 10)+"',";
-	eventstring += "end : '"+list.get(i).getEndDate().substring(0, 10)+"',";
+	eventstring += "id : '"+list.get(i).getSeq()+"',";
+	eventstring += "start : '"+list.get(i).getStartDate().substring(0, 16)+"',";
+	eventstring += "end : '"+list.get(i).getEndDate().substring(0, 16)+"',";
+	eventstring += "description : '"+list.get(i).getContent()+"',";	
 	eventstring += "backgroundColor : '"+list.get(i).getCategory()+"',";
 	if(list.get(i).getImportant()==1){
 		eventstring += "imageurl : " +" '..\\"+"\\image\\"+"\\"+"star.png',";
 	}	
-	eventstring +="},"+"\n";	
+	eventstring +="},"+"\n";
+	
 }
 
+
+iPhonebookDAO pdao = PhonebookDAO.getInstance();
+List<PhonebookDTO> plist = pdao.getAllPhoneList(id);
+
+if(pic==null){
+	imgPath = serverPath+packagePath+File.separator+"icon"+File.separator+"user-g.png";
+}else{
+	imgPath = File.separator+"img"+File.separator+id+File.separator+pic;
+}
 %>
+
 <!DOCTYPE HTML>
 <html>
 
 <head>
-<link rel="stylesheet" type="text/css" href="../css/header.css">
-<link rel="stylesheet" type="text/css" href="../css/calendar.css">  
+<link rel="stylesheet" type="text/css" href="../css/header.css?ver=2">
+<link rel="stylesheet" type="text/css" href="../css/calendar.css?ver=2">  
 <style type="text/css">
+#topMenu a:hover {
+	text-decoration:none;
+    background-color: #006699;
+}
 
 aside{
 	float: left;
@@ -74,15 +98,9 @@ aside{
     
 }
 
-td.first{
-	
-	text-align: center;
-
-}
-
 article {
     margin-left: 10px;
-   
+    
     overflow: hidden;
     height: auto;
 }
@@ -114,38 +132,51 @@ div.fc-center h2{
 	size: 0.8em;
 }
 
-td.addtable{
-	padding: 10px;
+tr.important{
+	border-bottom: 1px solid #EAEAEA;
+}
+
+tr.title{
+	border-bottom: 1px solid #EAEAEA;
+}
+
+#loading {
+    display:none;
+    position:absolute;
+    top:10px;
+    right:10px;
 }
 
 
-
-    #loading {
-        display:none;
-        position:absolute;
-        top:10px;
-        right:10px;
-    }
-
-    div.barKategorie {
-        float:left;
-        margin:5px;
-        padding-top:5px;
-        padding-bottom:5px;
-        padding-left:5px;
-        /* padding-right:10px; */
-        border-radius:5px;
-        font-weight:bold;
-    }
+div.barKategorie {
+    float:left;
+    margin:5px;
+    padding-top:5px;
+    padding-bottom:5px;
+    padding-left:5px;
+    /* padding-right:10px; */
+    border-radius:5px;
+    font-weight:bold;
+}
     
 ul li a:hover, ul li a:focus {  
     color:#fff;  
     background-color:#f40;  
 }  
 
-</style>
-<!-- DatePicker -->
+tr.phonetitle th{
+	background-color: #F6F6F6;
+	border-left-color: #F6F6F6;
+	border-right-color: #F6F6F6;
+	height: 30px;
+}
 
+tr.phonedetail td{
+	border-bottom: 1px solid #F6F6F6;
+	height: 30px;
+}
+
+</style>
 <link href="../fullcalendar-3.8.2/fullcalendar.css" rel="stylesheet"/>
 <link href="../fullcalendar-3.8.2/fullcalendar.print.css" rel="stylesheet" media="print"/>
 <script type="text/javascript" src="../fullcalendar-3.8.2/lib/moment.min.js"></script>
@@ -157,7 +188,7 @@ ul li a:hover, ul li a:focus {
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
 <!-- 부가적인 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> 
 
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
@@ -166,26 +197,6 @@ ul li a:hover, ul li a:focus {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $('#datetimepicker1').datetimepicker({
-        	format : 'YYYY-MM-DD HH:mm',
-        	locale: 'ko'
-        	
-        });
-        $('#datetimepicker2').datetimepicker({
-        	format : 'YYYY-MM-DD HH:mm',
-        	locale: 'ko',        	
-            useCurrent: false //Important! See issue #1075
-        });
-        $("#datetimepicker1").on("dp.change", function (e) {        	
-            $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
-        });
-        $("#datetimepicker2").on("dp.change", function (e) {
-            $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
-        });
-    });
-</script>
 
 <script type="text/javascript">
 
@@ -237,13 +248,15 @@ ul li a:hover, ul li a:focus {
 
     				return false
     			}
-    	        
-    	        });
     	    });
-    });
+    	        
+    	        
+    	    });
+    	
+	});
 
 </script>
-  
+<title>BizPayDay</title>
 </head>
 <body>
 <!-- <div id ="main"> -->
@@ -260,17 +273,18 @@ ul li a:hover, ul li a:focus {
 				<ul>
 					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/home-n.png" onmouseover='this.src="../icon/home-w.png"' onmouseout='this.src="../icon/home-n.png"' ></a></li>
 					<li><a class="menuLink" href="../schedule/schedulemain.jsp"><img src="../icon/schedule-w.png" onmouseover='this.src="../icon/schedule-w.png"' onmouseout='this.src="../icon/schedule-w.png"' ></a></li>
-					<li><a class="menuLink" href="../cashbook/cashbookMain.jsp"><img src="../icon/cash-n.png" onmouseover='this.src="../icon/cash-w.png"' onmouseout='this.src="../icon/cash-n.png"'></a></li>
+					<li><a class="menuLink" href="../cashbook/cashbookMain.jsp"><img src="../icon/cash-n.png" ></a></li>
 				</ul>
 			</div>
 			<div class="login_info" style=" float: left; width: 18%; height: 30px;">
 		      <ul class="nav navbar-nav navbar-right">
+		      	<img alt="프로필이미지" src="<%=imgPath%>" class="img-circle" width="40">
 		        <li class="dropdown">
 		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style=" padding:5px; height: 30px;"><%=id %><span class="caret"></span></a>
 		          <ul class="dropdown-menu" role="menu">
 		            <li><a href="#">My List</a></li>
 		            <li><a href="#">My Info</a></li>
-		            <li><a href="../login.jsp">Log out</a></li>
+		            <li><a href="../index.jsp">Log out</a></li>
 		          </ul>
 		        </li>
 		      </ul>
@@ -281,122 +295,75 @@ ul li a:hover, ul li a:focus {
 	<aside>
 	<!-- 하단 -->
 		<!-- 좌측 서브 메뉴 -->
-		<div align="center">
-			<button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../schedule/addschedule.jsp' ">스케줄 등록</button>
+		<form action="../phonebook/searchphonebook.jsp" method="post">
+			<div align="center">
+				<input type="text" name="searchtitle" style="width: 236px" placeholder="찾고싶은 이름을 입력하세요.">
+				<input TYPE="IMAGE" src="../icon/search-g.png" id="submit" name="Submit" value="Submit"  align="absmiddle" height="26px" width="26px" style="padding-left: 2px">
+
+			</div>	
+		</form>	
+		<div align="center" style="padding-top: 10px">
+			<button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../phonebook/addphonebook.jsp' " >연락처 등록</button>
 		</div>
 	<br>
 		<div id="calendar-mini"></div>
+	<!-- btn1 -->
+	<div style="padding: 10px" class="tablediv">	
 	
-	<div style="padding: 10px" class="tablediv">
-			<table style="padding-top: 10px">
-				<tr>
-					<td>　</td>
-				</tr>
-				<tr>
-					<td style="width: 300px"><button type="button" class="btn btn-primary btn-lg btn-block">중요일정보기</button></td>
-				</tr>
-				<tr>
-					<td>
-				</tr>
+		<table style="padding-top: 10px">
+			<tr>
+				<td>　</td>
+			</tr>
 			
-			</table>
-		</div>
+			<tr>
+				<td>
+			</tr>
+			
+		</table>	
+			
+	</div>
 	</aside>
 		
 			
 	<!-- 우측 본문 -->
-	<article style="padding: 20px">
-		<form action="addscheduleAf.jsp" method="post">
-			<table class="table table-striped" style="height: 634px;" >
-	  			<col width="10%"><col width="30%"><col width="10%"><col width="30%">
-	  			<tr bgcolor="#f9f9f9" >
-	  				<td class="first">제목</td>
-	  				<td><input type="text" name="title" style="width: 100%"></td>
-	  				<td><input type="checkbox" name="important"> 중요</td>  
-	  				<td></td>				
-	  			</tr>
-	  			<tr>
-	  				<td class="first">시작일</td>
-	  				<td>
-		  				<div class='input-group date' id='datetimepicker1'>
-		                    <input type='text' class="form-control"  name="startdate" />
-		                    <span class="input-group-addon">
-		                        <span class="glyphicon glyphicon-calendar"></span>
-		                    </span>
-		                </div>
-	                </td>
-	                <td></td>
-	                <td></td>
-	            </tr>
-	            <tr>
-	  				<td class="first">종료일</td>
-	  				<td>
-		  				<div class='input-group date' id='datetimepicker2'>
-		                    <input type='text' class="form-control"  name="enddate" />
-		                    <span class="input-group-addon">
-		                        <span class="glyphicon glyphicon-calendar"></span>
-		                    </span>
-		                </div>
-	                </td>
-	                <td>
-	                <td>
-	  			</tr>
-	  			<tr>
-	  				<td class="first">범주</td>
-	  				<td>
-	  					<div class="btn-group">
-	  <input type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="colorbtn" class="colorbtn" 
-	   value ="Select Color"><!-- <span class="caret" ></span>	   -->
-	  <input type="hidden" value="Select Color" name="colorbtn" class="colorbtn">	  
-	  <ul class="dropdown-menu" role="menu">
-	    <li class="selectcolor"><a href="#" style="color: red">Red</a></li>
-	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: orange;">Orange</a></li>
-	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: yellow;">Yellow</a></li>
-	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: green;">Green</a></li>
-	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: blue;">Blue</a></li>
-	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: navy;">Navy</a></li>
-	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: purple;">Purple</a></li>
-	  </ul>
-	  <script type="text/javascript">
-	  	$(".selectcolor").click(function() {
-	  		
-	  		$("#colorbtn").val($(this).children().text());
-	  		$("#colorbtn").attr("style",$(this).children().attr("style"));
-	  		$(".colorbtn").val($(this).children().text());			
-	});
-	  </script>
-	</div>
-	  				</td>
-	  				<td></td>
-	  				<td></td>
-	  			</tr>
-	  			<tr>
-	  				<td class="first">내용</td>
-	  				<td><textarea rows="10" cols="47" name="content"></textarea></td>
-	  				<td></td>
-	  				<td></td>
-	  			</tr>
-	  			<tr>
-	  				<td class="first"></td>
-	  				<td></td>
-	  				<td></td>
-	  				<td>
-	  					<button type="button" class="btn btn-info" onclick="location='../schedule/schedulemain.jsp'">뒤로가기</button>
-	  					<input type="submit" class="btn btn-info" id="savebtn" value="저장">
-	  				</td>
-	  			</tr>
-			</table>
-		</form>
-	</article>
+	<article style="padding: 10px"> <!--150/250/300/350  -->
+	<table style= "padding: 10px; text-align: center">
+		<col width="130"><col width="230"><col width="280"><col width="330"><col width="60"><col width="60">
+		<tr class="phonetitle" >
+			<th style="text-align: center">이름</th>
+			<th style="text-align: center">생년월일</th>
+			<th style="text-align: center">전화번호</th>
+			<th style="text-align: center">이메일</th>
+			<th style="text-align: center">수정</th>
+			<th style="text-align: center">삭제</th>
+		</tr>
+		<%for(int i=0; i < plist.size(); i++){ %>
+			<tr class="phonedetail">
+				<td class="phonename"><%=plist.get(i).getName() %></td>
+				<td class="phonebirth"><%=plist.get(i).getBirth() %></td>
+				<td class="phonenumber"><%=plist.get(i).getPhone() %></td>
+				<td class="phoneemail"><%=plist.get(i).getEmail() %></td>
+				<td>
+					<form action="updatephonebook.jsp" method="post">
+						<input type="hidden" name="seq" value="<%=plist.get(i).getSeq() %>">
+						<input type="submit" class="btn btn-link" value="수정">				
+					</form>
+				</td>
+				<td>
+					<form action="deletephonebook.jsp" method="post">
+						<input type="hidden" name="seq" value="<%=plist.get(i).getSeq() %>">
+						<input type="submit" class="btn btn-link" value="삭제">				
+					</form>
+				</td>
+			</tr>		
+		<%
+		}
+		%>	
+	</table>
 		
-	<footer>Copyright &copy; BizPayDay</footer>
-	
-	
+	</article>
+	<div class="footer navbar-fixed-bottom">	
+		<footer >Copyright &copy; BizPayDay</footer>
+	</div>
 </body>
 </html>

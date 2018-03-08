@@ -40,6 +40,7 @@ if(session.getAttribute("login") != null){
 }
 %>
 <%
+
 iScheduleDAO dao = ScheduleDAO.getInstance();
 List<ScheduleDTO> list = dao.getAllSchedulList(id);
 
@@ -75,7 +76,7 @@ aside{
 }
 
 td.first{
-	
+	vertical-align: middle;
 	text-align: center;
 
 }
@@ -161,31 +162,13 @@ ul li a:hover, ul li a:focus {
 
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap-formhelpers-phone.js"></script>
 
 <!-- bootstrap date Picker -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $('#datetimepicker1').datetimepicker({
-        	format : 'YYYY-MM-DD HH:mm',
-        	locale: 'ko'
-        	
-        });
-        $('#datetimepicker2').datetimepicker({
-        	format : 'YYYY-MM-DD HH:mm',
-        	locale: 'ko',        	
-            useCurrent: false //Important! See issue #1075
-        });
-        $("#datetimepicker1").on("dp.change", function (e) {        	
-            $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
-        });
-        $("#datetimepicker2").on("dp.change", function (e) {
-            $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
-        });
-    });
-</script>
+
 
 <script type="text/javascript">
 
@@ -282,7 +265,7 @@ ul li a:hover, ul li a:focus {
 	<!-- 하단 -->
 		<!-- 좌측 서브 메뉴 -->
 		<div align="center">
-			<button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../schedule/addschedule.jsp' ">스케줄 등록</button>
+			<button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../phonebook/addphonebook.jsp' ">연락처 등록</button>
 		</div>
 	<br>
 		<div id="calendar-mini"></div>
@@ -292,9 +275,7 @@ ul li a:hover, ul li a:focus {
 				<tr>
 					<td>　</td>
 				</tr>
-				<tr>
-					<td style="width: 300px"><button type="button" class="btn btn-primary btn-lg btn-block">중요일정보기</button></td>
-				</tr>
+				
 				<tr>
 					<td>
 				</tr>
@@ -306,88 +287,40 @@ ul li a:hover, ul li a:focus {
 			
 	<!-- 우측 본문 -->
 	<article style="padding: 20px">
-		<form action="addscheduleAf.jsp" method="post">
-			<table class="table table-striped" style="height: 634px;" >
+		<form action="addphonebookAf.jsp" method="post">
+			<table class="table table-striped" style="height: 634px;" valign="middle" >
 	  			<col width="10%"><col width="30%"><col width="10%"><col width="30%">
 	  			<tr bgcolor="#f9f9f9" >
-	  				<td class="first">제목</td>
-	  				<td><input type="text" name="title" style="width: 100%"></td>
-	  				<td><input type="checkbox" name="important"> 중요</td>  
-	  				<td></td>				
+	  				<td class="first" valign="middle">이름</td>
+	  				<td><input type="text" name="name" style="width: 100%"></td>
+	  				<td></td>
+	  				<td></td>
 	  			</tr>
 	  			<tr>
-	  				<td class="first">시작일</td>
-	  				<td>
-		  				<div class='input-group date' id='datetimepicker1'>
-		                    <input type='text' class="form-control"  name="startdate" />
-		                    <span class="input-group-addon">
-		                        <span class="glyphicon glyphicon-calendar"></span>
-		                    </span>
-		                </div>
-	                </td>
+	  				<td class="first">생년월일</td>
+	  				<td><input type="text" name="birth" class="input-medium bfh-phone" data-format="dddd-dd-dd"></td>
 	                <td></td>
 	                <td></td>
 	            </tr>
 	            <tr>
-	  				<td class="first">종료일</td>
-	  				<td>
-		  				<div class='input-group date' id='datetimepicker2'>
-		                    <input type='text' class="form-control"  name="enddate" />
-		                    <span class="input-group-addon">
-		                        <span class="glyphicon glyphicon-calendar"></span>
-		                    </span>
-		                </div>
-	                </td>
-	                <td>
-	                <td>
+	  				<td class="first">전화번호</td>
+	  				<td><input type="text" name="phone" class="input-medium bfh-phone" data-format="ddd-dddd-dddd"></td>
+	                <td></td>
+	                <td></td>	
 	  			</tr>
 	  			<tr>
-	  				<td class="first">범주</td>
-	  				<td>
-	  					<div class="btn-group">
-	  <input type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="colorbtn" class="colorbtn" 
-	   value ="Select Color"><!-- <span class="caret" ></span>	   -->
-	  <input type="hidden" value="Select Color" name="colorbtn" class="colorbtn">	  
-	  <ul class="dropdown-menu" role="menu">
-	    <li class="selectcolor"><a href="#" style="color: red">Red</a></li>
-	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: orange;">Orange</a></li>
-	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: yellow;">Yellow</a></li>
-	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: green;">Green</a></li>
-	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: blue;">Blue</a></li>
-	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: navy;">Navy</a></li>
-	    <li class="divider"></li>
-	    <li class="selectcolor"><a href="#" style="color: purple;">Purple</a></li>
-	  </ul>
-	  <script type="text/javascript">
-	  	$(".selectcolor").click(function() {
-	  		
-	  		$("#colorbtn").val($(this).children().text());
-	  		$("#colorbtn").attr("style",$(this).children().attr("style"));
-	  		$(".colorbtn").val($(this).children().text());			
-	});
-	  </script>
-	</div>
-	  				</td>
+	  				<td class="first">이메일</td>
+	  				<td><input type="email" name="email" style="width: 100%" placeholder="xxxx@xxxx.xxx 형식으로 입력하세요."></td>
 	  				<td></td>
 	  				<td></td>
 	  			</tr>
-	  			<tr>
-	  				<td class="first">내용</td>
-	  				<td><textarea rows="10" cols="47" name="content"></textarea></td>
-	  				<td></td>
-	  				<td></td>
-	  			</tr>
+	  			
 	  			<tr>
 	  				<td class="first"></td>
 	  				<td></td>
 	  				<td></td>
 	  				<td>
-	  					<button type="button" class="btn btn-info" onclick="location='../schedule/schedulemain.jsp'">뒤로가기</button>
+	  					<button type="button" class="btn btn-info" onclick="location='../phonebook/phonebookMain.jsp'">뒤로가기</button>
 	  					<input type="submit" class="btn btn-info" id="savebtn" value="저장">
 	  				</td>
 	  			</tr>

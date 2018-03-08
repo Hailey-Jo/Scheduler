@@ -69,7 +69,52 @@ public class ScheduleDAO implements iScheduleDAO {
 		return list;
 
 	}
+	
+	@Override
+	public List<ScheduleDTO> getImportentSchedulList(String id) {
+		String sql = " SELECT SHECDELE_SEQ, ID, TITLE, STARTDATE, "
+				+ " ENDDATE, CONTENT, DEL "
+				+ " FROM SCHEDULE WHERE ID = '"+id+"' AND IMPORTANT= 1";
+		
+		System.out.println("1/6 getImportentSchedulList");
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<ScheduleDTO> list = new ArrayList<ScheduleDTO>();
+		
+		try {
+			conn = DBConnection.makeConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			
+			System.out.println("2/6 getImportentSchedulList");
+			
+			while(rs.next()) {
+				ScheduleDTO sDTO = new ScheduleDTO();
+				
+				sDTO.setSeq(rs.getInt("SHECDELE_SEQ"));
+				sDTO.setId(rs.getString("id"));
+				sDTO.setTitle(rs.getString("title"));
+				sDTO.setStartDate(rs.getString("startDate"));
+				sDTO.setEndDate(rs.getString("enddate"));
+				sDTO.setContent(rs.getString("content"));
+				sDTO.setDel(rs.getInt("del"));
+				
+				list.add(sDTO);
+			}
+			System.out.println("3/6 getImportentSchedulList");
+		} catch (SQLException e) {
+			System.out.println("F getImportentSchedulList");
+			e.printStackTrace();
+		} finally {
+			System.out.println("4/6 getImportentSchedulList");
+			DBClose.close(psmt, conn, rs);
+		}
+		return list;
 
+	}
 	@Override
 	public boolean addSchedule(ScheduleDTO dto) {
 		String sql = "INSERT INTO SCHEDULE VALUES(SHECDELE_SEQ.NEXTVAL, ?,?,to_date(?,'YYYY-MM-DD HH24:MI'),to_date(?,'YYYY-MM-DD HH24:MI'),?,?,?,0)";
@@ -213,6 +258,56 @@ public class ScheduleDAO implements iScheduleDAO {
 		}
 		System.out.println("4/6 deleteSchedule");
 		return count>0? true:false;
+	}
+
+	@Override
+	public List<ScheduleDTO> searchSchedule(String searchtitle, String id) {
+		
+		String stitle = "%"+searchtitle+"%";
+
+		String sql = " SELECT SHECDELE_SEQ, ID, TITLE, STARTDATE, "
+				+ " ENDDATE, CATEGORY, CONTENT, IMPORTANT, DEL "
+				+ " FROM SCHEDULE WHERE ID = ? AND TITLE LIKE ?";
+		
+		List<ScheduleDTO> list = new ArrayList<ScheduleDTO>();
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		
+		try {
+			conn = DBConnection.makeConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, id);
+			psmt.setString(2, stitle);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ScheduleDTO dto = new ScheduleDTO();
+				dto.setSeq(rs.getInt(1));
+				dto.setId(rs.getString(2));
+				dto.setTitle(rs.getString(3));
+				dto.setStartDate(rs.getString(4));
+				dto.setEndDate(rs.getString(5));
+				dto.setCategory(rs.getString(6));
+				dto.setContent(rs.getString(7));
+				dto.setImportant(rs.getInt(8));
+				dto.setDel(rs.getInt(9));
+				
+				list.add(dto);
+			}
+			/*String sql = " SELECT SHECDELE_SEQ, ID, TITLE, STARTDATE, "
+					+ " ENDDATE, CATEGORY, CONTENT, IMPORTANT, DEL "
+					+ " FROM SCHEDULE WHERE TITLE = ?";*/
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		return list;
 	}
 
 }

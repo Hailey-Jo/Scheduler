@@ -1,3 +1,4 @@
+<%@page import="User.userDTO"%>
 <%@page import="User.userDAO"%>
 <%@page import="User.iuserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -9,35 +10,27 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 <%
-String id = request.getParameter("id");
-String email = request.getParameter("email");
+userDTO user_dto = (userDTO)session.getAttribute("login");
 
-System.out.println("af id:" + id);
-System.out.println("af email:" + email);
-
-
+String id = user_dto.getId();
+String new_pwd = request.getParameter("new_pwd");
+System.out.println("new_pwd: "+new_pwd);
 iuserDAO dao = userDAO.getInstance();
-String finded_pw = dao.findPw(id, email);
-
-boolean isS = false;
-String find_mg = "";
-
-if(finded_pw==null){
-	find_mg = "정보를 다시 확인해 주세요";
-}else{
-	isS = dao.pwd_send_email(id, email, finded_pw);
-	find_mg = "가입시 입력된 메일로 발송 되었습니다";
-}
-
+boolean isS = dao.pwd_change(id, new_pwd);
 
 if(isS){
 %>
 <script type="text/javascript">
+alert("비밀번호가 변경되었습니다");
+location.href = "login.jsp"
 </script>
-<%=find_mg %>
 <%	}else{	%>
-alert("메일 발송 실패")
+<script type="text/javascript">
+alert("비밀번호 변경에 실패했습니다");
+location.href = "password_change.jsp";
+</script>
 <%	}	%>
 
 </body>
