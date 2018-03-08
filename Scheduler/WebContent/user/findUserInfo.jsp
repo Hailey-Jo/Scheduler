@@ -92,6 +92,10 @@
   </div>
 </div>
 
+<div align="center">
+<button class="btn btn-warning" onclick="location.href='../index.jsp'">뒤로가기</button>
+</div>
+
 
 <!-- 아이디 찾기 modal -->
 <div class="modal fade" id="findId" role="dialog">

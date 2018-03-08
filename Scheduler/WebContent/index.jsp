@@ -301,76 +301,19 @@ border-bottom:3px solid #78788c
 					class="fontawesome-ok-circle"></span>
 			</p>
 			<p class="text--center">
-				<a href="javascript:findclick();">아이디나 비밀번호를 잊으셨나요? </a> <span
+				<a href="./user/findUserInfo.jsp">아이디나 비밀번호를 잊으셨나요? </a> <span
 					class="fontawesome-exclamation-sign"></span>
 			</p>
 			
 			<p class="text--center">
-				<label style="cursor: pointer;">로그인 유지하기  <input type="checkbox" name="save_login" id="save_login">
+				<label style="cursor: pointer;">아이디 저장하기  <input type="checkbox" name="save_login" id="save_login">
 				</label> 
 				<span class="fontawesome-exclamation-sign"></span>
 			</p>
 		</div>
-
 	</div>
 
-	<!-- 아이디 비밀번호찾기 모달 -->
-	<div id="myModal" class="findinfo">
-
-		<!-- 모달 내용 -->
-		<div class="modal-content">
-		
-
-			<div class="modal__container">
-			<span class="close">&times</span>
-			
-				
-				<h2>아이디 찾기</h2>
-				<form action="./login/findAf.jsp">
-					<input class="modal__input" type="text" name="input-name" placeholder="이름">
-					<br>
-					<input class="modal__input" type="text" name="input-birth" placeholder="생년월일">
-	
-					<br>
-					<br> <br>
-					<br> <input type="submit" value="아이디 찾기">
-				</form>
-				
-				<br><br>							
-				<h2>비밀번호 찾기</h2>
-				<form action="">
-
-					<input class="modal_input" type="text" name="input-id" placeholder="아이디">
-					<br>
-					<input class="modal_input" type="text" name="input-email" placeholder="이메일">
-
-				<br>
-				<br> <br>
-				<br> <input type="submit" value="비밀번호 찾기">
-			</form>
-			</div>
-		</div>
-	</div>
-
-	<script type="text/javascript">
-		var modal = document.getElementById("myModal");
-
-		var span = document.getElementsByClassName("close")[0];
-
-		function findclick() {
-			modal.style.display = "block";
-		}
-
-		span.onclick = function() {
-			modal.style.display = "none";
-		}
-
-		window.onclick = function(event) {
-			if (event.target == modal) {
-				modal.style.display = "none";
-			}
-
-		}		
+	<script type="text/javascript">	
 
 		var user_id = $.cookie("user_id");
 		if(user_id != null){

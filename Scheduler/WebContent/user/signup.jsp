@@ -282,7 +282,7 @@
 				
 				<div class="form-group col-sm-offset-4">
 					<button type="submit" class="btn btn-info" id="signup" disabled='disabled'>회원가입</button>
-					<button type="button" class="btn btn-warning" onclick="location.href='login.jsp'">뒤로가기<i class="fa fa-times spaceLeft"></i></button>
+					<button type="button" class="btn btn-warning" onclick="location.href='../index.jsp'">뒤로가기<i class="fa fa-times spaceLeft"></i></button>
 				</div>
 				
 				<script type="text/javascript">
