@@ -25,7 +25,7 @@ if(checkID== true) {
 }else if(userID.length()==0){
 	b_id = "";
 }else{
-	b_id = "사용 가능한 아이디 입니다";
+	b_id = "중복되지 않은 아이디 입니다";
 }
 
 %>
