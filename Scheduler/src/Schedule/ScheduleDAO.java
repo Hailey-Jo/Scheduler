@@ -69,7 +69,52 @@ public class ScheduleDAO implements iScheduleDAO {
 		return list;
 
 	}
+	
+	@Override
+	public List<ScheduleDTO> getImportentSchedulList(String id) {
+		String sql = " SELECT SHECDELE_SEQ, ID, TITLE, STARTDATE, "
+				+ " ENDDATE, CONTENT, DEL "
+				+ " FROM SCHEDULE WHERE ID = '"+id+"' AND IMPORTANT= 1";
+		
+		System.out.println("1/6 getImportentSchedulList");
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<ScheduleDTO> list = new ArrayList<ScheduleDTO>();
+		
+		try {
+			conn = DBConnection.makeConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			
+			System.out.println("2/6 getImportentSchedulList");
+			
+			while(rs.next()) {
+				ScheduleDTO sDTO = new ScheduleDTO();
+				
+				sDTO.setSeq(rs.getInt("SHECDELE_SEQ"));
+				sDTO.setId(rs.getString("id"));
+				sDTO.setTitle(rs.getString("title"));
+				sDTO.setStartDate(rs.getString("startDate"));
+				sDTO.setEndDate(rs.getString("enddate"));
+				sDTO.setContent(rs.getString("content"));
+				sDTO.setDel(rs.getInt("del"));
+				
+				list.add(sDTO);
+			}
+			System.out.println("3/6 getImportentSchedulList");
+		} catch (SQLException e) {
+			System.out.println("F getImportentSchedulList");
+			e.printStackTrace();
+		} finally {
+			System.out.println("4/6 getImportentSchedulList");
+			DBClose.close(psmt, conn, rs);
+		}
+		return list;
 
+	}
 	@Override
 	public boolean addSchedule(ScheduleDTO dto) {
 		String sql = "INSERT INTO SCHEDULE VALUES(SHECDELE_SEQ.NEXTVAL, ?,?,to_date(?,'YYYY-MM-DD HH24:MI'),to_date(?,'YYYY-MM-DD HH24:MI'),?,?,?,0)";
@@ -214,5 +259,4 @@ public class ScheduleDAO implements iScheduleDAO {
 		System.out.println("4/6 deleteSchedule");
 		return count>0? true:false;
 	}
-
 }
