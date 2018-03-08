@@ -13,6 +13,7 @@ String eventstring = "";
 String id = "";
 String pic = "";
 String imgPath = "";
+
 String serverPath = request.getRequestURL().substring(0,request.getRequestURL().indexOf(request.getRequestURI()));
 String packagePath = request.getContextPath();
 userDTO user = new userDTO();
@@ -62,8 +63,7 @@ for(int i=0; i<list.size();i++){
 
 String birth = user.getBirth();
 String name = user.getName();
-System.out.println("birth: " + birth);
-System.out.println("name: " + name);
+
 
 String syear = birth.substring(0, 4);
 int year = Integer.parseInt(syear.trim());
@@ -514,6 +514,7 @@ ul li a:hover, ul li a:focus {
 		<div align="center" style="padding-top: 10px">
 			<button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../schedule/addschedule.jsp' " >스케줄 등록</button>
 		</div>
+		<a href="../phonebook/phonebookMain.jsp">연락처</a>
 	<br>
 		<div id="calendar-mini"></div>
 	<!-- btn1 -->
