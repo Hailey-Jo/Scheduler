@@ -800,8 +800,8 @@ function scheduleChoice(num, id, distinct, color, text) {
 				<!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
 				  Launch Modal window
 				</button> -->
-				<button type="button" id="btnInPrice" data-backdrop="static" data-keyboard="false" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#inCashMyModal">　　수입　　</button>
-				<button type="button" id="btnOutPrice" data-backdrop="static" data-keyboard="false" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#outCashMyModal">　　지출　　</button>
+				<button type="button" id="btnInPrice" data-backdrop="static" data-keyboard="false" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#inCashMyModal" style="width: 130px;">수입</button>
+				<button type="button" id="btnOutPrice" data-backdrop="static" data-keyboard="false" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#outCashMyModal" style="width: 130px;">지출</button>
 				<hr>
 			</div>
 		</div>

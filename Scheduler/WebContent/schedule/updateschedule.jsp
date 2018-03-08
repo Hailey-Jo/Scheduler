@@ -295,9 +295,12 @@ ul li a:hover, ul li a:focus {
 			</div>
 			<div class="topMenu_icon" align="center" style=" float: left; width: 40%;">
 				<ul>
-					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/home-n.png" onmouseover='this.src="../icon/home-w.png"' onmouseout='this.src="../icon/home-n.png"' ></a></li>
-					<li><a class="menuLink" href="../schedule/schedulemain.jsp"><img src="../icon/schedule-w.png" onmouseover='this.src="../icon/schedule-w.png"' onmouseout='this.src="../icon/schedule-w.png"' ></a></li>
-					<li><a class="menuLink" href="../cashbook/cashbookMain.jsp"><img src="../icon/cash-n.png" onmouseover='this.src="../icon/cash-w.png"' onmouseout='this.src="../icon/cash-n.png"'></a></li>
+					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/ic_home_white_36px.svg" onmouseover='this.src="../icon/ic_home_black_36px.svg"' onmouseout='this.src="../icon/ic_home_white_36px.svg"'></a></li>
+					<li><a class="menuLink" href="../schedule/schedulemain.jsp"><img src="../icon/ic_event_available_white_36px.svg"></a></li>
+					<li><a class="menuLink" href="../cashbook/cashbookMain.jsp"><img src="../icon/ic_assessment_white_36px.svg" onmouseover='this.src="../icon/ic_assessment_black_36px.svg"' onmouseout='this.src="../icon/ic_assessment_white_36px.svg"'></a></li>
+					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_cloud_download_white_36px.svg" onmouseover='this.src="../icon/ic_cloud_download_black_36px.svg"' onmouseout='this.src="../icon/ic_cloud_download_white_36px.svg"'></a></li>
+					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_phone_white_36px.svg" onmouseover='this.src="../icon/ic_local_phone_black_36px.svg"' onmouseout='this.src="../icon/ic_phone_white_36px.svg"'></a></li>
+				
 				</ul>
 			</div>
 			<div class="login_info" style=" float: left; width: 18%; height: 30px;">
@@ -319,7 +322,8 @@ ul li a:hover, ul li a:focus {
 		<!-- 하단 -->
 		<!-- 좌측 서브 메뉴 -->
 		<div align="center">
-			<button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../schedule/addschedule.jsp' ">스케줄 등록</button>
+			<!-- <button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../schedule/addschedule.jsp' ">스케줄 등록</button> -->
+			<button type="button" class="btn btn-primary btn-sm" style="width: 260px;" onclick = "location.href = '../schedule/addschedule.jsp' ">스케줄 등록</button>
 		</div>
 		<br>
 		<div id="calendar-mini"></div>
@@ -330,8 +334,10 @@ ul li a:hover, ul li a:focus {
 					<td></td>
 				</tr>
 				<tr>
-					<td style="width: 300px"><button type="button"
-							class="btn btn-primary btn-lg btn-block">중요일정보기</button></td>
+					<!-- <td style="width: 300px"><button type="button"
+							class="btn btn-primary btn-lg btn-block">중요일정보기</button></td> -->
+							
+					<td align="center"><button type="button" class="btn btn-primary btn-sm" style="width: 260px;">중요일정보기</button></td>
 				</tr>
 				<tr>
 					<td>
@@ -460,7 +466,9 @@ ul li a:hover, ul li a:focus {
 		</form>
 	</article>
 		
-	<footer>Copyright &copy; BizPayDay</footer>
+	<div class="footer navbar-fixed-bottom">
+		<footer>Copyright &copy; BizPayDay</footer>
+	</div>
 	
 	
 </body>

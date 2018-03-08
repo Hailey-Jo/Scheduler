@@ -245,7 +245,7 @@ ul li a:hover, ul li a:focus {
 					<li><a class="menuLink" href="../schedule/schedulemain.jsp"><img src="../icon/ic_event_available_white_36px.svg" onmouseover='this.src="../icon/ic_event_available_black_36px.svg"' onmouseout='this.src="../icon/ic_event_available_white_36px.svg"'></a></li>
 					<li><a class="menuLink" href="../cashbook/cashbookMain.jsp"><img src="../icon/ic_assessment_white_36px.svg" onmouseover='this.src="../icon/ic_assessment_black_36px.svg"' onmouseout='this.src="../icon/ic_assessment_white_36px.svg"'></a></li>
 					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_cloud_download_white_36px.svg" onmouseover='this.src="../icon/ic_cloud_download_black_36px.svg"' onmouseout='this.src="../icon/ic_cloud_download_white_36px.svg"'></a></li>
-					<li><a class="menuLink" href="#"><img src="../icon/ic_phone_white_36px.svg" ></a></li>
+					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_phone_white_36px.svg" ></a></li>
 					
 				</ul>
 			</div>
@@ -334,7 +334,9 @@ ul li a:hover, ul li a:focus {
 		</form>
 	</article>
 		
-	<footer>Copyright &copy; BizPayDay</footer>
+	<div class="footer navbar-fixed-bottom">
+		<footer>Copyright &copy; BizPayDay</footer>
+	</div>
 	
 	
 </body>

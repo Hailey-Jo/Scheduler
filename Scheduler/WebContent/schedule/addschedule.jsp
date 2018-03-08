@@ -259,7 +259,7 @@ ul li a:hover, ul li a:focus {
 			<div class="topMenu_icon" align="center" style=" float: left; width: 40%;">
 				<ul>
 					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/ic_home_white_36px.svg" onmouseover='this.src="../icon/ic_home_black_36px.svg"' onmouseout='this.src="../icon/ic_home_white_36px.svg"'></a></li>
-					<li><a class="menuLink" href="#"><img src="../icon/ic_event_available_white_36px.svg"></a></li>
+					<li><a class="menuLink" href="../schedule/schedulemain.jsp"><img src="../icon/ic_event_available_white_36px.svg"></a></li>
 					<li><a class="menuLink" href="../cashbook/cashbookMain.jsp"><img src="../icon/ic_assessment_white_36px.svg" onmouseover='this.src="../icon/ic_assessment_black_36px.svg"' onmouseout='this.src="../icon/ic_assessment_white_36px.svg"'></a></li>
 					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_cloud_download_white_36px.svg" onmouseover='this.src="../icon/ic_cloud_download_black_36px.svg"' onmouseout='this.src="../icon/ic_cloud_download_white_36px.svg"'></a></li>
 					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_phone_white_36px.svg" onmouseover='this.src="../icon/ic_local_phone_black_36px.svg"' onmouseout='this.src="../icon/ic_phone_white_36px.svg"'></a></li>
@@ -366,6 +366,8 @@ ul li a:hover, ul li a:focus {
 	    <li class="selectcolor"><a href="#" style="color: navy">Navy</a></li>
 	    <li class="divider"></li>
 	    <li class="selectcolor"><a href="#" style="color: purple">Purple</a></li>
+	    
+	    
 	  </ul>
 	  <script type="text/javascript">
 	  	$(".selectcolor").click(function() {
@@ -401,7 +403,9 @@ ul li a:hover, ul li a:focus {
 		</form>
 	</article>
 		
-	<footer>Copyright &copy; BizPayDay</footer>
+	<div class="footer navbar-fixed-bottom">
+		<footer>Copyright &copy; BizPayDay</footer>
+	</div>
 	
 	
 </body>

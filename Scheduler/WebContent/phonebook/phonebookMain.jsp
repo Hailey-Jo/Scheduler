@@ -279,7 +279,7 @@ tr.phonedetail td{
 					<li><a class="menuLink" href="../schedule/schedulemain.jsp"><img src="../icon/ic_event_available_white_36px.svg" onmouseover='this.src="../icon/ic_event_available_black_36px.svg"' onmouseout='this.src="../icon/ic_event_available_white_36px.svg"'></a></li>
 					<li><a class="menuLink" href="../cashbook/cashbookMain.jsp"><img src="../icon/ic_assessment_white_36px.svg" onmouseover='this.src="../icon/ic_assessment_black_36px.svg"' onmouseout='this.src="../icon/ic_assessment_white_36px.svg"'></a></li>
 					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_cloud_download_white_36px.svg" onmouseover='this.src="../icon/ic_cloud_download_black_36px.svg"' onmouseout='this.src="../icon/ic_cloud_download_white_36px.svg"'></a></li>
-					<li><a class="menuLink" href="#"><img src="../icon/ic_phone_white_36px.svg" ></a></li>
+					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_phone_white_36px.svg" ></a></li>
 				
 				</ul>
 			</div>
@@ -312,7 +312,7 @@ tr.phonedetail td{
 		
 		<div align="center" style="padding-top: 10px">
 			<!-- <button type="button" class="btn btn-info" style="width: 260px" onclick = "location.href = '../phonebook/addphonebook.jsp' " >연락처 등록</button> -->
-			<button type="button" class="btn btn-primary btn-sm" data-target="#importantmodal" style="width: 260px;" onclick = "location.href = '../phonebook/addphonebook.jsp' ">연락처 등록</button>
+			<button type="button" class="btn btn-primary btn-sm" style="width: 260px;" onclick = "location.href = '../phonebook/addphonebook.jsp' ">연락처 등록</button>
 		</div>
 	<br>
 		<div id="calendar-mini"></div>
