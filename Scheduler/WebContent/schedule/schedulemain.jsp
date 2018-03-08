@@ -332,6 +332,9 @@ ul li a:hover, ul li a:focus {
 				}
 	        }
        	    , dayClick: function(date, allDay, jsEvent, view) {
+       	    	alert(date.format());
+       	    	$('#modalTitle').html("");
+				$('#modalBody').html("일정을등록하시려면 EventPage 버튼을 눌러주세요");
        	    	$('#eventUrl').attr('href','addschedule.jsp');
        	    	$('#fullCalModal').modal();
        	    }     	   
