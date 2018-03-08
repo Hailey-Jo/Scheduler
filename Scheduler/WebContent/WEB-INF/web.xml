@@ -17,7 +17,7 @@
   
   <servlet-mapping>
     <servlet-name>filedown</servlet-name>
-    <url-pattern>/filedown</url-pattern>  
+    <url-pattern>/pds/filedown</url-pattern>  
   </servlet-mapping>
 </web-app>
 

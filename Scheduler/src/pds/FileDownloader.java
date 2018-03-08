@@ -64,9 +64,9 @@ public class FileDownloader extends HttpServlet {
 			user = (userDTO) session.getAttribute("login");
 			
 			//user folder
-			String serverPath = req.getRequestURL().substring(0,req.getRequestURL().indexOf(req.getRequestURI()));
+			//String serverPath = req.getRequestURL().substring(0,req.getRequestURL().indexOf(req.getRequestURI()));
 			
-			filePath = serverPath+File.separator+"img"+File.separator+user.getId()+File.separator+"tmp"+File.separator+filename;
+			filePath = "c:"+File.separator+"upload"+File.separator+user.getId()+File.separator+"tmp";
 		}
 		
 		try {
