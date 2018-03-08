@@ -74,6 +74,9 @@ aside{
 }
 
 </style>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+
 <link rel="stylesheet" type="text/css" href="./css/mainHeader.css">
 <link rel="stylesheet" type="text/css" href="./css/calendar.css">  
 <!-- 합쳐지고 최소화된 최신 CSS -->
@@ -194,30 +197,37 @@ window.onload = function () {
 	</header>
 
 	<!-- left -->
-	<div class="col-md-3" style="height:90vh; background-color:gray;">
+	<div class="col-md-3" style="height:90vh; background-color:#fff; border-right: 1px solid #e6e6e6;">
 	 	<div class="row row-centered" style="height: 80vh; padding:20px;">
 			<div><img src="<%=imgPath%>" class="img-thumbnail" style="height: 200px;"></img></div>
-			<div><br><p align="center"><font size="3" color="white"><%=id %> 님 즐거운 하루 되세요!</font></p></div>
-			<div class="col-md-12" style="padding:5px;">
-				<button type="button" class="btn btn-defult" style="padding: 1px; width: 100px; height: 50px;" onclick="location.href='./schedule/schedulemain.jsp'">나의 일정</button>&nbsp;&nbsp;&nbsp;
-				<button type="button" class="btn btn-defult" style="padding: 1px; width: 100px; height: 50px;" onclick="location.href='./cashbook/cashbookMain.jsp'">나의 가계</button>
+			<div><br><p align="center"><font size="3" color="#ccc"><%=id %></font></p></div>
+			
+			<div class="col-md-12" style="padding:5px; position: absolute; bottom: 150px; left: 0;" >
+				<a href="./schedule/schedulemain.jsp" data-toggle="tooltip" data-placement="top" title="일정관리"><img src="./icon/mainicon/if_calendar.svg" style="width: 40px; height: auto;"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="./cashbook/cashbookMain.jsp" data-toggle="tooltip" data-placement="top" title="가계부"><img src="./icon/mainicon/if_cashbook.svg" style="width: 40px; height: auto;"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="./pds/pdslist.jsp" data-toggle="tooltip" data-placement="top" title="클라우드" ><img src="./icon/mainicon/if_pds.svg" style="width: 40px; height: auto;"></a>
+			</div><br><br><br>
+			<div class="col-md-12" style="padding:5px; position: absolute; bottom: 60px; left: 0;" >
+				<a href="./phonebook/phonebookMain.jsp" data-toggle="tooltip" data-placement="top" title="연락처"><img src="./icon/mainicon/if_phone.svg" style="width: 40px; height: auto;"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="#" data-toggle="tooltip" data-placement="top" title="내정보" ><img src="./icon/mainicon/if_mymodi.svg" style="width: 40px; height: auto;"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="index.jsp" data-toggle="tooltip" data-placement="top" title="로그아웃"><img src="./icon/mainicon/if_logout.svg" style="width: 40px; height: auto;"></a>
 			</div><br>
-			<div class="col-md-12" style="padding:5px;">
-				 <button type="button" class="btn btn-defult"style="padding: 1px; width: 100px; height: 50px;" onclick="location.href='#'">전화번호부</button>&nbsp;&nbsp;&nbsp;
-				 <button type="button" class="btn btn-defult"style="padding: 1px; width: 100px; height: 50px;" onclick="location.href='./pds/pdslist.jsp'">자료실</button>
-			</div><br>
-			<div class="col-md-12" style="padding:5px;">
-				 <button type="button" class="btn btn-defult"style="padding: 1px; width: 100px; height: 50px;" onclick="location.href='#'">정보수정</button>&nbsp;&nbsp;&nbsp;
-				 <button type="button" class="btn btn-defult"style="padding: 1px; width: 100px; height: 50px;" onclick="location.href='index.jsp'">로그아웃</button>
-			</div>
 		</div>
 	</div>
+	
+	    
+<!-- 아이콘 마우스오버 툴팁 -->
+	<script>
+	$(document).ready(function(){
+	    $('[data-toggle="tooltip"]').tooltip();   
+	});
+	</script>
 
 	<!-- 우측 본문 -->
-	<div class="col-md-9" style="height: 40vh;">
+	<div class="col-md-9" style="height: 40vh; ">
 		<div class="col-md-6" style="padding:5px;">
 		<!-- tobe -->
-			<p style="padding:3px; background-color: lightgray">이달의 중요일정</p>
+			<p style="padding:3px; background-color: #f2f2f2">이달의 중요일정</p>
 			<table class="table table-striped">
 			  <thead>
 			    <tr>
@@ -257,14 +267,14 @@ window.onload = function () {
 			</table>
 		</div>
 		<div class="col-md-6" style="padding:5px;">
-			<p style="padding:3px; background-color: lightgray">이달의 가계</p>
+			<p style="padding:3px; background-color: #f2f2f2">이달의 가계</p>
 			<div id="chartContainer" style="width:100%; height:200px;"></div>
 		</div>
 	</div>
 	<br>
 	<div class="col-md-9">
 		<div class="col-md-6" style="padding:5px;">
-			<p style="padding:3px; background-color: lightgray">연락처</p>
+			<p style="padding:3px; background-color: #f2f2f2">연락처</p>
 			<table class="table">
 			  <thead>
 			  	<tr>
@@ -302,7 +312,7 @@ window.onload = function () {
 			</table>
 		</div>
 		<div class="col-md-6" style="padding:5px;">
-			<p style="padding:3px; background-color: lightgray">자료실</p>
+			<p style="padding:3px; background-color: #f2f2f2">자료실</p>
 						<table class="table">
 			  <thead>
 			    <tr>
@@ -335,7 +345,6 @@ window.onload = function () {
 			</table>
 		</div>
 	</div>
-
 	<!-- footer -->
 	<div class="footer navbar-fixed-bottom">
 		<footer>Copyright &copy; BizPayDay</footer>
