@@ -13,42 +13,8 @@
 <%@page import="Schedule.ScheduleDAO"%>
 <%@page import="Schedule.iScheduleDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-String eventstring = "";
-String id = "";
-String pic = "";
-String imgPath = "";
-String serverPath = request.getRequestURL().substring(0,request.getRequestURL().indexOf(request.getRequestURI()));
-String packagePath = request.getContextPath();
-
-if(session.getAttribute("login") != null){
-
-	//user
-	userDTO user = new userDTO();
-	user = (userDTO)session.getAttribute("login");
-	
-	id = user.getId();
-	pic = user.getPic();
-	
-	if(pic==null){
-		imgPath = serverPath+packagePath+File.separator+"icon"+File.separator+"user-g.png";
-	}else{
-		imgPath = File.separator+"img"+File.separator+id+File.separator+pic;
-	}
-	
-}else{
-%>
-
-<script type="text/javascript">
-	alert("로그인 후 이용해 주세요.");
-	location.href="index.jsp";
-</script>
-<%	
-}
-%>
 <!DOCTYPE HTML>
 <html>
-
 <head>
 <style type="text/css">
 footer {
@@ -94,6 +60,48 @@ aside{
 <!-- chart -->
 <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+<script type="text/javascript">
+
+function logout(){
+    alert("일정시간이 지나 로그아웃 되었습니다.");
+    location.href="../index.jsp";
+}
+
+setTimeout("logout()",1000*600);
+</script>
+<%
+String eventstring = "";
+String id = "";
+String pic = "";
+String imgPath = "";
+String serverPath = request.getRequestURL().substring(0,request.getRequestURL().indexOf(request.getRequestURI()));
+String packagePath = request.getContextPath();
+
+if(session.getAttribute("login") != null){
+
+	//user
+	userDTO user = new userDTO();
+	user = (userDTO)session.getAttribute("login");
+	
+	id = user.getId();
+	pic = user.getPic();
+	
+	if(pic==null){
+		imgPath = serverPath+packagePath+File.separator+"icon"+File.separator+"user-g.png";
+	}else{
+		imgPath = File.separator+"img"+File.separator+id+File.separator+pic;
+	}
+	
+}else{
+%>
+
+<script type="text/javascript">
+	alert("로그인 후 이용해 주세요.");
+	location.href="index.jsp";
+</script>
+<%	
+}
+%>
 <%
 	TimeZone jst =TimeZone.getTimeZone ("JST");
 	Calendar cal =Calendar.getInstance (jst);

@@ -11,13 +11,13 @@
   </welcome-file-list>
   
   <servlet>
-  	<servlet-name>filedown</servlet-name>
-  	<servlet-class>pds.FileDownloader</servlet-class>
+      <servlet-name>filedown</servlet-name>
+      <servlet-class>pds.FileDownloader</servlet-class>
   </servlet>
   
   <servlet-mapping>
-	<servlet-name>filedown</servlet-name>
-	<url-pattern>/filedown</url-pattern>  
+    <servlet-name>filedown</servlet-name>
+    <url-pattern>/pds/filedown</url-pattern>  
   </servlet-mapping>
 </web-app>
 

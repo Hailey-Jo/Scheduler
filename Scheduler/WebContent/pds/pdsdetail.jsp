@@ -1,6 +1,6 @@
 <%@page import="pds.PdsDao"%>
-<%@page import="mem.MemberDao"%>
-<%@page import="mem.MemberDto"%>
+<%@page import="User.userDAO"%>
+<%@page import="User.userDTO"%>
 <%@page import="pds.PdsDto"%>
 
 <%@ page contentType="text/html; charset=utf-8" %>

@@ -335,6 +335,8 @@ div.barKategorie {
 				}
 	        }
        	    , dayClick: function(date, allDay, jsEvent, view) {
+       	    	$('#modalTitle').html("");
+				$('#modalBody').html("일정을 등록하시려면 EventPage를 눌러주세요.");
        	    	$('#eventUrl').attr('href','addschedule.jsp');
        	    	$('#fullCalModal').modal();
        	    }     	   
@@ -440,13 +442,7 @@ div.barKategorie {
 		    modalstr += 'if(startdate[i]==$(".monthbtn").attr("value")){'
 		    modalstr += 'if(important[i]==1){'
 	    	modalstr += '$("#importanttable tbody").append("<tr class="+"important"+"><td>"+fullstartdate[i]+"</td><td>"+fullenddate[i]+"</td><td>"+title[i]+"</td></tr>");';
-		    /* modalstr += '$("#importanttable tbody").append("<td>"+fullstartdate[i]+"</td>");';
-		    modalstr += '$("#importanttable tbody").append("<td>"+fullenddate[i]+"</td>");';
-		    modalstr += '$("#importanttable tbody").append("<td>"+title[i]+"</td>");';
-		    modalstr += '$("#importanttable tbody").append("</tr>");'; */
-		    
-		    modalstr += ' }';
-	//	    modalstr += '$(".titletr").append("</tr>");';
+		    modalstr += '}';	
 		    modalstr += '}';		    
 		    modalstr += '}';
 		    modalstr += '<\/script>';

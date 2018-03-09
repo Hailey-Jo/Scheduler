@@ -102,7 +102,8 @@ if(isMultipart){ //Multipart set true?
 			}
 		}else{ //fileload
 			if(item.getFieldName().equals("fileload")){
-				String saveUrl = fupload+id+"tmp"+File.separator;
+				String saveUrl = fupload+id+File.separator+"tmp"+File.separator;
+				System.out.println("PDS_FileUPload saveUrl==>"+saveUrl);
 				File file = new File(saveUrl); //upload/id/tmp/
 				
 				if (!file.exists()) {

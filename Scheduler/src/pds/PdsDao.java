@@ -9,13 +9,14 @@ import java.util.List;
 
 import db.DBClose;
 import db.DBConnection;
-import User.userDTO;
+import pds.PageingUtil;
+import pds.PagingBean;
 
 public class PdsDao implements iPdsDao {
 	
 	private static PdsDao pdsdao = new PdsDao();
 	
-	private PdsDao() {}
+	private PdsDao() {}	
 	
 	public static PdsDao getInstance() {
 		if(pdsdao == null){
@@ -256,6 +257,72 @@ public class PdsDao implements iPdsDao {
 		}
 		
 		return count>0?true:false;
+	}
+
+	@Override
+	public List<PdsDto> getPdsPagingList(PagingBean paging, String searchWord) {
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<PdsDto> pdslist = new ArrayList<>();
+		
+		//검색어
+		String sWord = "%" + searchWord.trim() + "%";
+		
+		try {
+			conn = DBConnection.makeConnection();
+			System.out.println("1/6 S getPdsPagingList");
+			
+			String totalSql = " SELECT COUNT(SEQ) FROM S_PDS WHERE TITLE LIKE '" + sWord + "'";
+			psmt = conn.prepareStatement(totalSql);
+			rs = psmt.executeQuery();
+			
+			int totalCount = 0;
+			rs.next();
+			totalCount = rs.getInt(1);	// row의 총 갯수
+			paging.setTotalCount(totalCount);
+			paging = PageingUtil.setPagingInfo(paging);
+			
+			psmt.close();
+			rs.close();
+			
+			String sql = " SELECT * FROM"
+					+ " (SELECT * FROM (SELECT * FROM S_PDS  WHERE TITLE LIKE '" + sWord + "' ORDER BY SEQ ASC) "
+					+ " WHERE ROWNUM <=" + paging.getStartNum() + " ORDER BY SEQ ASC) "
+					+ " WHERE ROWNUM <=" + paging.getCountPerPage();
+						
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 S getPdsPagingList");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 S getPdsPagingList");
+			
+			while(rs.next()){
+				int i = 1;
+				PdsDto dto = new PdsDto(
+						rs.getInt(i++),		// seq 
+						rs.getString(i++),	// id 
+						rs.getString(i++),  //title
+						rs.getString(i++), 	// content 
+						rs.getString(i++), 	// filename 
+						rs.getInt(i++),		// readcount 
+						rs.getInt(i++),		// downcount 
+						rs.getString(i++)); // regdate 
+
+						pdslist.add(dto);				
+			}	
+			System.out.println("4/6 S getPdsPagingList");
+			
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		} finally{
+			DBClose.close(psmt, conn, rs);
+			System.out.println("5/6 S getPdsPagingList");
+		}		
+		
+		return pdslist;
 	}
 	
 	
