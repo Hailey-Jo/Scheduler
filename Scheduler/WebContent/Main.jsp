@@ -169,9 +169,12 @@ window.onload = function () {
 		}],
 		animationEnabled: true,
 		locale: 'ko',
+		
+		
 		data: [{
 			type: "pie",
 			startAngle: 40,
+			fontSize: 10,
 			toolTipContent: "<b>{label}</b>: {y}%",
 			showInLegend: "true",
 			legendText: "{label}",
@@ -345,7 +348,7 @@ window.onload = function () {
 				for(int i=0; i<pdsList.size();i++){
 			    	if(i==5){
 			    %>
-			    	<tr><td colspan="3"><a href="./pds/pdslist.jsp" id=moreBtn class="badge badge-light" data-backdrop="static" data-keyboard="false" style="background-color: #fff; color: #777;">... 더보기</a></td></tr>
+			    	<tr><td colspan="4"><a href="./pds/pdslist.jsp" id=moreBtn class="badge badge-light" data-backdrop="static" data-keyboard="false" style="background-color: #fff; color: #777;">... 더보기</a></td></tr>
 			    <%
 			    		break;
 			    	}
