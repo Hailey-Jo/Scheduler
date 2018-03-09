@@ -83,10 +83,7 @@ if(pic==null){
 <link rel="stylesheet" type="text/css" href="../css/header.css?ver=2">
 <link rel="stylesheet" type="text/css" href="../css/calendar.css?ver=2">  
 <style type="text/css">
-#topMenu a:hover {
-	text-decoration:none;
-    background-color: #006699;
-}
+
 
 .form-control{
 	display : block;
@@ -162,11 +159,7 @@ div.barKategorie {
     border-radius:5px;
     font-weight:bold;
 }
-    
-ul li a:hover, ul li a:focus {  
-    color:#fff;  
-    background-color:#f40;  
-}  
+
 
 tr.phonetitle th{
 	background-color: #F6F6F6;
@@ -266,28 +259,23 @@ tr.phonedetail td{
 <!-- <div id ="main"> -->
 
 <!-- 상단 메뉴바 -->
-	<header>
-		<nav id="topMenu">
-			<div class="topMenu_siteTitle" style=" float: left; width: 40%;">
-				<ul>
-					<li><a href="../Main.jsp" style="color: white">BizPayDay</a></li>
+		<header>
+		<div class="row" id="header">
+			<div class="col-sm-4" id="headerTitle" style=" float: left;">BizPayDay</div>
+			<div class="col-sm-4" id="menuRow">
+				<ul style="list-style: none; ">
+					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/ic_home_white_36px.svg" onmouseover='this.src="../icon/ic_home_black_36px.svg"' onmouseout='this.src="../icon/ic_home_white_36px.svg"'></a></li>&nbsp;&nbsp;&nbsp;&nbsp;
+					<li><a class="menuLink" href="../schedule/schedulemain.jsp"><img src="../icon/ic_event_available_white_36px.svg" onmouseover='this.src="../icon/ic_event_available_black_36px.svg"' onmouseout='this.src="../icon/ic_event_available_white_36px.svg"'></a></li>&nbsp;&nbsp;&nbsp;&nbsp;
+					<li><a class="menuLink" href="../cashbook/cashbookMain.jsp"><img src="../icon/ic_assessment_white_36px.svg" onmouseover='this.src="../icon/ic_assessment_black_36px.svg"' onmouseout='this.src="../icon/ic_assessment_white_36px.svg"'></a></li>&nbsp;&nbsp;&nbsp;&nbsp;
+					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_cloud_download_white_36px.svg" onmouseover='this.src="../icon/ic_cloud_download_black_36px.svg"' onmouseout='this.src="../icon/ic_cloud_download_white_36px.svg"'></a></li>&nbsp;&nbsp;&nbsp;&nbsp;
+					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_phone_white_36px.svg" onmouseover='this.src="../icon/ic_local_phone_black_36px.svg"' onmouseout='this.src="../icon/ic_phone_white_36px.svg"'></a></li>&nbsp;&nbsp;&nbsp;&nbsp;
 				</ul>
 			</div>
-			<div class="topMenu_icon" align="center" style=" float: left; width: 40%;">
-				<ul>
-					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/ic_home_white_36px.svg" onmouseover='this.src="../icon/ic_home_black_36px.svg"' onmouseout='this.src="../icon/ic_home_white_36px.svg"'></a></li>
-					<li><a class="menuLink" href="../schedule/schedulemain.jsp"><img src="../icon/ic_event_available_white_36px.svg" onmouseover='this.src="../icon/ic_event_available_black_36px.svg"' onmouseout='this.src="../icon/ic_event_available_white_36px.svg"'></a></li>
-					<li><a class="menuLink" href="../cashbook/cashbookMain.jsp"><img src="../icon/ic_assessment_white_36px.svg" onmouseover='this.src="../icon/ic_assessment_black_36px.svg"' onmouseout='this.src="../icon/ic_assessment_white_36px.svg"'></a></li>
-					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_cloud_download_white_36px.svg" onmouseover='this.src="../icon/ic_cloud_download_black_36px.svg"' onmouseout='this.src="../icon/ic_cloud_download_white_36px.svg"'></a></li>
-					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_phone_white_36px.svg" ></a></li>
-				
-				</ul>
-			</div>
-			<div class="login_info" style=" float: left; width: 18%; height: 30px;">
-		      <ul class="nav navbar-nav navbar-right">
+			<div class="col-sm-4" id="myinfo" class="login_info" style=" float: right;">
+			 <ul class="nav navbar-nav navbar-right">
 		      	<img alt="프로필이미지" src="<%=imgPath%>" class="img-circle" width="40">
 		        <li class="dropdown">
-		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style=" padding:5px; height: 30px;"><%=id %><span class="caret"></span></a>
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style=" height: 30px;"><%=id %><span class="caret"></span></a>
 		          <ul class="dropdown-menu" role="menu">
 		            <li><a href="#">My List</a></li>
 		            <li><a href="#">My Info</a></li>
@@ -295,8 +283,8 @@ tr.phonedetail td{
 		          </ul>
 		        </li>
 		      </ul>
- 		  </div>
-		</nav>
+			</div>
+		</div>
 	</header>
 	
 	<aside>

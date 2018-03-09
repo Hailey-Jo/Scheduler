@@ -13,30 +13,41 @@
 <%@page import="Schedule.iScheduleDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <%
- userDTO user = new userDTO();
-
-user = (userDTO)session.getAttribute("login");
-
-String id = user.getId();
-String pic = user.getPic();
-
+String eventstring = "";
+String id = "";
+String pic = "";
 String imgPath = "";
+
 String serverPath = request.getRequestURL().substring(0,request.getRequestURL().indexOf(request.getRequestURI()));
 String packagePath = request.getContextPath();
+userDTO user = new userDTO();
 
-System.out.println("urltest2==>"+serverPath+packagePath);
-
-if(pic==null){
-	imgPath = serverPath+packagePath+File.separator+"icon"+File.separator+"user-g.png";
+if(session.getAttribute("login") != null){	
+	
+	user = (userDTO)session.getAttribute("login");
+	
+	id = user.getId();
+	pic = user.getPic();	
+	
+	if(pic==null){
+		imgPath = serverPath+packagePath+File.separator+"icon"+File.separator+"user-g.png";
+	}else{
+		imgPath = File.separator+"img"+File.separator+id+File.separator+pic;
+	}
+	
 }else{
-	imgPath = File.separator+"img"+File.separator+id+File.separator+pic;
+%>
+<script type="text/javascript">
+	alert("로그인 후 이용해 주세요.");
+	location.href="../index.jsp";
+</script>
+<%	
 }
+%>
 
-System.out.println("pic==>"+pic);
-System.out.println("id===>"+id);
-System.out.println("imgpath==>"+imgPath);
+
+<%
 
 //cashbook 연결
 iCashbookDAO cashDao = CashbookDAO.getInstance();
@@ -176,7 +187,7 @@ for(int i=0; i<cList.size();i++){
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="../css/cashbookCalendar.css?ver=1"> 
-<link rel="stylesheet" type="text/css" href="../css/header.css?ver=1"> 
+<link rel="stylesheet" type="text/css" href="../css/header.css?ver=3"> 
 
 <style type="text/css">
 
@@ -636,11 +647,10 @@ jQuery("#calendar").fullCalendar({
  , selectHelper: true
 	, height : 580
     , locale : "ko"
-    , editable : true
+    , editable : false
     , eventLimit : true
-
     , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
-
+	, editable : true
     , eventSources : [
         // 대한민국의 공휴일
         {
@@ -649,7 +659,6 @@ jQuery("#calendar").fullCalendar({
             , color : "#FF0000"
             , textColor : "#FFFFFF"
             , editable : false
-            , url : "http://www.naver.com"
         }
     ]
     , loading:function(bool) {
@@ -673,8 +682,11 @@ jQuery("#calendar").fullCalendar({
      	if (event.imageurl)
  		{             		
  		eventElement.find("div.fc-content").prepend("<i class='material-icons' style='font-size: 12px;'>"+ event.imageurl +"</i>"); 
- 		} 
+ 		}
+     	//google link remove
+		$('td .fc-event-container').find('a').removeAttr("href");
 		 } 
+        
 
       ,eventClick: function(event){
           /* $('#modalTitle').html(event.title);
@@ -706,8 +718,6 @@ jQuery("#calendar").fullCalendar({
   			$("#calDetailOut").modal({backdrop: 'static', keyboard: false});
           }
       },
-        editable: true,
-        eventLimit: true // allow "more" link when too many events
     });
     
     
@@ -759,36 +769,34 @@ function scheduleChoice(num, id, distinct, color, text) {
 	상단 메뉴바
  ------------------------------------------------------------------------------->
 	<header>
-		<nav id="topMenu">
-			<div class="topMenu_siteTitle" style=" float: left; width: 40%;">
-				<ul>
-					<li>BizPayDay</li>
+		<div class="row" id="header">
+			<div class="col-sm-4" id="headerTitle"  style=" float: left;">BizPayDay</div>
+			<div class="col-sm-4" id="menuRow">
+				<ul style="list-style: none; ">
+					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/ic_home_white_36px.svg" onmouseover='this.src="../icon/ic_home_black_36px.svg"' onmouseout='this.src="../icon/ic_home_white_36px.svg"'></a></li>&nbsp;&nbsp;&nbsp;&nbsp;
+					<li><a class="menuLink" href="../schedule/schedulemain.jsp"><img src="../icon/ic_event_available_white_36px.svg" onmouseover='this.src="../icon/ic_event_available_black_36px.svg"' onmouseout='this.src="../icon/ic_event_available_white_36px.svg"'></a></li>&nbsp;&nbsp;&nbsp;&nbsp;
+					<li><a class="menuLink" href="#"><img src="../icon/ic_assessment_white_36px.svg" ></a></li>&nbsp;&nbsp;&nbsp;&nbsp;
+					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_cloud_download_white_36px.svg" onmouseover='this.src="../icon/ic_cloud_download_black_36px.svg"' onmouseout='this.src="../icon/ic_cloud_download_white_36px.svg"'></a></li>&nbsp;&nbsp;&nbsp;&nbsp;
+					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_phone_white_36px.svg" onmouseover='this.src="../icon/ic_local_phone_black_36px.svg"' onmouseout='this.src="../icon/ic_phone_white_36px.svg"'></a></li>&nbsp;&nbsp;&nbsp;&nbsp;
 				</ul>
 			</div>
-			<div class="topMenu_icon" align="center" style=" float: left; width: 40%;">
-				<ul>
-					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/ic_home_white_36px.svg" onmouseover='this.src="../icon/ic_home_black_36px.svg"' onmouseout='this.src="../icon/ic_home_white_36px.svg"'></a></li>
-					<li><a class="menuLink" href="../schedule/schedulemain.jsp"><img src="../icon/ic_event_available_white_36px.svg" onmouseover='this.src="../icon/ic_event_available_black_36px.svg"' onmouseout='this.src="../icon/ic_event_available_white_36px.svg"'></a></li>
-					<li><a class="menuLink" href="#"><img src="../icon/ic_assessment_white_36px.svg" ></a></li>
-					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_cloud_download_white_36px.svg" onmouseover='this.src="../icon/ic_cloud_download_black_36px.svg"' onmouseout='this.src="../icon/ic_cloud_download_white_36px.svg"'></a></li>
-					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_phone_white_36px.svg" onmouseover='this.src="../icon/ic_local_phone_black_36px.svg"' onmouseout='this.src="../icon/ic_phone_white_36px.svg"'></a></li>
-				</ul>
-			</div>
-			<div class="login_info" style=" float: left; width: 18%; height: 30px;">
-		      <ul class="nav navbar-nav navbar-right">
+			<div class="col-sm-4" id="myinfo" class="login_info" style=" float: right;">
+			 <ul class="nav navbar-nav navbar-right">
 		      	<img alt="프로필이미지" src="<%=imgPath%>" class="img-circle" width="40">
 		        <li class="dropdown">
-		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style=" padding:5px; height: 30px;"><%=id %><span class="caret"></span></a>
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style=" height: 30px;"><%=id %><span class="caret"></span></a>
 		          <ul class="dropdown-menu" role="menu">
 		            <li><a href="#">My List</a></li>
 		            <li><a href="#">My Info</a></li>
-		            <li><a href="index.jsp">Log out</a></li>
+		            <li><a href="../index.jsp">Log out</a></li>
 		          </ul>
 		        </li>
 		      </ul>
- 		  </div>
-		</nav>
+			</div>
+		</div>
 	</header>
+	
+	
 	
 <!-------------------------------------------------------------------------------
 	좌측 서브 메뉴
@@ -808,7 +816,7 @@ function scheduleChoice(num, id, distinct, color, text) {
 			
 		<div class="left_totalMonth">
 			<div id="cashList" style="height:auto; overflow: y:hidden;">
-				<b>이달의 가계</b><br><br>
+				<b><%=month %>월 이달의 가계 </b> (<%=month %>월 1일 - <%=month %>월 <%=day %>일)<br><br>
 				<ul class="list-group">
 					<li class="list-group-item d-flex justify-content-between align-items-center">
 					  수입
@@ -961,7 +969,25 @@ function scheduleChoice(num, id, distinct, color, text) {
 <!-------------------------------------------------------------------------------
 	 캘린더에서 클릭하면 나오는 수입 내역 상세보기
  ------------------------------------------------------------------------------->
-
+<div class="modal fade">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
  
  
  
