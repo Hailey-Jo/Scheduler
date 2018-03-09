@@ -146,7 +146,7 @@
 	<br>
 	<article class="container">
         <div class="col-md-8 col-md-offset-2 well well-sm">
-          <form role="form-group" action="signupAf.jsp" method="post" enctype="multipart/form-data">
+          <form role="form-group" action="signupAf.jsp" method="post" enctype="multipart/form-data" class="signupForm">
 				<div class="form-group row">
 					<div class="col-md-2">
 						<label for="input-id" style="line-height: 35px;">아이디</label>&emsp;
@@ -286,7 +286,7 @@
 				<div class="checkbox">
 					<label> <input type="checkbox" id="agree" name="agree">
 						<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-						<a href="#">이용약관</a>에 동의합니다.
+						이용약관에 동의합니다.
 					</label>
 				</div>
 				
