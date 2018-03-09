@@ -1,3 +1,6 @@
+<%@page import="pds.PdsDao"%>
+<%@page import="pds.iPdsDao"%>
+<%@page import="pds.PdsDto"%>
 <%@page import="phonebook.PhonebookDTO"%>
 <%@page import="phonebook.PhonebookDAO"%>
 <%@page import="phonebook.iPhonebookDAO"%>
@@ -311,34 +314,41 @@ window.onload = function () {
 		</div>
 		<div class="col-md-6" style="padding:5px;">
 			<p style="padding:3px; background-color: lightgray">자료실</p>
-						<table class="table">
+			<table class="table">
 			  <thead>
 			    <tr>
-			      <th>#</th>
-			      <th>First Name</th>
-			      <th>Last Name</th>
-			      <th>Username</th>
+			      <th>No</th>
+			      <th>제목</th>
+			      <th>내용</th>
+			      <th>날짜</th>
 			    </tr>
 			  </thead>
 			  <tbody>
+			  <tr></tr>
+			  <%
+				//list get
+				iPdsDao pdsDAO = PdsDao.getInstance();
+				List<PdsDto>  pdsList = pdsDAO.getPdsList(id);
+				
+				System.out.println("PdsList"+pdsList);
+				
+				for(int i=0; i<pdsList.size();i++){
+			    	if(i==5){
+			    %>
+			    	<tr><td colspan="3"><a href="./pds/pdslist.jsp" id=moreBtn class="badge badge-light" data-backdrop="static" data-keyboard="false" style="background-color: #fff; color: #777;">... 더보기</a></td></tr>
+			    <%
+			    		break;
+			    	}
+			 	%>
 			    <tr>
-			      <th scope="row">1</th>
-			      <td>Mark</td>
-			      <td>Otto</td>
-			      <td>@mdo</td>
+			      <th scope="row"><%=i+1 %></th>
+			      <td><%=pdsList.get(i).getTitle() %></td>
+			      <td><%=pdsList.get(i).getContent() %></td>
+			      <td><%=pdsList.get(i).getRegdate().substring(0, 10) %></td>
 			    </tr>
-			    <tr>
-			      <th scope="row">2</th>
-			      <td>Jacob</td>
-			      <td>Thornton</td>
-			      <td>@fat</td>
-			    </tr>
-			    <tr>
-			      <th scope="row">3</th>
-			      <td>Larry</td>
-			      <td>the Bird</td>
-			      <td>@twitter</td>
-			    </tr>
+			    <%
+				}
+			    %>
 			  </tbody>
 			</table>
 		</div>

@@ -213,15 +213,17 @@ public class PdsDao implements iPdsDao {
 				pdsDto.setReadcount(readcount);
 				pdsDto.setDowncount(downcount);
 				pdsDto.setRegdate(regdate);
+				System.out.println("5/6 getPds");
 			}	
 			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("F getPds");
 		}finally {
 			DBClose.close(psmt, conn, rs);
-			System.out.println("5/6 getPdsList");
+			System.out.println("6/6 getPds");
 		}
 		
 		return pdsDto;
@@ -231,7 +233,7 @@ public class PdsDao implements iPdsDao {
 	public boolean pdsDel(int seq) {
 		String msg = "이 글은 삭제 되었습니다.";
 		
-		String sql = " UPDATE S_PDS SET ( TITLE, CONTENT, FILENAME ) = (?, ?, ?)"
+		String sql = " UPDATE S_PDS SET TITLE = ? , CONTENT = ? , FILENAME = ? "
 				+ " WHERE SEQ=?";
 		
 		Connection conn = null;
@@ -246,6 +248,7 @@ public class PdsDao implements iPdsDao {
 			psmt.setString(1, msg);
 			psmt.setString(2, msg);
 			psmt.setString(3, "");
+			psmt.setInt(4, seq);
 			
 			count = psmt.executeUpdate();
 			

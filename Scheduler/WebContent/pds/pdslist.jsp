@@ -12,15 +12,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BizPayDay</title>
+<link rel="stylesheet" type="text/css" href="../css/mainHeader.css">
+<link rel="stylesheet" type="text/css" href="../css/header.css?ver=1">
+<script type="text/javascript" src="../fullcalendar-3.8.2/lib/jquery.min.js"></script>
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <!-- 부가적인 테마 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="../css/mainHeader.css">
-<link rel="stylesheet" type="text/css" href="../css/header.css?ver=1">
-<script type="text/javascript" src="../fullcalendar-3.8.2/lib/jquery.min.js"></script>
 <style>
 /* 아이콘 버튼 스타일 */
 .btn-circle {
@@ -42,6 +42,13 @@
 }
 .row-centered {
     text-align:center;
+}
+a:hover {
+	text-decoration:none;
+    background-color: #006699;
+}
+a:active {
+	display: block;
 }
 </style>
 </head>
@@ -68,8 +75,11 @@ List<PdsDto> list = null;
 PagingBean paging = new PagingBean();
 
 iPdsDao pdsDAO = PdsDao.getInstance();
+//list = pdsDAO.getPdsList(id);
 
 String findWord = request.getParameter("findWord");
+if(findWord == null) findWord = "";
+list = pdsDAO.getPdsPagingList(paging, findWord);
 
 if(session.getAttribute("login") != null){
 
@@ -85,9 +95,6 @@ if(session.getAttribute("login") != null){
 	}else{
 		imgPath = File.separator+"img"+File.separator+id+File.separator+pic;
 	}
-	
-	iPdsDao dao = PdsDao.getInstance();
-	list = dao.getPdsList(id);
 
 	if(request.getParameter("nowPage") == null){
 		paging.setNowPage(1);
@@ -95,15 +102,14 @@ if(session.getAttribute("login") != null){
 		paging.setNowPage(Integer.parseInt(request.getParameter("nowPage")));
 	}
 	
-	if(findWord == null) findWord = "";
-	List<PdsDto> bbslist = pdsDAO.getPdsPagingList(paging, findWord);
+
 	
 }else{
 %>
 
 <script type="text/javascript">
 	alert("로그인 후 이용해 주세요.");
-	location.href="index.jsp";
+	location.href="../index.jsp";
 </script>
 <%	
 }
@@ -112,7 +118,7 @@ if(session.getAttribute("login") != null){
 <!-- 상단 메뉴바 -->
 	<header>
 		<nav id="topMenu">
-			<div class="topMenu_siteTitle" style=" float: left; width: 40%;">
+			<div class="topMenu_siteTitle" style=" float: left; width:35%;">
 				<ul>
 					<li><a href="../Main.jsp" style="color: white">BizPayDay</a></li>
 				</ul>
@@ -127,7 +133,7 @@ if(session.getAttribute("login") != null){
 				
 				</ul>
 			</div>
-			<div class="login_info" style=" float: left; width: 18%; height: 30px;">
+			<div class="login_info" style=" float: left; width: 23%; height: 30px;">
 		      <ul class="nav navbar-nav navbar-right">
 		      	<img alt="프로필이미지" src="<%=imgPath%>" class="img-circle" width="40">
 		        <li class="dropdown">
@@ -156,7 +162,7 @@ if(session.getAttribute("login") != null){
 <%
 	for(int i=0; i<list.size(); i++){
 		PdsDto pds = list.get(i);
-		 System.out.println("pds.getFilename()===>"+pds.getFilename());
+		System.out.println("pds.getFilename()===>"+pds.getFilename());
 		String bgcolor = "";
 		
 		if(i%2 == 0){
