@@ -13,6 +13,7 @@
 <%@page import="Schedule.iScheduleDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+        <%request.setCharacterEncoding("utf-8"); %>
 <%
 String eventstring = "";
 String id = "";
@@ -547,7 +548,7 @@ jQuery("#calendar-out-Modify").fullCalendar({
    	                $('.modal').find('#starts-at').val(event.start);
    	                $('.modal').find('#ends-at').val(event.end); */
 					//$('#datepicker .modal').modal('show');
-   	             	alert('Clicked ' + eventObj.title);
+   	             	//alert('Clicked ' + eventObj.title);
    	                //alert($('#datepicker .modal').val(event.start));
    	                
    	            }, dayClick: function(date, jsEvent, view, resourceObj) {
@@ -615,7 +616,7 @@ jQuery("#calendar-out-Modify").fullCalendar({
     	                $('.modal').find('#starts-at').val(event.start);
     	                $('.modal').find('#ends-at').val(event.end); */
  					//$('#datepicker .modal').modal('show');
-    	             	alert('Clicked ' + eventObj.title);
+    	             	//alert('Clicked ' + eventObj.title);
     	                //alert($('#datepicker .modal').val(event.start));
     	                
     	            }, dayClick: function(date, jsEvent, view, resourceObj) {
@@ -693,10 +694,10 @@ jQuery("#calendar").fullCalendar({
           $('#modalBody').html(event.description);
           $('#fullCalModal').modal(); */
           var num = event.id;
-          alert(typeof num);
+          //alert(typeof num);
           var date = event.start;
-          alert(typeof date);
-          alert(date);
+          //alert(typeof date);
+          //alert(date);
           var strArr = num.split('%');
           
           if(strArr[0]==0){
@@ -770,7 +771,7 @@ function scheduleChoice(num, id, distinct, color, text) {
  ------------------------------------------------------------------------------->
 	<header>
 		<div class="row" id="header">
-			<div class="col-sm-4" id="headerTitle"  style=" float: left;">BizPayDay</div>
+			<div class="col-sm-4" id="headerTitle" style=" float: left;">BizPayDay</div>
 			<div class="col-sm-4" id="menuRow">
 				<ul style="list-style: none; ">
 					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/ic_home_white_36px.svg" onmouseover='this.src="../icon/ic_home_black_36px.svg"' onmouseout='this.src="../icon/ic_home_white_36px.svg"'></a></li>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -1439,11 +1440,11 @@ $(document).ready(function () {
        //alert("addrow 후 counter 값 :" +counter);
 		var row = parseInt(counter);
 		//alert(typeof row);($('input[ var checkNull = -1;
-		alert($("input[name='inCategory']:checked").val());
+		//alert($("input[name='inCategory']:checked").val());
 
 		for(var i=0; i<row; i++){
 			if($("#inContent"+i).val()==null){
-				alert("공백 발생!");
+				//alert("공백 발생!");
 			}
 		};
 			
@@ -1491,12 +1492,12 @@ $(document).ready(function () {
    			traditional : true,
    			
                success : function(data){
-                   alert("success");
+                   //alert("success");
                    $("#inCashMyModal").modal().hide();
                    location.reload();
                },
                error : function(request,status,error){
-                   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                   //alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                }
            
            });
@@ -1522,7 +1523,7 @@ $(document).ready(function () {
 		
 		for(var i=0; i<rowOut; i++){
 			if($("#outContent"+i).val()==null){
-				alert("공백 발생!");
+				//alert("공백 발생!");
 			}
 		};
 			
@@ -1571,12 +1572,12 @@ $(document).ready(function () {
 				traditional : true,
 				
 	           success : function(data){
-	               alert("success");
+	               //alert("success");
 	               $("#outCashMyModal").modal().hide();
 	               location.reload();
 	           },
 	           error : function(request,status,error){
-	               alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	              // alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	           }
 	       
 	       });
@@ -1593,20 +1594,20 @@ $(document).ready(function () {
 <script type="text/javascript">
 $(document).ready(function () {
 	$("#btn_delIo").click(function () {	
-		alert("btn_delIo");
+		//alert("btn_delIo");
 	});
 
 	$("#btn_modiIo").click(function () {
-		alert("btn_modiIo");
+		//alert("btn_modiIo");
 	});
 
 	$("#btn_delSpend").click(function () {
-		alert("btn_delSpend");
+		//alert("btn_delSpend");
 	});
 
 
 	$("#btn_modiSpend").click(function () {
-		alert("btn_modiSpend");
+		//alert("btn_modiSpend");
 	});
 	
 });
@@ -1618,11 +1619,11 @@ $(document).ready(function () {
 <script type="text/javascript">
 function show (str){
 	var afterStr = str.split('%');
-	alert("스플릿 한 개수 : " + afterStr.length);
+	//alert("스플릿 한 개수 : " + afterStr.length);
 		
 	//메인에서 올라갈 때
 		if(afterStr.length==9){
-		alert("본문 if문");
+		//alert("본문 if문");
 		/* 
 		[0] : seq
 		[1] : id
@@ -1650,7 +1651,7 @@ function show (str){
 			//del 버튼 클릭하면
 			$("#btn_delIo").click(function () {	
 			   	
-				alert("btn_delIo 버튼 클릭!");
+				//alert("btn_delIo 버튼 클릭!");
 				
 					$.ajax({
 						
@@ -1665,7 +1666,7 @@ function show (str){
 						traditional : true,
 						
 			           success : function(data){
-			               alert("success");
+			               //alert("success");
 			               $("#inCashMyModalModify").modal().hide();
 			               location.reload();
 			           },
@@ -1707,12 +1708,12 @@ function show (str){
 						traditional : true,
 						
 			           success : function(data){
-			               alert("success");
+			               //alert("success");
 			               $("#inCashMyModalModify").modal().hide();
 			               location.reload();
 			           },
 			           error : function(request,status,error){
-			               alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			              // alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			           }
 			       
 			       });
@@ -1745,12 +1746,12 @@ function show (str){
 						traditional : true,
 						
 			           success : function(data){
-			               alert("success");
+			               //alert("success");
 			               $("#inCashMyModalModify").modal().hide();
 			               location.reload();
 			           },
 			           error : function(request,status,error){
-			               alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			               //alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			           }
 			       
 			       });
@@ -1786,12 +1787,12 @@ function show (str){
 						traditional : true,
 						
 			           success : function(data){
-			               alert("success");
+			               //alert("success");
 			               $("#outCashMyModalModify").modal().hide();
 			               location.reload();
 			           },
 			           error : function(request,status,error){
-			               alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			               //alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			           }
 			       
 			       });
@@ -1802,9 +1803,9 @@ function show (str){
 		//모달에서 할 때
 		}else{
 			
-			alert("ioMoney : " +afterStr[0]);
-			alert("seq : " +afterStr[5]);
-			alert("else로 들어옴")
+			//alert("ioMoney : " +afterStr[0]);
+			//alert("seq : " +afterStr[5]);
+			//alert("else로 들어옴")
 			/* 
 			[0] : ioMoney
 			[1] : content
@@ -1818,9 +1819,9 @@ function show (str){
 			
 			if(afterStr[0]=="0"){
 				title= "수입 내역 수정";
-				alert("ioMoney : " +afterStr[0]);
-				alert("seq : " +afterStr[5]);
-				alert("money : " +afterStr[2]);
+				//alert("ioMoney : " +afterStr[0]);
+				//alert("seq : " +afterStr[5]);
+				//alert("money : " +afterStr[2]);
 				
 				$("#inCashMyModalModify .modal-title").html(title);
 				$("#inCashMyModalModify #inContent").val(afterStr[1]);
@@ -1846,12 +1847,12 @@ function show (str){
 							traditional : true,
 							
 				           success : function(data){
-				               alert("success");
+				               //alert("success");
 				               $("#inCashMyModalModify").modal().hide();
 				               location.reload();
 				           },
 				           error : function(request,status,error){
-				               alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				               //alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				           }
 				       
 				       });
@@ -1896,12 +1897,12 @@ function show (str){
 							traditional : true,
 							
 				           success : function(data){
-				               alert("success");
+				               //alert("success");
 				               $("#inCashMyModalModify").modal().hide();
 				               location.reload();
 				           },
 				           error : function(request,status,error){
-				               alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				               //alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				           }
 				       
 				       });
@@ -1910,8 +1911,8 @@ function show (str){
 				
 				
 			}else if(afterStr[0]=="1"){
-				alert("seq : " +afterStr[0]);
-				alert("ioMoney : " +afterStr[5]);
+				//alert("seq : " +afterStr[0]);
+				//alert("ioMoney : " +afterStr[5]);
 				
 				title="지출 내역 수정";
 				$("#outCashMyModalModify .modal-title").html(title);
@@ -1938,12 +1939,12 @@ function show (str){
 							traditional : true,
 							
 				           success : function(data){
-				               alert("success");
+				               //alert("success");
 				               $("#outCashMyModalModify").modal().hide();
 				               location.reload();
 				           },
 				           error : function(request,status,error){
-				               alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				              // alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				           }
 				       
 				       });
@@ -1979,12 +1980,12 @@ function show (str){
 							traditional : true,
 							
 				           success : function(data){
-				               alert("success");
+				               //alert("success");
 				               $("#outCashMyModalModify").modal().hide();
 				               location.reload();
 				           },
 				           error : function(request,status,error){
-				               alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				               //alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				           }
 				       
 				       });
