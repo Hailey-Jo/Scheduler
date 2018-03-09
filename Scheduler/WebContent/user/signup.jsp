@@ -40,7 +40,7 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="../css/header.css">
+<link rel="stylesheet" type="text/css" href="../css/header.css?ver=1"> 
 <link rel="stylesheet" type="text/css" href="../css/check.css">
 
 </head>
@@ -118,16 +118,28 @@
 
 
 
-<body class="align">
+<body>
+
 	<header>
-		<nav id="topMenu">
-			<div class="topMenu_siteTitle">
+		<div class="col-md-12" id="header" >
+			<div class="col-sm-4" id="headerTitle" style=" float: left;" ><a href="../Main.jsp" style="color: white; text-decoration: none">BizPayDay</a></div>
+			<div class="col-sm-4" id="menuRow">
 				<ul>
-					<li>Sign Up</li>
+					<li><b>Sign Up</b></li>
 				</ul>
 			</div>
-		</nav>
+			<div class="col-sm-4" id="myinfo" class="login_info" style=" float: right;">
+			 
+			</div>
+		</div>
 	</header>
+			
+			
+	
+	
+	
+	
+	
 	<br>
 	<br>
 	<br>
