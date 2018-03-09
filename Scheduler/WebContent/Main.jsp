@@ -162,27 +162,27 @@ window.onload = function () {
 
 	var options = {
 		title: {
-			text: "이달의 수입 & 지출"
+			text: "총 금액: "+"<%=totMomey%>" + "원"
 		},
 		subtitles: [{
-			text: "총 금액: "+"<%=totMomey%>" + "원"
+			text: ""
 		}],
 		animationEnabled: true,
 		locale: 'ko',
-		
-		
+        axisX:{
+          labelFontSize: 20
+        },
 		data: [{
 			type: "pie",
 			startAngle: 40,
-			fontSize: 10,
 			toolTipContent: "<b>{label}</b>: {y}%",
 			showInLegend: "true",
 			legendText: "{label}",
 			indexLabelFontSize: 16,
 			indexLabel: "{label} - {y}원",
 			dataPoints: [
-				{ y: <%=income%>, label: "수입" },
-				{ y: <%=spending%>, label: "지출" },
+				{ y: <%=income%>,  label: "수입", indexLabelFontSize: 10 },
+				{ y: <%=spending%>, label: "지출", indexLabelFontSize: 10 },
 			]
 		}]
 	};
