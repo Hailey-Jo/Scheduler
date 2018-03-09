@@ -397,10 +397,10 @@ jQuery(document).ready(function() {
 	        , selectHelper: true
         	, navLinks: false
             , locale : "ko"
-            , editable : true
+            , editable : false
             , eventLimit : true
 			, height : 347
-            , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
+      //      , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
 
             , eventSources : [
                 // 대한민국의 공휴일
@@ -455,10 +455,10 @@ jQuery("#calendar-out-Modify").fullCalendar({
         , selectHelper: true
     	, navLinks: false
         , locale : "ko"
-        , editable : true
+        , editable : false
         , eventLimit : true
 		, height : 347
-        , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
+   //     , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
 
         , eventSources : [
             // 대한민국의 공휴일
@@ -514,10 +514,10 @@ jQuery("#calendar-out-Modify").fullCalendar({
    		        , selectHelper: true
    	        	, navLinks: false
    	            , locale : "ko"
-   	            , editable : true
+   	            , editable : false
    	            , eventLimit : true
 				, height : 347
-   	            , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
+   	     //       , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
 
    	            , eventSources : [
    	                // 대한민국의 공휴일
@@ -582,10 +582,10 @@ jQuery("#calendar-out-Modify").fullCalendar({
     		        , selectHelper: true
     	        	, navLinks: false
     	            , locale : "ko"
-    	            , editable : true
+    	            , editable : false
     	            , eventLimit : true
  				, height : 347
-    	            , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
+    	 //           , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
 
     	            , eventSources : [
     	                // 대한민국의 공휴일
@@ -650,8 +650,8 @@ jQuery("#calendar").fullCalendar({
     , locale : "ko"
     , editable : false
     , eventLimit : true
-    , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
-	, editable : true
+//    , googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE"      // Google API KEY
+	
     , eventSources : [
         // 대한민국의 공휴일
         {
