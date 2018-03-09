@@ -60,7 +60,7 @@ for(int i=0; i<list.size();i++){
 <html>
 
 <head>
-<link rel="stylesheet" type="text/css" href="../css/header.css">
+<link rel="stylesheet" type="text/css" href="../css/header.css?ver=3">
 <link rel="stylesheet" type="text/css" href="../css/calendar.css">  
 <style type="text/css">
 
@@ -247,7 +247,7 @@ td.addtable{
 <!-- 상단 메뉴바 -->
 	<header>
 		<div class="row" id="header">
-			<div class="col-sm-4" id="headerTitle" style=" float: left;">BizPayDay</div>
+			<div class="col-sm-4" id="headerTitle" style=" float: left;"><a href="../Main.jsp" style="color: white; text-decoration: none">BizPayDay</a></div>
 			<div class="col-sm-4" id="menuRow">
 				<ul style="list-style: none; ">
 					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/ic_home_white_36px.svg" onmouseover='this.src="../icon/ic_home_black_36px.svg"' onmouseout='this.src="../icon/ic_home_white_36px.svg"'></a></li>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -288,10 +288,7 @@ td.addtable{
 				<tr>
 					<td>　</td>
 				</tr>
-				<tr>
-					<!-- <td style="width: 300px"><button type="button" class="btn btn-primary btn-lg btn-block">중요일정보기</button></td> -->
-					<td align="center"><button id="btn1" data-toggle="modal" type="button" class="btn btn-primary btn-sm" data-target="#importantmodal" style="width: 260px;">중요일정보기</button></td>
-				</tr>
+				
 				<tr>
 					<td>
 				</tr>
