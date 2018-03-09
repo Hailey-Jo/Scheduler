@@ -13,6 +13,7 @@
 <%@page import="Schedule.iScheduleDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+        <%request.setCharacterEncoding("utf-8"); %>
 <%
 String eventstring = "";
 String id = "";
@@ -770,7 +771,7 @@ function scheduleChoice(num, id, distinct, color, text) {
  ------------------------------------------------------------------------------->
 	<header>
 		<div class="row" id="header">
-			<div class="col-sm-4" id="headerTitle"  style=" float: left;">BizPayDay</div>
+			<div class="col-sm-4" id="headerTitle" style=" float: left;">BizPayDay</div>
 			<div class="col-sm-4" id="menuRow">
 				<ul style="list-style: none; ">
 					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/ic_home_white_36px.svg" onmouseover='this.src="../icon/ic_home_black_36px.svg"' onmouseout='this.src="../icon/ic_home_white_36px.svg"'></a></li>&nbsp;&nbsp;&nbsp;&nbsp;

@@ -166,10 +166,7 @@ div.barKategorie {
 	font-weight: bold;
 }
 
-ul li a:hover, ul li a:focus {
-	color: #fff;
-	background-color: #f40;
-}
+
 </style>
 <!-- DatePicker -->
 
