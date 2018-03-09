@@ -131,7 +131,8 @@ $(document).ready(function() {
 	} );
 </script>
 <script type="text/javascript">
-$('#searchmodal').on('hidden.bs.modal', function (e) {		    	  
+$('#searchmodal').on('hidden.bs.modal', function (e) {	
+	 $("#exampleBody").remove();
 	 location.href="../schedule/schedulemain.jsp"
 	});
 </script>

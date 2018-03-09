@@ -223,7 +223,7 @@ window.onload = function () {
 			</div><br><br><br>
 			<div class="col-md-12" style="padding:5px; position: absolute; bottom: 60px; left: 0;" >
 				<a href="./phonebook/phonebookMain.jsp" data-toggle="tooltip" data-placement="top" title="연락처"><img src="./icon/mainicon/if_phone.svg" style="width: 40px; height: auto;"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href="#" data-toggle="tooltip" data-placement="top" title="내정보" ><img src="./icon/mainicon/if_mymodi.svg" style="width: 40px; height: auto;"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="./user/password_change.jsp" data-toggle="tooltip" data-placement="top" title="내정보" ><img src="./icon/mainicon/if_mymodi.svg" style="width: 40px; height: auto;"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<a href="index.jsp" data-toggle="tooltip" data-placement="top" title="로그아웃"><img src="./icon/mainicon/if_logout.svg" style="width: 40px; height: auto;"></a>
 			</div><br>
 		</div>

@@ -246,9 +246,7 @@ td.addtable{
 		      	<img alt="프로필이미지" src="<%=imgPath%>" class="img-circle" width="40">
 		        <li class="dropdown">
 		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style=" height: 30px;"><%=id %><span class="caret"></span></a>
-		          <ul class="dropdown-menu" role="menu">
-		            <li><a href="#">My List</a></li>
-		            <li><a href="#">My Info</a></li>
+		          <ul class="dropdown-menu" role="menu">		           
 		            <li><a href="../index.jsp">Log out</a></li>
 		          </ul>
 		        </li>

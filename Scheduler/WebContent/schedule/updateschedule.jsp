@@ -300,8 +300,7 @@ div.barKategorie {
 		        <li class="dropdown">
 		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style=" height: 30px;"><%=id %><span class="caret"></span></a>
 		          <ul class="dropdown-menu" role="menu">
-		            <li><a href="#">My List</a></li>
-		            <li><a href="#">My Info</a></li>
+		            
 		            <li><a href="../index.jsp">Log out</a></li>
 		          </ul>
 		        </li>
