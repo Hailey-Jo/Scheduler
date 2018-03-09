@@ -44,11 +44,11 @@
     text-align:center;
     margin: auto;
 }
-a:hover {
+/* a:hover {
 	text-decoration:none;
     background-color: #006699;
 }
-
+ */
 </style>
 </head>
 
@@ -142,13 +142,19 @@ if(session.getAttribute("login") != null){
 			</div>
 		</div>
 	</header>
+	 
 	
-	<div>
-		<h3 style="text-align: center;">자료실</h3>
-	</div>
-		<a href="pdswrite.jsp">자료올리기</a>
+		
+
 <table class="table table-bordered" border="1" style="width: 80%; height: auto; margin: auto; text-align: center;">
 <col width="50"><col width="70"><col width="100"><col width="70"><col width="70"><col width="50"><col width="100">
+<tr style="height: 80px;">
+	<td colspan="7" style="text-align: center; border-bottom-color: white; border-top-color: white; border-left-color: white; border-right-color: white; font-size: 24px;">자료실</td>
+</tr>
+<tr>
+	<td colspan="7" style="text-align: right; border-top-color: white; border-left-color: white; border-right-color: white; font-size: 15px;"><a href="pdswrite.jsp" style="text-decoration: none;">자료올리기</a></td>
+</tr>
+
 <tr>
 	<th>번호</th><th>작성자</th><th>제목</th><th>다운로드</th><th>조회수</th><th>다운수</th><th>작성일</th>
 </tr>
@@ -197,7 +203,7 @@ if(session.getAttribute("login") != null){
 	</td>
 </tr>
 </table>
-
+<br><br>
 <!-- search -->
 <div class="row-centered"">
 <input type=text" id="search">
