@@ -161,10 +161,7 @@ td.addtable{
         font-weight:bold;
     }
     
-ul li a:hover, ul li a:focus {  
-    color:#fff;  
-    background-color:#f40;  
-}  
+
 
 </style>
 <!-- DatePicker -->
@@ -256,7 +253,7 @@ ul li a:hover, ul li a:focus {
 <!-- 상단 메뉴바 -->
 		<header>
 		<div class="row" id="header">
-			<div class="col-sm-4" id="headerTitle"  style=" float: left;">BizPayDay</div>
+			<div class="col-sm-4" id="headerTitle"  style=" float: left;"><a href="../Main.jsp" style="color: white; text-decoration: none">BizPayDay</a></div>
 			<div class="col-sm-4" id="menuRow">
 				<ul style="list-style: none; ">
 					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/ic_home_white_36px.svg" onmouseover='this.src="../icon/ic_home_black_36px.svg"' onmouseout='this.src="../icon/ic_home_white_36px.svg"'></a></li>&nbsp;&nbsp;&nbsp;&nbsp;

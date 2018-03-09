@@ -115,7 +115,7 @@ var title = [<% for (int i = 0; i < title.length; i++) { %>"<%= title[i] %>"<%= 
 <html>
 
 <head>
-<link rel="stylesheet" type="text/css" href="../css/header.css?ver=2">
+<link rel="stylesheet" type="text/css" href="../css/header.css?ver=3">
 <link rel="stylesheet" type="text/css" href="../css/calendar.css?ver=2">  
 
 <style type="text/css">
@@ -472,7 +472,7 @@ div.barKategorie {
 <!-- 상단 메뉴바 -->
 		<header>
 		<div class="row" id="header">
-			<div class="col-sm-4"  id="headerTitle" style=" float: left;">BizPayDay</div>
+			<div class="col-sm-4"  id="headerTitle" style=" float: left;"><a href="../Main.jsp" style="color: white; text-decoration: none">BizPayDay</a></div>
 			<div class="col-sm-4" id="menuRow">
 				<ul style="list-style: none; ">
 					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/ic_home_white_36px.svg" onmouseover='this.src="../icon/ic_home_black_36px.svg"' onmouseout='this.src="../icon/ic_home_white_36px.svg"'></a></li>&nbsp;&nbsp;&nbsp;&nbsp;

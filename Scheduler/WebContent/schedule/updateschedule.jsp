@@ -166,7 +166,6 @@ div.barKategorie {
 	font-weight: bold;
 }
 
-
 </style>
 <!-- DatePicker -->
 
@@ -285,7 +284,7 @@ div.barKategorie {
 	<!-- 상단 메뉴바 -->
 	<header>
 		<div class="row" id="header">
-			<div class="col-sm-4"  id="headerTitle" style=" float: left;">BizPayDay</div>
+			<div class="col-sm-4"  id="headerTitle" style=" float: left;"><a href="../Main.jsp" style="color: white; text-decoration: none">BizPayDay</a></div>
 			<div class="col-sm-4" id="menuRow">
 				<ul style="list-style: none; ">
 					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/ic_home_white_36px.svg" onmouseover='this.src="../icon/ic_home_black_36px.svg"' onmouseout='this.src="../icon/ic_home_white_36px.svg"'></a></li>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -326,12 +325,7 @@ div.barKategorie {
 				<tr>
 					<td></td>
 				</tr>
-				<tr>
-					<!-- <td style="width: 300px"><button type="button"
-							class="btn btn-primary btn-lg btn-block">중요일정보기</button></td> -->
-							
-					<td align="center"><button type="button" class="btn btn-primary btn-sm" style="width: 260px;">중요일정보기</button></td>
-				</tr>
+
 				<tr>
 					<td>
 				</tr>
