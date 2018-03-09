@@ -266,7 +266,7 @@ ul li a:hover, ul li a:focus {
 					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_phone_white_36px.svg" onmouseover='this.src="../icon/ic_local_phone_black_36px.svg"' onmouseout='this.src="../icon/ic_phone_white_36px.svg"'></a></li>&nbsp;&nbsp;&nbsp;&nbsp;
 				</ul>
 			</div>
-			<div class="col-sm-4" class="login_info" style=" float: right; width: 18%;">
+			<div class="col-sm-4" id="myinfo" class="login_info" style=" float: right;">
 			 <ul class="nav navbar-nav navbar-right">
 		      	<img alt="프로필이미지" src="<%=imgPath%>" class="img-circle" width="40">
 		        <li class="dropdown">

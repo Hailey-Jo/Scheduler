@@ -25,6 +25,9 @@ header{
 	padding-left: 50px; 
  }
 
+#myinfo{
+	padding-right: 50px;
+}
 
 #menuRow ul {
 	list-style-type: none;
