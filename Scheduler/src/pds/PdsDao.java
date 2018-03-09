@@ -247,7 +247,7 @@ public class PdsDao implements iPdsDao {
 			
 			psmt.setString(1, msg);
 			psmt.setString(2, msg);
-			psmt.setString(3, "");
+			psmt.setString(3, msg);
 			psmt.setInt(4, seq);
 			
 			count = psmt.executeUpdate();

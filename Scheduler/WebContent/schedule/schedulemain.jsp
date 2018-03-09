@@ -272,7 +272,7 @@ div.barKategorie {
     			eventClick: function(e) {  
     				var target = $(this).find('a').attr('href', '#');
 
-    				return false
+    				return false;
     			}
     	    });
     	        
@@ -326,7 +326,7 @@ div.barKategorie {
        	    , eventClick:  function(event, jsEvent, view) {
        	    	if(event.id.length > 10 || event.id == null){
 					var target = $(this).find('a').attr('href', '#');
-					return false
+					return false;
 				}else{
 					$('#modalTitle').html(event.title);
 					$('#modalBody').html(event.description);
