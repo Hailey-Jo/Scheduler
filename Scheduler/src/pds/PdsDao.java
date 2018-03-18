@@ -107,7 +107,6 @@ public class PdsDao implements iPdsDao {
 			DBClose.close(psmt, conn, rs);
 			System.out.println("5/6 getPdsList");
 		}
-		
 		return list;
 	}
 
@@ -263,7 +262,7 @@ public class PdsDao implements iPdsDao {
 	}
 
 	@Override
-	public List<PdsDto> getPdsPagingList(PagingBean paging, String searchWord) {
+	public List<PdsDto> getPdsPagingList(String id, PagingBean paging, String searchWord) {
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -278,13 +277,14 @@ public class PdsDao implements iPdsDao {
 			conn = DBConnection.makeConnection();
 			System.out.println("1/6 S getPdsPagingList");
 			
-			String totalSql = " SELECT COUNT(SEQ) FROM S_PDS WHERE TITLE LIKE '" + sWord + "'";
+			String totalSql = " SELECT COUNT(SEQ) FROM S_PDS WHERE ID= '"+id+"' AND TITLE LIKE '" + sWord + "'";
 			psmt = conn.prepareStatement(totalSql);
 			rs = psmt.executeQuery();
 			
 			int totalCount = 0;
 			rs.next();
 			totalCount = rs.getInt(1);	// row의 총 갯수
+			System.out.println("totalCount==>"+totalCount);
 			paging.setTotalCount(totalCount);
 			paging = PageingUtil.setPagingInfo(paging);
 			
@@ -292,7 +292,7 @@ public class PdsDao implements iPdsDao {
 			rs.close();
 			
 			String sql = " SELECT * FROM"
-					+ " (SELECT * FROM (SELECT * FROM S_PDS  WHERE TITLE LIKE '" + sWord + "' ORDER BY SEQ ASC) "
+					+ " (SELECT * FROM (SELECT * FROM S_PDS  WHERE ID='"+id+"' AND TITLE LIKE '" + sWord + "' ORDER BY SEQ ASC) "
 					+ " WHERE ROWNUM <=" + paging.getStartNum() + " ORDER BY SEQ ASC) "
 					+ " WHERE ROWNUM <=" + paging.getCountPerPage();
 						
@@ -327,7 +327,6 @@ public class PdsDao implements iPdsDao {
 		
 		return pdslist;
 	}
-	
 	
 
 }

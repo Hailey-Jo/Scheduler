@@ -14,7 +14,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>pdsupload.jsp</title>
+<title>BizPayDay</title>
 </head>
 <body>
 

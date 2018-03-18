@@ -8,7 +8,7 @@
 
 <html>
 <head>
-<title>pdswrite</title>
+<title>BizPayDay</title>
 <style>
 .row-centered {
     text-align:center;

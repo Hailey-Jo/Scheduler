@@ -42,13 +42,14 @@
 }
 .row-centered {
     text-align:center;
-    margin: auto;
 }
-/* a:hover {
+a:hover {
 	text-decoration:none;
     background-color: #006699;
 }
- */
+a:active {
+	display: block;
+}
 </style>
 </head>
 
@@ -71,14 +72,8 @@ String packagePath = request.getContextPath();
 
 List<PdsDto> list = null;
 
-PagingBean paging = new PagingBean();
-
 iPdsDao pdsDAO = PdsDao.getInstance();
-//list = pdsDAO.getPdsList(id);
 
-String findWord = request.getParameter("findWord");
-if(findWord == null) findWord = "";
-list = pdsDAO.getPdsPagingList(paging, findWord);
 
 if(session.getAttribute("login") != null){
 
@@ -88,21 +83,6 @@ if(session.getAttribute("login") != null){
 	
 	id = user.getId();
 	pic = user.getPic();
-	
-	if(pic==null){
-		imgPath = serverPath+packagePath+File.separator+"icon"+File.separator+"user-g.png";
-	}else{
-		imgPath = File.separator+"img"+File.separator+id+File.separator+pic;
-	}
-
-	if(request.getParameter("nowPage") == null){
-		paging.setNowPage(1);
-	}else{
-		paging.setNowPage(Integer.parseInt(request.getParameter("nowPage")));
-	}
-	
-
-	
 }else{
 %>
 
@@ -112,53 +92,77 @@ if(session.getAttribute("login") != null){
 </script>
 <%	
 }
+	PagingBean paging = new PagingBean();
+	String findWord = request.getParameter("findWord");
+	
+	if(findWord == null)findWord = "";
+	list = pdsDAO.getPdsPagingList(id, paging, findWord);
+	
+	if(request.getParameter("nowPage") == null){
+		paging.setNowPage(1);
+	}else{
+		paging.setNowPage(Integer.parseInt(request.getParameter("nowPage")));
+	}
+
+	
+	if(pic==null){
+		imgPath = serverPath+packagePath+File.separator+"icon"+File.separator+"user-g.png";
+	}else{
+		imgPath = File.separator+"img"+File.separator+id+File.separator+pic;
+	}
 %>
 <body>
 <!-- 상단 메뉴바 -->
 	<header>
-		<div id="header">
-			<div class="col-sm-4" id="headerTitle" style=" float: left;" ><a href="../Main.jsp" style="color: white; text-decoration: none">BizPayDay</a></div>
-			<div class="col-sm-4" id="menuRow">
-				<ul style="list-style: none; ">
-					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/ic_home_white_36px.svg" onmouseover='this.src="../icon/ic_home_black_36px.svg"' onmouseout='this.src="../icon/ic_home_white_36px.svg"'></a></li>&nbsp;&nbsp;&nbsp;&nbsp;
-					<li><a class="menuLink" href="../schedule/schedulemain.jsp"><img src="../icon/ic_event_available_white_36px.svg" onmouseover='this.src="../icon/ic_event_available_black_36px.svg"' onmouseout='this.src="../icon/ic_event_available_white_36px.svg"'></a></li>&nbsp;&nbsp;&nbsp;&nbsp;
-					<li><a class="menuLink" href="../cashbook/cashbookMain.jsp"><img src="../icon/ic_assessment_white_36px.svg" onmouseover='this.src="../icon/ic_assessment_black_36px.svg"' onmouseout='this.src="../icon/ic_assessment_white_36px.svg"'></a></li>&nbsp;&nbsp;&nbsp;&nbsp;
-					<li><a class="menuLink" href="../pds/pdslist.jsp"><img src="../icon/ic_cloud_download_white_36px.svg" onmouseover='this.src="../icon/ic_cloud_download_black_36px.svg"' onmouseout='this.src="../icon/ic_cloud_download_white_36px.svg"'></a></li>&nbsp;&nbsp;&nbsp;&nbsp;
-					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_phone_white_36px.svg" onmouseover='this.src="../icon/ic_local_phone_black_36px.svg"' onmouseout='this.src="../icon/ic_phone_white_36px.svg"'></a></li>&nbsp;&nbsp;&nbsp;&nbsp;
+		<nav id="topMenu">
+			<div class="topMenu_siteTitle" style=" float: left; width:35%;">
+				<ul>
+					<li><a href="../Main.jsp" style="color: white">BizPayDay</a></li>
 				</ul>
 			</div>
-			<div class="col-sm-4" id="myinfo" class="login_info" style=" float: right;">
-			 <ul class="nav navbar-nav navbar-right">
+			<div class="topMenu_icon" align="center" style=" float: left; width: 40%;">
+				<ul>
+					<li><a class="menuLink" href="../Main.jsp"><img src="../icon/ic_home_white_36px.svg" onmouseover='this.src="../icon/ic_home_black_36px.svg"' onmouseout='this.src="../icon/ic_home_white_36px.svg"'></a></li>
+					<li><a class="menuLink" href="../schedule/schedulemain.jsp"><img src="../icon/ic_event_available_white_36px.svg"></a></li>
+					<li><a class="menuLink" href="../cashbook/cashbookMain.jsp"><img src="../icon/ic_assessment_white_36px.svg" onmouseover='this.src="../icon/ic_assessment_black_36px.svg"' onmouseout='this.src="../icon/ic_assessment_white_36px.svg"'></a></li>
+					<li><a class="menuLink" href="../pds/pdslist.jsp"><img src="../icon/ic_cloud_download_white_36px.svg" onmouseover='this.src="../icon/ic_cloud_download_black_36px.svg"' onmouseout='this.src="../icon/ic_cloud_download_white_36px.svg"'></a></li>
+					<li><a class="menuLink" href="../phonebook/phonebookMain.jsp"><img src="../icon/ic_phone_white_36px.svg" onmouseover='this.src="../icon/ic_local_phone_black_36px.svg"' onmouseout='this.src="../icon/ic_phone_white_36px.svg"'></a></li>
+				
+				</ul>
+			</div>
+			<div class="login_info" style=" float: left; width: 23%; height: 30px;">
+		      <ul class="nav navbar-nav navbar-right">
 		      	<img alt="프로필이미지" src="<%=imgPath%>" class="img-circle" width="40">
 		        <li class="dropdown">
-		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style=" height: 30px;"><%=id %><span class="caret"></span></a>
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style=" padding:5px; height: 30px;"><%=id %><span class="caret"></span></a>
 		          <ul class="dropdown-menu" role="menu">
-		            
+		            <li><a href="#">My List</a></li>
+		            <li><a href="#">My Info</a></li>
 		            <li><a href="../index.jsp">Log out</a></li>
 		          </ul>
 		        </li>
 		      </ul>
-			</div>
-		</div>
+ 		  </div>
+		</nav>
 	</header>
-	 
-	
-		
-
-<table class="table table-bordered" border="1" style="width: 80%; height: auto; margin: auto; text-align: center;">
+	<div>
+		<h3 class="row-centered">자료실</h3>
+		<a href="pdswrite.jsp">자료올리기</a>
+	</div>
+<table class="table table-bordered" border="1">
 <col width="50"><col width="70"><col width="100"><col width="70"><col width="70"><col width="50"><col width="100">
-<tr style="height: 80px;">
-	<td colspan="7" style="text-align: center; border-bottom-color: white; border-top-color: white; border-left-color: white; border-right-color: white; font-size: 24px;">자료실</td>
-</tr>
-<tr>
-	<td colspan="7" style="text-align: right; border-top-color: white; border-left-color: white; border-right-color: white; font-size: 15px;"><a href="pdswrite.jsp" style="text-decoration: none;">자료올리기</a></td>
-</tr>
 
 <tr>
 	<th>번호</th><th>작성자</th><th>제목</th><th>다운로드</th><th>조회수</th><th>다운수</th><th>작성일</th>
 </tr>
-
 <%
+if(list == null || list.size() == 0){
+	%>
+	<tr>
+		<td colspan="7">작성된 글이 없습니다</td>
+	</tr>	
+	<%
+}
 	for(int i=0; i<list.size(); i++){
 		PdsDto pds = list.get(i);
 		System.out.println("pds.getFilename()===>"+pds.getFilename());
@@ -202,7 +206,7 @@ if(session.getAttribute("login") != null){
 	</td>
 </tr>
 </table>
-<br><br>
+
 <!-- search -->
 <div class="row-centered"">
 <input type=text" id="search">

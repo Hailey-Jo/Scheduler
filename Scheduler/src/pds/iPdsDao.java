@@ -12,6 +12,7 @@ public interface iPdsDao {
 	public boolean pdsReadCount(int seq);
 	public PdsDto getPDS(int seq);
 	public boolean pdsDel(int seq);
-	public List<PdsDto> getPdsPagingList(PagingBean paging, String searchWord);
+	//public List<PdsDto> getPdsPagingList(PagingBean paging, String searchWord);
+	public List<PdsDto> getPdsPagingList(String id, PagingBean paging, String searchWord);
 	
 }
